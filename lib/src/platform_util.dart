@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
@@ -24,6 +25,7 @@ bool isAddress(String content) {
 class PlatformUtil {
   // 判断当前的设备是否是移动设备
   static String _documentDir;
+  static String _packageName;
   static bool isMobilePhone() {
     return Platform.isAndroid || Platform.isIOS;
   }
@@ -96,6 +98,17 @@ class PlatformUtil {
         _documentDir ??= await workDirectory();
         return _documentDir;
       }();
+  static Future<String> getPackageName() async {
+    if (_packageName == null) {
+      Directory appDocumentsDir = await getApplicationSupportDirectory();
+      _packageName = appDocumentsDir.path;
+      _packageName = _packageName.replaceAll('/data/user/0/', '');
+      _packageName = _packageName.replaceAll('/files', '');
+    }
+    return _packageName;
+  }
+
+  static Future<String> get packageName => getPackageName();
   static Future<String> workDirectory() async {
     // 获取外部储存路径的函数
     // 原path_provider中有提供，后来被删除了
