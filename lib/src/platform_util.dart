@@ -91,12 +91,12 @@ class PlatformUtil {
     return adbPath.isNotEmpty;
   }
 
-  static Future<String> workDirectory(String packageName) async {
+  static Future<String> workDirectory() async {
     String path;
     if (Platform.isAndroid) {
       Directory storageDirectory = await getExternalStorageDirectory();
       path = storageDirectory.path
-          .replaceAll('/Android/data/$packageName/files', ''); //初始化外部储存的路径
+          .replaceAll(RegExp('/Android.*'), ''); //初始化外部储存的路径
     } else if (isDesktop()) {
       path = FileSystemEntity.parentOf(Platform.resolvedExecutable);
     }
