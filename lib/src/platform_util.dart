@@ -30,6 +30,10 @@ class PlatformUtil {
     return Platform.isAndroid || Platform.isIOS;
   }
 
+  static String getLsPath() {
+    return '/system/bin/ls';
+  }
+
   // 判断当前的设备是否是桌面设备
   static bool isDesktop() {
     return !isMobilePhone();
