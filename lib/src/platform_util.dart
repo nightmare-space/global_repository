@@ -23,6 +23,7 @@ bool isAddress(String content) {
 // 针对平台
 class PlatformUtil {
   // 判断当前的设备是否是移动设备
+  static String _documentDir;
   static bool isMobilePhone() {
     return Platform.isAndroid || Platform.isIOS;
   }
@@ -91,7 +92,13 @@ class PlatformUtil {
     return adbPath.isNotEmpty;
   }
 
+  static Future<String> get documentsDir => () async {
+        _documentDir ??= await workDirectory();
+        return _documentDir;
+      }();
   static Future<String> workDirectory() async {
+    // 获取外部储存路径的函数
+    // 原path_provider中有提供，后来被删除了
     String path;
     if (Platform.isAndroid) {
       Directory storageDirectory = await getExternalStorageDirectory();
