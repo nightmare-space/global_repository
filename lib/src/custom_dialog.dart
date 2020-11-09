@@ -3,7 +3,7 @@ import 'package:event_bus/event_bus.dart';
 
 Future<void> showCustomDialog({
   BuildContext context,
-  Duration duration,
+  Duration duration = const Duration(milliseconds: 300),
   double height,
   Widget child,
   bool bval = true,
@@ -67,7 +67,7 @@ class DialogBuilderState extends State<DialogBuilder>
     with SingleTickerProviderStateMixin {
   AnimationController _animationController;
   Animation<double> dialogHeight;
-  Animation<double> curve2;
+  Animation<double> curve;
   Key _key;
   String a;
 
@@ -78,13 +78,15 @@ class DialogBuilderState extends State<DialogBuilder>
       _key = GlobalObjectKey(widget.tag);
     else
       _key = GlobalKey();
-    _animationController =
-        AnimationController(duration: widget.duration, vsync: this);
-    curve2 = CurvedAnimation(parent: _animationController, curve: Curves.ease);
+    _animationController = AnimationController(
+      duration: widget.duration,
+      vsync: this,
+    );
+    curve = CurvedAnimation(parent: _animationController, curve: Curves.ease);
     dialogHeight = Tween<double>(
       begin: 0,
       end: widget.height,
-    ).animate(curve2);
+    ).animate(curve);
     dialogHeight.addListener(() {
       setState(() {});
     });
@@ -103,7 +105,7 @@ class DialogBuilderState extends State<DialogBuilder>
         dialogHeight = Tween<double>(
           begin: dialogHeight.value,
           end: event.height,
-        ).animate(curve2);
+        ).animate(curve);
         if (_animationController != null) {
           _animationController.reset();
           _animationController.forward();
