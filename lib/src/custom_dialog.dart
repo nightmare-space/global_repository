@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:event_bus/event_bus.dart';
 
-Future<void> showCustomDialog(
-    BuildContext context, Duration duration, double height, Widget child,
-    [bool bval = true, bool ispadding = true, String tag]) {
+Future<void> showCustomDialog({
+  BuildContext context,
+  Duration duration,
+  double height,
+  Widget child,
+  bool bval = true,
+  bool ispadding = true,
+  String tag,
+}) {
   // print(tag);
   //if (tag == null) tag = "dialog";
   return showDialog<void>(
