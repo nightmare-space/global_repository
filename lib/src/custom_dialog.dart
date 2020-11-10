@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:event_bus/event_bus.dart';
 
-Future<void> showCustomDialog({
+Future<T> showCustomDialog<T>({
   BuildContext context,
   Duration duration = const Duration(milliseconds: 300),
   double height,
@@ -12,7 +12,7 @@ Future<void> showCustomDialog({
 }) {
   // print(tag);
   //if (tag == null) tag = "dialog";
-  return showDialog<void>(
+  return showDialog<T>(
     context: context,
     barrierDismissible: bval, // user must tap button!
     builder: (BuildContext context) {
@@ -20,7 +20,7 @@ Future<void> showCustomDialog({
         tag: tag,
         isPadding: ispadding,
         duration: duration,
-        height: height,
+        height: height ?? 0,
         child: child,
       );
     },
@@ -69,7 +69,6 @@ class DialogBuilderState extends State<DialogBuilder>
   Animation<double> dialogHeight;
   Animation<double> curve;
   Key _key;
-  String a;
 
   @override
   void initState() {
@@ -150,6 +149,59 @@ class DialogBuilderState extends State<DialogBuilder>
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+//这个Widget会默认把ListView显示到最大
+class FullHeightListView extends StatefulWidget {
+  const FullHeightListView({Key key, this.child}) : super(key: key);
+  final Widget child;
+
+  @override
+  _FullHeightListViewState createState() => _FullHeightListViewState();
+}
+
+class _FullHeightListViewState extends State<FullHeightListView> {
+  final ScrollController _scrollController = ScrollController();
+  @override
+  void didChangeDependencies() {
+    WidgetsBinding.instance.addPostFrameCallback(_onAfterRendering);
+    super.didChangeDependencies();
+  }
+
+  Future<void> _onAfterRendering(Duration timeStamp) async {
+    // print(maxScrollExtent);
+    // print(_scrollController.position.viewportDimension +
+    //     _scrollController.position.maxScrollExtent);
+    // print(_scrollController.position.viewportDimension + maxScrollExtent * 2);
+    print('刷新了');
+    dialogeventBus.fire(Height(_scrollController.position.viewportDimension +
+        _scrollController.position.maxScrollExtent));
+    // _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      // print(_scrollController.position.viewportDimension);
+      // print("context:${context.size.height}");
+      // print("maxScrollExtent:${_scrollController.position.maxScrollExtent}");
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    // print(cont)
+    return SizedBox(
+      child: ListView(
+        controller: _scrollController,
+        physics: const NeverScrollableScrollPhysics(),
+        children: <Widget>[
+          widget.child,
+        ],
       ),
     );
   }
