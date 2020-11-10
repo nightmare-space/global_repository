@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'platform_util.dart';
+
 // 自实现的Process基于dart:io库中的Process.start
 
 typedef ProcessCallBack = void Function(String output);
@@ -13,7 +15,6 @@ class NiProcess {
   // 确保异步安全，这是一种极low的方式
   static bool isUseing = false;
   // 包名
-  static String packageName = 'com.nightmare.adbtool';
   static Process get process => _process;
   static String get shPath => () {
         switch (Platform.operatingSystem) {
@@ -54,7 +55,7 @@ class NiProcess {
       // );
       await Future<void>.delayed(const Duration(milliseconds: 300));
       _process.stdin.write(
-        'export PATH=/data/data/$packageName/files:\$PATH\n',
+        'export PATH=/data/data/${await PlatformUtil.packageName}/files:\$PATH\n',
       );
     }
 
