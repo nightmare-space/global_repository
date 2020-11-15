@@ -55,7 +55,7 @@ class NiProcess {
       // );
       await Future<void>.delayed(const Duration(milliseconds: 300));
       _process.stdin.write(
-        'export PATH=/data/data/${await PlatformUtil.packageName}/files:\$PATH\n',
+        'export PATH=/data/data/${await PlatformUtil.packageName}/files/usr/bin:\$PATH\n',
       );
     }
 
@@ -92,7 +92,7 @@ class NiProcess {
       script += '\n';
     }
     _process.stdin.write(script);
-    // print('脚本====>$script');
+    print('脚本====>$script');
     _process.stdin.write('echo exitCode\n');
     // _process.stdin.write(script + 'echo exitCode\n');
     if (getStdout) {

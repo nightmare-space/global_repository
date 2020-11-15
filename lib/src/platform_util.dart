@@ -26,6 +26,10 @@ class PlatformUtil {
   // 判断当前的设备是否是移动设备
   static String _documentDir;
   static String _packageName;
+  static void init() async {
+    _documentDir ??= await workDirectory();
+  }
+
   static bool isMobilePhone() {
     return Platform.isAndroid || Platform.isIOS;
   }
@@ -98,8 +102,7 @@ class PlatformUtil {
     return adbPath.isNotEmpty;
   }
 
-  static Future<String> get documentsDir => () async {
-        _documentDir ??= await workDirectory();
+  static String get documentsDir => () {
         return _documentDir;
       }();
   static Future<String> getPackageName() async {
