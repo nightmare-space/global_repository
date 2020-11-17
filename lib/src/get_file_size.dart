@@ -41,3 +41,9 @@ class FileSizeUtils {
     return _human;
   }
 }
+
+class FileUtils {
+  String getFileName(String path) {
+    return path.split('/').last;
+  }
+}
