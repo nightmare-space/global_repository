@@ -172,24 +172,21 @@ class _FullHeightListViewState extends State<FullHeightListView> {
   }
 
   Future<void> _onAfterRendering(Duration timeStamp) async {
-    // print(maxScrollExtent);
-    // print(_scrollController.position.viewportDimension +
-    //     _scrollController.position.maxScrollExtent);
-    // print(_scrollController.position.viewportDimension + maxScrollExtent * 2);
-    print('刷新了');
-    dialogeventBus.fire(Height(_scrollController.position.viewportDimension +
-        _scrollController.position.maxScrollExtent));
-    // _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    dialogeventBus.fire(Height(
+      _scrollController.position.viewportDimension +
+          _scrollController.position.maxScrollExtent,
+    ));
   }
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(() {
-      // print(_scrollController.position.viewportDimension);
-      // print("context:${context.size.height}");
-      // print("maxScrollExtent:${_scrollController.position.maxScrollExtent}");
-    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
