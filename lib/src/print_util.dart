@@ -1,5 +1,5 @@
 class PrintUtil {
-  static void printn(Object object, [int color, int backgroundColor]) {
+  static void printd(Object object, [int color, int backgroundColor]) {
     String colorStr = '';
     if (color != null) {
       colorStr += ';$color';
