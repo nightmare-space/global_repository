@@ -42,4 +42,5 @@ void main() {
   PrintUtil.printn('object', 31, 46);
   PrintUtil.printn('object', 31, 47);
   PrintUtil.printn('object', 31, 7);
+  PrintUtil.printD('object', [31, 47, 7]);
 }
