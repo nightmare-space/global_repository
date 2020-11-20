@@ -11,6 +11,16 @@ class PrintUtil {
     }
     print('\x1B[1$colorStr\m$object\x1B[0m');
   }
+
+  static void printD(Object object, [List<int> colors = const []]) {
+    String colorStr = '';
+    if (colors.isNotEmpty) {
+      colors.forEach((element) {
+        colorStr += ';$element';
+      });
+    }
+    print('\x1B[1$colorStr\m$object\x1B[0m');
+  }
 }
 
 void main() {
@@ -31,4 +41,5 @@ void main() {
   PrintUtil.printn('object', 31, 45);
   PrintUtil.printn('object', 31, 46);
   PrintUtil.printn('object', 31, 47);
+  PrintUtil.printn('object', 31, 7);
 }
