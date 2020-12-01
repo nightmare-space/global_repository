@@ -4,7 +4,7 @@ mixin NiToast {
   static BuildContext toastContext;
   static List<String> stack = <String>[];
   static void initContext(BuildContext context) {
-    toastContext = context;
+    toastContext ??= context;
   }
 
   static void showToast(

@@ -43,4 +43,5 @@ void main() {
   PrintUtil.printn('object', 31, 47);
   PrintUtil.printn('object', 31, 7);
   PrintUtil.printD('object', [31, 47, 7]);
+  print('${'a' * 47}\x0dbbb\n');
 }
