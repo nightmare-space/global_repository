@@ -26,7 +26,7 @@ class PlatformUtil {
   // 判断当前的设备是否是移动设备
   static String _documentDir;
   static String _packageName;
-  static void init() async {
+  static Future<void> init() async {
     _documentDir ??= await workDirectory();
   }
 
