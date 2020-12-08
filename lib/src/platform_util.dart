@@ -64,10 +64,15 @@ class PlatformUtil {
   }
 
   // 获取二进制文件的路径
+
   static String getBinaryPath() {
-    final Map<String, String> map = Map.from(Platform.environment);
+    String binPath = getDataPath() + '/bin';
+    Directory binDir = Directory(binPath);
+    if (!binDir.existsSync()) {
+      binDir.createSync();
+    }
     // print();
-    return map['HOME'] + '/downloads';
+    return binPath;
   }
 
   // 获取files文件夹的路径，更多用在安卓
