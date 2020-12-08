@@ -46,6 +46,7 @@ class NiProcess {
       <String>[],
       includeParentEnvironment: true,
       runInShell: false,
+      environment: PlatformUtil.environment(),
     );
     // 初始化app的环境变量
     if (Platform.isAndroid) {
@@ -53,10 +54,7 @@ class NiProcess {
       // _process.stdin.write(
       //   'su\n',
       // );
-      await Future<void>.delayed(const Duration(milliseconds: 300));
-      _process.stdin.write(
-        'export PATH=/data/data/${await PlatformUtil.packageName}/files/usr/bin:\$PATH\n',
-      );
+
     }
 
     // processStderr.transform(utf8.decoder).listen((event) {
