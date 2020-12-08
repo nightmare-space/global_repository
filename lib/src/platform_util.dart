@@ -97,10 +97,8 @@ class PlatformUtil {
   }
 
   static Future<bool> cmdIsExist(String cmd) async {
-    final String adbPath = await exec('which $cmd');
-    await Future<void>.delayed(const Duration(seconds: 1));
-    print('adbPath====$adbPath');
-    return adbPath.isNotEmpty;
+    final String cmdPath = await exec('which $cmd');
+    return cmdPath.isNotEmpty;
   }
 
   static String get documentsDir => () {
