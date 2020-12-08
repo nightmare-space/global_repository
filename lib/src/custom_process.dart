@@ -45,7 +45,7 @@ class NiProcess {
       'sh',
       <String>[],
       includeParentEnvironment: true,
-      runInShell: true,
+      runInShell: false,
       environment: PlatformUtil.environment(),
     );
     // 初始化app的环境变量
