@@ -133,7 +133,7 @@ class PlatformUtil {
       map['PATH'] = '/data/data/$_packageName/files:' + map['PATH'];
     }
     if (Platform.isMacOS) {
-      map['PATH'] = getBinaryPath() + map['PATH'];
+      map['PATH'] = getBinaryPath() + ':' + map['PATH'];
     }
     return map;
   }
