@@ -72,7 +72,31 @@ class PlatformUtil {
 
   // 获取files文件夹的路径，更多用在安卓
   static String getFilsePath(String packageName) {
+    if (Platform.isMacOS) {
+      String macDataPath =
+          FileSystemEntity.parentOf(Platform.resolvedExecutable) + '/data';
+      Directory macDataDir = Directory(macDataPath);
+      if (!macDataDir.existsSync()) {
+        macDataDir.createSync();
+      }
+      return macDataPath;
+    }
     return '/data/data/$packageName/files';
+  }
+
+  // 获取files文件夹的路径，更多用在安卓
+  static String getDataPath() {
+    if (Platform.isMacOS) {
+      String macDataPath =
+          FileSystemEntity.parentOf(Platform.resolvedExecutable) + '/data';
+      Directory macDataDir = Directory(macDataPath);
+      if (!macDataDir.existsSync()) {
+        macDataDir.createSync();
+      }
+      return macDataPath;
+    }
+    // TODO 要确保初始化
+    return '/data/data/$_packageName/files';
   }
 
   static String getUnixPath(String prePath) {
