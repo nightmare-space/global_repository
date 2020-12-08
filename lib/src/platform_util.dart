@@ -75,6 +75,16 @@ class PlatformUtil {
     return binPath;
   }
 
+  static String getTmpPath() {
+    String binPath = getDataPath() + '/tmp';
+    Directory binDir = Directory(binPath);
+    if (!binDir.existsSync()) {
+      binDir.createSync();
+    }
+    // print();
+    return binPath;
+  }
+
   // 获取files文件夹的路径，更多用在安卓
   static String getFilsePath(String packageName) {
     if (Platform.isMacOS) {
