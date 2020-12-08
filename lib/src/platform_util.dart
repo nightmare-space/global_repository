@@ -122,6 +122,9 @@ class PlatformUtil {
       // TODO
       map['PATH'] = '/data/data/$_packageName/files:' + map['PATH'];
     }
+    if (Platform.isMacOS) {
+      map['PATH'] = getBinaryPath() + map['PATH'];
+    }
     return map;
   }
 
