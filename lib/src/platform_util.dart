@@ -113,6 +113,9 @@ class PlatformUtil {
     if(Platform.isLinux){
       return FileSystemEntity.parentOf(Platform.resolvedExecutable)+'/data';
     }
+    if(Platform.isWindows){
+      return FileSystemEntity.parentOf(Platform.resolvedExecutable)+r'\data';
+    }
 
     // TODO 要确保初始化
     return '/data/data/$_packageName/files';
