@@ -25,7 +25,7 @@ class NiProcess {
             return 'sh';
             break;
           case 'windows':
-            return '';
+            return 'cmd';
             break;
           case 'android':
             return '/system/bin/sh';
@@ -42,7 +42,7 @@ class NiProcess {
 
   static Future<void> _init() async {
     _process = await Process.start(
-      'sh',
+      shPath,
       <String>[],
       includeParentEnvironment: true,
       runInShell: false,
