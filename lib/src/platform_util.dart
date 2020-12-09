@@ -110,11 +110,11 @@ class PlatformUtil {
       }
       return macDataPath;
     }
-    if(Platform.isLinux){
-      return FileSystemEntity.parentOf(Platform.resolvedExecutable)+'/data';
+    if (Platform.isLinux) {
+      return FileSystemEntity.parentOf(Platform.resolvedExecutable) + '/data';
     }
-    if(Platform.isWindows){
-      return FileSystemEntity.parentOf(Platform.resolvedExecutable)+r'\data';
+    if (Platform.isWindows) {
+      return FileSystemEntity.parentOf(Platform.resolvedExecutable) + r'\data';
     }
 
     // TODO 要确保初始化
@@ -146,7 +146,13 @@ class PlatformUtil {
   }
 
   static Future<bool> cmdIsExist(String cmd) async {
-    final String cmdPath = await exec('which $cmd');
+    String cmd;
+    if (Platform.isWindows) {
+      cmd = 'where $cmd 2>nul';
+    } else {
+      cmd = 'which $cmd';
+    }
+    final String cmdPath = await exec(cmd);
     return cmdPath.isNotEmpty;
   }
 
