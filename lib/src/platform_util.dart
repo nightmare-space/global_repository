@@ -110,6 +110,10 @@ class PlatformUtil {
       }
       return macDataPath;
     }
+    if(Platform.isLinux){
+      return FileSystemEntity.parentOf(Platform.resolvedExecutable)+'/data';
+    }
+
     // TODO 要确保初始化
     return '/data/data/$_packageName/files';
   }
