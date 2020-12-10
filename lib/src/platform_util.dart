@@ -142,6 +142,9 @@ class PlatformUtil {
     if (Platform.isMacOS) {
       map['PATH'] = getBinaryPath() + ':' + map['PATH'];
     }
+    if (Platform.isWindows) {
+      map['PATH'] = getBinaryPath() + ';' + map['PATH'];
+    }
     return map;
   }
 
