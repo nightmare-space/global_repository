@@ -153,7 +153,7 @@ class PlatformUtil {
     String stderr;
     String stdout;
     final ProcessResult result = await Process.run(
-      'where',
+      Platform.isWindows ? 'where' : 'which',
       [cmd],
       environment: PlatformUtil.environment(),
     );
@@ -161,7 +161,10 @@ class PlatformUtil {
     stderr = result.stderr.toString();
     // print('stderr->${result.stderr.toString()}');
     // print('stdout->${result.stdout.toString()}');
-    return stderr.isEmpty;
+    if (Platform.isWindows)
+      return stderr.isEmpty;
+    else
+      return stdout.isNotEmpty;
   }
 
   static String get documentsDir => () {
