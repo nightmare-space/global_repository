@@ -149,14 +149,19 @@ class PlatformUtil {
   }
 
   static Future<bool> cmdIsExist(String cmd) async {
-    String cmd;
-    if (Platform.isWindows) {
-      cmd = 'where $cmd 2>nul';
-    } else {
-      cmd = 'which $cmd';
-    }
-    final String cmdPath = await exec(cmd);
-    return cmdPath.isNotEmpty;
+    // TODO 只为了适配windwos
+    String stderr;
+    String stdout;
+    final ProcessResult result = await Process.run(
+      'where',
+      [cmd],
+      environment: PlatformUtil.environment(),
+    );
+    stdout = result.stdout.toString();
+    stderr = result.stderr.toString();
+    // print('stderr->${result.stderr.toString()}');
+    // print('stdout->${result.stdout.toString()}');
+    return stderr.isEmpty;
   }
 
   static String get documentsDir => () {
