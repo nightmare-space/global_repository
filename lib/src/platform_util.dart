@@ -28,6 +28,7 @@ class PlatformUtil {
   static String _packageName;
   static Future<void> init() async {
     _documentDir ??= await workDirectory();
+    _packageName ??= await getPackageName();
   }
 
   static bool isMobilePhone() {
@@ -137,7 +138,7 @@ class PlatformUtil {
     if (Platform.isAndroid) {
       // 只有安卓需要
       // TODO
-      map['PATH'] = '/data/data/$_packageName/files:' + map['PATH'];
+      map['PATH'] = '/data/data/$_packageName/files/bin:' + map['PATH'];
     }
     if (Platform.isMacOS) {
       map['PATH'] = getBinaryPath() + ':' + map['PATH'];
@@ -171,13 +172,12 @@ class PlatformUtil {
         return _documentDir;
       }();
   static Future<String> getPackageName() async {
-    if (_packageName == null) {
-      Directory appDocumentsDir = await getApplicationSupportDirectory();
-      _packageName = appDocumentsDir.path;
-      _packageName = _packageName.replaceAll('/data/user/0/', '');
-      _packageName = _packageName.replaceAll('/files', '');
-    }
-    return _packageName;
+    String packageName = '';
+    Directory appDocumentsDir = await getApplicationSupportDirectory();
+    packageName = appDocumentsDir.path;
+    packageName = packageName.replaceAll('/data/user/0/', '');
+    packageName = packageName.replaceAll('/files', '');
+    return packageName;
   }
 
   static Future<String> get packageName => getPackageName();
