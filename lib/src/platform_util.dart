@@ -139,7 +139,7 @@ class PlatformUtil {
     if (Platform.isAndroid) {
       // 只有安卓需要
       // TODO
-      map['PATH'] = '/data/data/$_packageName/files/bin:' + map['PATH'];
+      map['PATH'] = '/data/data/$_packageName/files/usr/bin:' + map['PATH'];
     }
     if (Platform.isMacOS) {
       map['PATH'] = getBinaryPath() + ':' + map['PATH'];
