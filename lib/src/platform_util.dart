@@ -67,7 +67,8 @@ class PlatformUtil {
   // 获取二进制文件的路径
 
   static String getBinaryPath() {
-    String binPath = getDataPath() + '${Platform.pathSeparator}bin';
+    String binPath = getDataPath() +
+        '${Platform.pathSeparator}usr${Platform.pathSeparator}bin';
     Directory binDir = Directory(binPath);
     if (!binDir.existsSync()) {
       binDir.createSync();
@@ -78,7 +79,7 @@ class PlatformUtil {
 
   static String getTmpPath() {
     String binPath = getDataPath() +
-        '${Platform.pathSeparator}usr${Platform.pathSeparator}tmp';
+        '${Platform.pathSeparator}usr${Platform.pathSeparator}usr${Platform.pathSeparator}tmp';
     Directory binDir = Directory(binPath);
     if (!binDir.existsSync()) {
       binDir.createSync();
