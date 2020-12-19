@@ -79,7 +79,7 @@ class PlatformUtil {
 
   static String getTmpPath() {
     String binPath = getDataPath() +
-        '${Platform.pathSeparator}usr${Platform.pathSeparator}usr${Platform.pathSeparator}tmp';
+        '${Platform.pathSeparator}usr${Platform.pathSeparator}tmp';
     Directory binDir = Directory(binPath);
     if (!binDir.existsSync()) {
       binDir.createSync();
