@@ -38,7 +38,10 @@ class DialogBuilder extends StatefulWidget {
     this.child,
     this.actions,
     this.title,
-    this.padding = const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 24.0),
+    this.padding = const EdgeInsets.symmetric(
+      vertical: 8.0,
+      horizontal: 16.0,
+    ),
     this.duration = const Duration(milliseconds: 1000),
     this.height = 1000,
     this.tag,
