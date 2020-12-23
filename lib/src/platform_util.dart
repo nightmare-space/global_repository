@@ -28,6 +28,7 @@ class PlatformUtil {
   static String _packageName;
   static Future<void> init() async {
     _documentDir ??= await workDirectory();
+    // 获取包名
     _packageName ??= await getPackageName();
   }
 
@@ -182,7 +183,7 @@ class PlatformUtil {
     return packageName;
   }
 
-  static Future<String> get packageName => getPackageName();
+  static String get packageName => _packageName;
   static Future<String> workDirectory() async {
     // 获取外部储存路径的函数
     // 原path_provider中有提供，后来被删除了
