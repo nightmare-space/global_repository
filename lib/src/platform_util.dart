@@ -72,7 +72,7 @@ class PlatformUtil {
         '${Platform.pathSeparator}usr${Platform.pathSeparator}bin';
     Directory binDir = Directory(binPath);
     if (!binDir.existsSync()) {
-      binDir.createSync();
+      binDir.createSync(recursive: true);
     }
     // print();
     return binPath;
