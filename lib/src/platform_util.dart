@@ -139,7 +139,7 @@ class PlatformUtil {
     final String patch = e.elementAt(0).group(0);
     return prePath
         .replaceAll('\\', '/')
-        .replaceAll(RegExp('^' + patch + ':'), '/' + patch.toLowerCase());
+        .replaceAll(RegExp('^' + patch + ':'), '/mnt/' + patch.toLowerCase());
   }
 
   static Map<String, String> environment() {
