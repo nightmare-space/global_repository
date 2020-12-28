@@ -118,7 +118,13 @@ class PlatformUtil {
       return FileSystemEntity.parentOf(Platform.resolvedExecutable) + '/data';
     }
     if (Platform.isWindows) {
-      return FileSystemEntity.parentOf(Platform.resolvedExecutable) + r'\data';
+      String dataPath =
+          FileSystemEntity.parentOf(Platform.resolvedExecutable) + r'\data';
+      Directory dataDir = Directory(dataPath);
+      if (!dataDir.existsSync()) {
+        dataDir.createSync();
+      }
+      return dataPath;
     }
 
     // TODO 要确保初始化
