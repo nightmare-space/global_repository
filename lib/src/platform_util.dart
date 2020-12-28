@@ -46,7 +46,7 @@ class PlatformUtil {
   }
 
   static String getFileName(String filePath) {
-    return filePath.split('/').last;
+    return filePath.split(Platform.pathSeparator).last;
   }
 
   static String getRealPath(String filePath) {
