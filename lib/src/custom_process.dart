@@ -91,7 +91,7 @@ class NiProcess {
       script += '\n';
     }
     _process.stdin.write(script);
-    // print('脚本====>$script');
+    print('脚本====>$script');
     _process.stdin.write('echo exitCode\n');
     // _process.stdin.write(script + 'echo exitCode\n');
     if (getStdout) {
