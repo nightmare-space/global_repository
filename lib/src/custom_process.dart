@@ -25,7 +25,7 @@ class NiProcess {
             return 'sh';
             break;
           case 'windows':
-            return 'cmd';
+            return 'wsl';
             break;
           case 'android':
             return '/system/bin/sh';
