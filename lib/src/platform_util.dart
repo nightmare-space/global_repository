@@ -105,6 +105,7 @@ class PlatformUtil {
 
   // 获取files文件夹的路径，更多用在安卓
   static String getDataPath({String packageName}) {
+    packageName ??= _packageName;
     if (Platform.isMacOS) {
       String macDataPath =
           FileSystemEntity.parentOf(Platform.resolvedExecutable) + '/data';
