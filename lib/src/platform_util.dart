@@ -49,9 +49,9 @@ class PlatformUtil {
     return filePath.split(Platform.pathSeparator).last;
   }
 
-  static String getRealPath(String filePath) {
+  static String getPlatformPathByUnixPath(String filePath) {
     if (Platform.isWindows)
-      return filePath.replaceAll('/', '\\').replaceAll(RegExp('/c'), 'C:');
+      return filePath.replaceAll('/', r'\').replaceAll(RegExp('/c'), 'C:');
     else
       return filePath;
   }
