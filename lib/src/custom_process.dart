@@ -64,11 +64,11 @@ class NiProcess {
 
   static Stream<List<int>> processStdout = _process.stdout.asBroadcastStream();
   static Stream<List<int>> processStderr = _process.stderr.asBroadcastStream();
-  static void exit() {
-    if (isUseing) {
-      _process.stdin.write('echo exitCode\n');
-    }
-  }
+  // static void exit() {
+  //   if (isUseing) {
+  //     // _process.stdin.write('echo exitCode\n');
+  //   }
+  // }
 
   static Future<String> exec(
     String script, {
@@ -92,8 +92,18 @@ class NiProcess {
     }
     _process.stdin.write(script);
     // print('脚本====>$script');
-    _process.stdin.write('echo exitCode\n');
-    // _process.stdin.write(script + 'echo exitCode\n');
+    _process.stdin.write('echo process_exit\n');
+    if (getStderr) {
+      print('等待错误');
+      processStderr.transform(utf8.decoder).every(
+        (String out) {
+          // print('processStdout错误输出为======>$out');
+          buffer.write(out);
+          callback?.call(out);
+          return isUseing;
+        },
+      );
+    }
     if (getStdout) {
       await processStdout.transform(utf8.decoder).every(
         (String out) {
@@ -101,32 +111,12 @@ class NiProcess {
           buffer.write(out);
           callback?.call(out);
           //
-          if (out.contains('exitCode'))
-            return false;
-          else
-            return true;
-        },
-      );
-    }
-
-    if (getStderr) {
-      print('等待错误');
-
-      _process.stdin.write('echo exitCode >&2\n');
-      await processStderr.transform(utf8.decoder).every(
-        (String out) {
-          // print('processStdout错误输出为======>$out');
-          buffer.write(out);
-          callback?.call(out);
-          if (out.contains('exitCode'))
-            return false;
-          else
-            return true;
+          return !out.contains('process_exit');
         },
       );
     }
     // print('释放锁');
     isUseing = false;
-    return buffer.toString().replaceAll('exitCode', '').trim();
+    return buffer.toString().replaceAll('process_exit', '').trim();
   }
 }
