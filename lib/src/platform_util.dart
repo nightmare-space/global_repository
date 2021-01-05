@@ -159,6 +159,22 @@ class PlatformUtil {
     return map;
   }
 
+  static Map<String, String> environmentByPackage(String packageName) {
+    final Map<String, String> map = Map.from(Platform.environment);
+    if (Platform.isAndroid) {
+      // 只有安卓需要
+      // TODO
+      map['PATH'] = '/data/data/$packageName/files/usr/bin:' + map['PATH'];
+    }
+    if (Platform.isMacOS) {
+      map['PATH'] = getBinaryPath() + ':' + map['PATH'];
+    }
+    if (Platform.isWindows) {
+      map['PATH'] = getBinaryPath() + ';' + map['PATH'];
+    }
+    return map;
+  }
+
   static Future<bool> cmdIsExist(String cmd) async {
     // TODO 只为了适配windwos
     String stderr;
