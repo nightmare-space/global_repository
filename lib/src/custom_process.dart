@@ -49,13 +49,13 @@ class NiProcess {
       environment: PlatformUtil.environment(),
     );
     // 初始化app的环境变量
-    if (Platform.isAndroid) {
-      isUseing = true;
-      // _process.stdin.write(
-      //   'su\n',
-      // );
+    // if (Platform.isAndroid) {
+    //   isUseing = true;
+    //   // _process.stdin.write(
+    //   //   'su\n',
+    //   // );
 
-    }
+    // }
 
     // processStderr.transform(utf8.decoder).listen((event) {
     //   print('$NiProcess------>$event');
