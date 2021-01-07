@@ -56,10 +56,10 @@ class NiProcess {
     //   // );
 
     // }
-
-    // processStderr.transform(utf8.decoder).listen((event) {
-    //   print('$NiProcess------>$event');
-    // });
+    // 不加这个，会出现err输出会累计到最后输出
+    processStderr.transform(utf8.decoder).listen((event) {
+      print('$NiProcess------>processStderr $event');
+    });
   }
 
   static Stream<List<int>> processStdout = _process.stdout.asBroadcastStream();
