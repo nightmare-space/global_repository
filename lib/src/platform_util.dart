@@ -32,6 +32,26 @@ class PlatformUtil {
     _packageName ??= await getPackageName();
   }
 
+  Future<List<String>> getLocalAddress() async {
+    List<String> address = [];
+    final List<NetworkInterface> networkInterfaces =
+        await NetworkInterface.list(
+      includeLoopback: false,
+      type: InternetAddressType.IPv4,
+    );
+    for (final NetworkInterface netInterface in networkInterfaces) {
+      // 遍历网卡
+      print('${netInterface.name} : ${netInterface.addresses}');
+      for (final InternetAddress netAddress in netInterface.addresses) {
+        // 遍历网卡的IP地址
+        if (isAddress(netAddress.address)) {
+          address.add(netAddress.address);
+        }
+      }
+    }
+    return address;
+  }
+
   static bool isMobilePhone() {
     return Platform.isAndroid || Platform.isIOS;
   }
