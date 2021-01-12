@@ -32,7 +32,7 @@ class PlatformUtil {
     _packageName ??= await getPackageName();
   }
 
-  Future<List<String>> getLocalAddress() async {
+  Future<List<String>> localAddress() async {
     List<String> address = [];
     final List<NetworkInterface> networkInterfaces =
         await NetworkInterface.list(
