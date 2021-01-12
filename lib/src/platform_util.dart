@@ -41,7 +41,7 @@ class PlatformUtil {
     );
     for (final NetworkInterface netInterface in networkInterfaces) {
       // 遍历网卡
-      print('${netInterface.name} : ${netInterface.addresses}');
+      // print('${netInterface.name} : ${netInterface.addresses}');
       for (final InternetAddress netAddress in netInterface.addresses) {
         // 遍历网卡的IP地址
         if (isAddress(netAddress.address)) {
