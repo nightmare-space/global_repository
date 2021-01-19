@@ -81,7 +81,7 @@ class PlatformUtil {
       return '/sdcard/download';
     }
     final Map<String, String> map = Map.from(Platform.environment);
-    print(map);
+    // print(map);
     return map['HOME'] + '/downloads';
   }
 
