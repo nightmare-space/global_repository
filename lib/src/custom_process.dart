@@ -83,7 +83,6 @@ class NiProcess {
     isUseing = true;
     if (_process == null) {
       /// 如果初始为空需要城初始化Process
-      await PlatformUtil.init();
       await _init();
     }
     final StringBuffer buffer = StringBuffer();

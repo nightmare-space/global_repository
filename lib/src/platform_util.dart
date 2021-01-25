@@ -24,10 +24,8 @@ bool isAddress(String content) {
 // 针对平台
 class PlatformUtil {
   // 判断当前的设备是否是移动设备
-  static String _documentDir;
   static String _packageName;
   static Future<void> init() async {
-    _documentDir ??= await workDirectory();
     // 获取包名
     _packageName ??= await getPackageName();
   }
@@ -214,15 +212,16 @@ class PlatformUtil {
       return stdout.isNotEmpty;
   }
 
-  static String get documentsDir => () {
-        return _documentDir;
-      }();
   static Future<String> getPackageName() async {
+    if (_packageName != null) {
+      return _packageName;
+    }
     String packageName = '';
     Directory appDocumentsDir = await getApplicationSupportDirectory();
     packageName = appDocumentsDir.path;
     packageName = packageName.replaceAll('/data/user/0/', '');
     packageName = packageName.replaceAll('/files', '');
+    _packageName ??= packageName;
     return packageName;
   }
 
