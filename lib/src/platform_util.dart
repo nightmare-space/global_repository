@@ -24,10 +24,10 @@ bool isAddress(String content) {
 // 针对平台
 class PlatformUtil {
   // 判断当前的设备是否是移动设备
-  static String _packageName;
-  static Future<void> init() async {
+  static String packageName;
+  static Future<void> initPackageName() async {
     // 获取包名
-    _packageName ??= await getPackageName();
+    packageName ??= await getPackageName();
   }
 
   static Future<List<String>> localAddress() async {
@@ -123,7 +123,7 @@ class PlatformUtil {
 
   // 获取files文件夹的路径，更多用在安卓
   static String getDataPath({String packageName}) {
-    packageName ??= _packageName;
+    PlatformUtil.packageName ??= packageName;
     if (Platform.isMacOS) {
       String macDataPath =
           FileSystemEntity.parentOf(Platform.resolvedExecutable) + '/data';
@@ -166,7 +166,7 @@ class PlatformUtil {
     if (Platform.isAndroid) {
       // 只有安卓需要
       // TODO
-      map['PATH'] = '/data/data/$_packageName/files/usr/bin:' + map['PATH'];
+      map['PATH'] = '/data/data/$packageName/files/usr/bin:' + map['PATH'];
     }
     if (Platform.isMacOS) {
       map['PATH'] = getBinaryPath() + ':' + map['PATH'];
@@ -213,19 +213,17 @@ class PlatformUtil {
   }
 
   static Future<String> getPackageName() async {
-    if (_packageName != null) {
-      return _packageName;
+    if (packageName != null) {
+      return packageName;
     }
-    String packageName = '';
+    String _packageName = '';
     Directory appDocumentsDir = await getApplicationSupportDirectory();
-    packageName = appDocumentsDir.path;
-    packageName = packageName.replaceAll('/data/user/0/', '');
-    packageName = packageName.replaceAll('/files', '');
-    _packageName ??= packageName;
-    return packageName;
+    _packageName = appDocumentsDir.path;
+    _packageName = packageName.replaceAll('/data/user/0/', '');
+    _packageName = packageName.replaceAll('/files', '');
+    return _packageName;
   }
 
-  static String get packageName => _packageName;
   static Future<String> workDirectory() async {
     // 获取外部储存路径的函数
     // 原path_provider中有提供，后来被删除了
