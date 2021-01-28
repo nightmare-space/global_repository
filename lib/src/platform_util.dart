@@ -24,15 +24,16 @@ bool isAddress(String content) {
 // 针对平台
 class PlatformUtil {
   // 判断当前的设备是否是移动设备
-  static String packageName;
+  static String _packageName;
+  static String get packageName => _packageName;
   static Future<void> initPackageName() async {
     // 获取包名
-    packageName ??= await getPackageName();
+    _packageName ??= await getPackageName();
   }
 
   static void setPackageName(String packageName) {
     // 获取包名
-    PlatformUtil.packageName = packageName;
+    _packageName = packageName;
   }
 
   static Future<List<String>> localAddress() async {
@@ -113,7 +114,7 @@ class PlatformUtil {
   }
 
   // 获取files文件夹的路径，更多用在安卓
-  static String getFilsePath(String packageName) {
+  static String getFilsePath() {
     if (Platform.isMacOS) {
       String macDataPath =
           FileSystemEntity.parentOf(Platform.resolvedExecutable) + '/data';
@@ -123,12 +124,12 @@ class PlatformUtil {
       }
       return macDataPath;
     }
-    return '/data/data/$packageName/files';
+    return '/data/data/$_packageName/files';
   }
 
   // 获取files文件夹的路径，更多用在安卓
   static String getDataPath({String packageName}) {
-    PlatformUtil.packageName ??= packageName;
+    _packageName ??= packageName;
     if (Platform.isMacOS) {
       String macDataPath =
           FileSystemEntity.parentOf(Platform.resolvedExecutable) + '/data';
@@ -152,7 +153,7 @@ class PlatformUtil {
     }
 
     // TODO 要确保初始化
-    return '/data/data/$packageName/files';
+    return '/data/data/$_packageName/files';
   }
 
   static String getUnixPath(String prePath) {
@@ -171,7 +172,7 @@ class PlatformUtil {
     if (Platform.isAndroid) {
       // 只有安卓需要
       // TODO
-      map['PATH'] = '/data/data/$packageName/files/usr/bin:' + map['PATH'];
+      map['PATH'] = '/data/data/$_packageName/files/usr/bin:' + map['PATH'];
     }
     if (Platform.isMacOS) {
       map['PATH'] = getBinaryPath() + ':' + map['PATH'];
