@@ -30,6 +30,11 @@ class PlatformUtil {
     packageName ??= await getPackageName();
   }
 
+  static void setPackageName(String packageName) {
+    // 获取包名
+    PlatformUtil.packageName = packageName;
+  }
+
   static Future<List<String>> localAddress() async {
     List<String> address = [];
     final List<NetworkInterface> networkInterfaces =
