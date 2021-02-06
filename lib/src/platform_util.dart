@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 
 Future<String> exec(String cmd) async {
@@ -168,6 +169,9 @@ class PlatformUtil {
   }
 
   static Map<String, String> environment() {
+    if (kIsWeb) {
+      return {};
+    }
     final Map<String, String> map = Map.from(Platform.environment);
     if (Platform.isAndroid) {
       // 只有安卓需要
