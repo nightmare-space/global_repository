@@ -12,6 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # 屏幕适配
+  flutter_screenutil: ^2.3.0
   provider: 5.0.0-nullsafety.3
   # 提供路径访问
   path_provider: ^1.3.0
