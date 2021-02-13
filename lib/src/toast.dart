@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:scrcpy_home/config/dimens.dart';
 
 void showToast(
   String message, {
@@ -22,10 +21,10 @@ void showToast(
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: EdgeInsets.fromLTRB(
-                  Dimens.gap_dp24,
+                  24,
                   0,
-                  Dimens.gap_dp24,
-                  Dimens.gap_dp24,
+                  24,
+                  24,
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(
@@ -48,7 +47,7 @@ void showToast(
                             // color: const Color(0xff2c2c2e),
                             color: Color(0xffececec).withOpacity(0.6),
                           ),
-                          height: Dimens.gap_dp48,
+                          height: 48,
                           // child:
                         ),
                       ),
