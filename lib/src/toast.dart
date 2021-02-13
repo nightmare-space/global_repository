@@ -90,15 +90,15 @@ void showToast(
 
 List<BuildContext> contexts = [];
 
-class NiToast extends StatefulWidget {
-  const NiToast({Key key, this.child}) : super(key: key);
+class NiToastNew extends StatefulWidget {
+  const NiToastNew({Key key, this.child}) : super(key: key);
   final Widget child;
 
   @override
   _NiToastState createState() => _NiToastState();
 }
 
-class _NiToastState extends State<NiToast> {
+class _NiToastState extends State<NiToastNew> {
   @override
   Widget build(BuildContext context) {
     return Overlay(
