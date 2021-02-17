@@ -6,12 +6,11 @@ void showToast(
   String message, {
   Duration duration = const Duration(milliseconds: 1000),
 }) {
-  print(showToast);
   //创建一个OverlayEntry对象
   // final EdgeInsets padding = MediaQuery.of(toastContext).viewInsets;
   final OverlayEntry overlayEntry = OverlayEntry(
     builder: (BuildContext context) {
-      return Positioned(
+      return Positioned.fill(
         bottom: 0,
         child: Material(
           color: Colors.transparent,
