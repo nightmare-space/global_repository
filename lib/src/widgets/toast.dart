@@ -101,7 +101,8 @@ class NiToastNew extends StatefulWidget {
 class _NiToastState extends State<NiToastNew> {
   @override
   Widget build(BuildContext context) {
-    return Overlay(
+    TextDirection direction = TextDirection.ltr;
+    var overlay = Overlay(
       initialEntries: [
         OverlayEntry(
           builder: (BuildContext context) {
@@ -111,5 +112,11 @@ class _NiToastState extends State<NiToastNew> {
         ),
       ],
     );
+
+    Widget w = Directionality(
+      child: overlay,
+      textDirection: direction,
+    );
+    return w;
   }
 }
