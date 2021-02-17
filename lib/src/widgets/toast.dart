@@ -16,7 +16,6 @@ void showToast(
         child: Material(
           color: Colors.transparent,
           child: SizedBox(
-            width: MediaQuery.of(context).size.width,
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
