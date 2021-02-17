@@ -12,4 +12,14 @@ class NiNavigator {
       ),
     );
   }
+
+  Future<void> pushVoid(Widget page) async {
+    return await Navigator.of(context).push<void>(
+      MaterialPageRoute<void>(
+        builder: (_) {
+          return page;
+        },
+      ),
+    );
+  }
 }
