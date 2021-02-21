@@ -7,3 +7,4 @@ export 'src/utils/custom_navigator.dart';
 export 'src/widgets/show_toast.dart';
 export 'src/widgets/custom_dialog.dart';
 export 'src/widgets/toast.dart';
+export 'src/widgets/custom_scaffold.dart';
