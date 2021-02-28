@@ -88,6 +88,8 @@ void showToast(
 
 List<BuildContext> contexts = [];
 
+class NiToast extends NiToastNew {}
+
 class NiToastNew extends StatefulWidget {
   const NiToastNew({Key key, this.child}) : super(key: key);
   final Widget child;
