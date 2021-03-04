@@ -28,6 +28,8 @@ class _NiScaffoldState extends State<NiScaffold> {
       builder: (context, orientation) {
         if (orientation == Orientation.landscape) {
           drawerType = DrawerType.row;
+        } else {
+          drawerType = DrawerType.hideInLeft;
         }
         return Scaffold(
           drawer: drawerType == DrawerType.hideInLeft ? widget.drawer : null,
