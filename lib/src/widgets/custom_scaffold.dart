@@ -24,21 +24,25 @@ class _NiScaffoldState extends State<NiScaffold> {
   DrawerType drawerType = DrawerType.hideInLeft;
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).orientation == Orientation.landscape) {
-      drawerType = DrawerType.row;
-    }
-    return Scaffold(
-      drawer: drawerType == DrawerType.hideInLeft ? widget.drawer : null,
-      body: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (drawerType == DrawerType.row && widget.drawer != null)
-            widget.drawer,
-          Expanded(
-            child: widget.body,
+    return OrientationBuilder(
+      builder: (context, orientation) {
+        if (orientation == Orientation.landscape) {
+          drawerType = DrawerType.row;
+        }
+        return Scaffold(
+          drawer: drawerType == DrawerType.hideInLeft ? widget.drawer : null,
+          body: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (drawerType == DrawerType.row && widget.drawer != null)
+                widget.drawer,
+              Expanded(
+                child: widget.body,
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
