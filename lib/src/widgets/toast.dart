@@ -12,7 +12,7 @@ void showToast(
     builder: (BuildContext context) {
       return Positioned(
         bottom: 0,
-        width: MediaQuery.of(context).size.width,
+        left: 0,
         child: Material(
           color: Colors.transparent,
           child: SizedBox(
