@@ -8,6 +8,7 @@ import 'platform_util.dart';
 
 typedef ProcessCallBack = void Function(String output);
 
+// 考虑用装饰器模式
 class NiProcess {
   NiProcess(this.callback);
   final ProcessCallBack callback;
