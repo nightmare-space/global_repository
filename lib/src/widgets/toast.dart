@@ -12,59 +12,56 @@ void showToast(
     builder: (BuildContext context) {
       return Positioned(
         bottom: 0,
-        left: 0,
-        child: Material(
-          color: Colors.transparent,
-          child: SizedBox(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(
-                  24,
-                  0,
-                  24,
-                  24,
+        child: SizedBox(
+          width: window.physicalSize.width / window.devicePixelRatio,
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 48.0,
+                vertical: 48.0,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  16,
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                    16,
-                  ),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      BackdropFilter(
-                        filter: ImageFilter.blur(
-                          sigmaX: 2.0,
-                          sigmaY: 2.0,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: 3.0,
+                        sigmaY: 3.0,
+                      ),
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            16,
+                          ),
+                          color: const Color(0xfff0f0f0).withOpacity(0.5),
                         ),
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(
-                              16,
+                        child: Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 12,
                             ),
-                            // color: const Color(0xff2c2c2e),
-                            color: Color(0xffececec).withOpacity(0.6),
-                          ),
-                          height: 48,
-                          // child:
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                        ),
-                        child: Text(
-                          message,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
+                            child: Text(
+                              message,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
                           ),
                         ),
+                        // height: 54,
+                        // child:
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),
