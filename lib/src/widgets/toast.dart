@@ -18,7 +18,7 @@ void showToast(
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.symmetric(
-                horizontal: 48.0,
+                horizontal: 24.0,
                 vertical: 48.0,
               ),
               child: ClipRRect(
