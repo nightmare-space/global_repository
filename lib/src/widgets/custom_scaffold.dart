@@ -13,9 +13,11 @@ class NiScaffold extends StatefulWidget {
     Key key,
     this.drawer,
     this.body,
+    this.backgroundColor,
   }) : super(key: key);
   final Widget drawer;
   final Widget body;
+  final Color backgroundColor;
   @override
   _NiScaffoldState createState() => _NiScaffoldState();
 }
@@ -32,6 +34,7 @@ class _NiScaffoldState extends State<NiScaffold> {
           drawerType = DrawerType.hideInLeft;
         }
         return Scaffold(
+          backgroundColor: widget.backgroundColor,
           drawer: drawerType == DrawerType.hideInLeft ? widget.drawer : null,
           body: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
