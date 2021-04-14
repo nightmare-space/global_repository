@@ -10,3 +10,4 @@ export 'src/widgets/toast.dart';
 export 'src/widgets/custom_scaffold.dart';
 export 'src/widgets/custom_scaffold.dart';
 export 'src/foundation/constants.dart';
+export 'src/utils/dimens.dart';
