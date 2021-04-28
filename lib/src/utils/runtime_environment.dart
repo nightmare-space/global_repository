@@ -29,7 +29,7 @@ class RuntimeEnvir {
     _isInit = true;
   }
 
-  static void initEnvirForDesktop(String packageName) {
+  static void initEnvirForDesktop() {
     if (_isInit) {
       return;
     }
