@@ -11,54 +11,51 @@ void showToast(
   final OverlayEntry overlayEntry = OverlayEntry(
     builder: (BuildContext context) {
       return Positioned(
-        bottom: 0,
+        top: 0,
         child: SizedBox(
           width: window.physicalSize.width / window.devicePixelRatio,
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 24.0,
-                vertical: 48.0,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 24.0,
+              vertical: 48.0,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(
+                16,
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  16,
-                ),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    BackdropFilter(
-                      filter: ImageFilter.blur(
-                        sigmaX: 3.0,
-                        sigmaY: 3.0,
-                      ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(
-                            16,
-                          ),
-                          color: const Color(0xfff0f0f0).withOpacity(0.5),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  BackdropFilter(
+                    filter: ImageFilter.blur(
+                      sigmaX: 3.0,
+                      sigmaY: 3.0,
+                    ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          16,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 16,
-                            vertical: 12,
-                          ),
-                          child: Text(
-                            message,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
+                        color: const Color(0xfff0f0f0).withOpacity(0.5),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                          vertical: 12,
+                        ),
+                        child: Text(
+                          message,
+                          style: const TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
                           ),
                         ),
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
