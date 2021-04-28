@@ -1,0 +1,97 @@
+// 多个包在单独运行的时候会是独立的包名
+// 而当被集成的时候，应该拿它所集成到的项目的包名
+// 所以在代码中不应该使用自身的配置文件中的路径来进行读写
+
+String _binKey = 'BIN';
+String _tmpKey = 'TMP';
+String _homeKey = 'HOME';
+String _filesKey = 'FILES';
+String _usrKey = 'USR';
+// 在安卓端是沙盒路径
+String _dataKey = 'DATA';
+
+class RuntimeEnvir {
+  static bool _isInit = false;
+  static Map<String, String> _environment = {};
+
+  static void initEnvirWithPackageName(String packageName) {
+    if (_isInit) {
+      return;
+    }
+    _environment[_dataKey] = '/data/data/$packageName';
+    _environment[_filesKey] = '/data/data/$packageName/files';
+    _environment[_usrKey] = '/data/data/$packageName/files/usr';
+    _environment[_binKey] = '/data/data/$packageName/files/bin';
+    _environment[_homeKey] = '/data/data/$packageName/files/home';
+    _environment[_tmpKey] = '/data/data/$packageName/files/usr/tmp';
+    _isInit = true;
+  }
+
+  static void initEnvirForDesktop(String packageName) {}
+
+  static void write(String key, String value) {
+    _environment[key] = value;
+  }
+
+  static String getValue(String key) {
+    if (_environment.containsKey(key)) {
+      return _environment[key];
+    }
+    return '';
+  }
+
+  static String get binPath {
+    if (_environment.containsKey(_binKey)) {
+      return _environment[_binKey];
+    }
+    throw Exception();
+  }
+
+  static set binPath(String value) {
+    _environment[_binKey] = value;
+  }
+
+  static String get usrPath {
+    if (_environment.containsKey(_usrKey)) {
+      return _environment[_usrKey];
+    }
+    throw Exception();
+  }
+
+  static set usrPath(String value) {
+    _environment[_usrKey] = value;
+  }
+
+  static String get tmpPath {
+    if (_environment.containsKey(_tmpKey)) {
+      return _environment[_tmpKey];
+    }
+    throw Exception();
+  }
+
+  static set tmpPath(String value) {
+    _environment[_tmpKey] = value;
+  }
+
+  static String get homePath {
+    if (_environment.containsKey(_homeKey)) {
+      return _environment[_homeKey];
+    }
+    throw Exception();
+  }
+
+  static set homePath(String value) {
+    _environment[_homeKey] = value;
+  }
+
+  static String get filesPath {
+    if (_environment.containsKey(_filesKey)) {
+      return _environment[_filesKey];
+    }
+    throw Exception();
+  }
+
+  static set filesPath(String value) {
+    _environment[_filesKey] = value;
+  }
+}

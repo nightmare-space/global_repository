@@ -13,8 +13,6 @@ class NiProcess {
   NiProcess(this.callback);
   final ProcessCallBack callback;
   static Process _process;
-  // 确保异步安全，这是一种极low的方式
-  static bool isUseing = false;
   // 包名
   static Process get process => _process;
   static String get shPath => () {
@@ -63,6 +61,8 @@ class NiProcess {
     });
   }
 
+  static Completer<StringBuffer> completer;
+
   static Stream<List<int>> processStdout = _process.stdout.asBroadcastStream();
   static Stream<List<int>> processStderr = _process.stderr.asBroadcastStream();
   // static void exit() {
@@ -77,11 +77,12 @@ class NiProcess {
     bool getStdout = true,
     bool getStderr = false,
   }) async {
-    // print(isUseing);
-    while (isUseing) {
-      await Future<void>.delayed(const Duration(milliseconds: 100));
+    if (completer != null) {
+      while (!completer.isCompleted) {
+        await Future<void>.delayed(const Duration(milliseconds: 100));
+      }
     }
-    isUseing = true;
+    completer = Completer();
     if (_process == null) {
       /// 如果初始为空需要城初始化Process
       await _init();
@@ -100,7 +101,7 @@ class NiProcess {
           // print('processStdout错误输出为======>$out');
           buffer.write(out);
           callback?.call(out);
-          return isUseing;
+          return !completer.isCompleted;
         },
       );
     }
@@ -110,13 +111,12 @@ class NiProcess {
           // print('processStdout输出为======>$out');
           buffer.write(out);
           callback?.call(out);
-          //
+          completer.complete(buffer);
           return !out.contains('process_exit');
         },
       );
     }
-    // print('释放锁');
-    isUseing = false;
-    return buffer.toString().replaceAll('process_exit', '').trim();
+    StringBuffer completerBuffer = await completer.future;
+    return completerBuffer.toString().replaceAll('process_exit', '').trim();
   }
 }
