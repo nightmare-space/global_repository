@@ -2,6 +2,8 @@
 // 而当被集成的时候，应该拿它所集成到的项目的包名
 // 所以在代码中不应该使用自身的配置文件中的路径来进行读写
 
+import 'dart:io';
+
 String _binKey = 'BIN';
 String _tmpKey = 'TMP';
 String _homeKey = 'HOME';
@@ -21,13 +23,33 @@ class RuntimeEnvir {
     _environment[_dataKey] = '/data/data/$packageName';
     _environment[_filesKey] = '/data/data/$packageName/files';
     _environment[_usrKey] = '/data/data/$packageName/files/usr';
-    _environment[_binKey] = '/data/data/$packageName/files/bin';
+    _environment[_binKey] = '/data/data/$packageName/files/usr/bin';
     _environment[_homeKey] = '/data/data/$packageName/files/home';
     _environment[_tmpKey] = '/data/data/$packageName/files/usr/tmp';
     _isInit = true;
   }
 
-  static void initEnvirForDesktop(String packageName) {}
+  static void initEnvirForDesktop(String packageName) {
+    if (_isInit) {
+      return;
+    }
+    String dataPath = FileSystemEntity.parentOf(Platform.resolvedExecutable) +
+        Platform.pathSeparator +
+        'data';
+    Directory dataDir = Directory(dataPath);
+    if (!dataDir.existsSync()) {
+      dataDir.createSync();
+    }
+    _environment[_dataKey] = dataPath;
+    _environment[_filesKey] = dataPath;
+    _environment[_usrKey] = '$dataPath${Platform.pathSeparator}usr';
+    _environment[_binKey] =
+        '${_environment[_usrKey]}${Platform.pathSeparator}bin';
+    _environment[_homeKey] = '$dataPath${Platform.pathSeparator}home';
+    _environment[_tmpKey] =
+        '${_environment[_usrKey]}${Platform.pathSeparator}tmp';
+    _isInit = true;
+  }
 
   static void write(String key, String value) {
     _environment[key] = value;
