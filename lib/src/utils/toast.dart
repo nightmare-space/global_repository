@@ -15,7 +15,7 @@ void showToast(
         child: SizedBox(
           width: window.physicalSize.width / window.devicePixelRatio,
           child: Align(
-            alignment: Alignment.bottomCenter,
+            alignment: Alignment.topCenter,
             child: Padding(
               padding: const EdgeInsets.symmetric(
                 horizontal: 24.0,
