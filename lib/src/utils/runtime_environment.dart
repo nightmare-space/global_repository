@@ -69,6 +69,13 @@ class RuntimeEnvir {
     throw Exception();
   }
 
+  static String get dataPath {
+    if (_environment.containsKey(_dataKey)) {
+      return _environment[_dataKey];
+    }
+    throw Exception();
+  }
+
   static set binPath(String value) {
     _environment[_binKey] = value;
   }
