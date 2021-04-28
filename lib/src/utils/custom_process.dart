@@ -77,6 +77,7 @@ class NiProcess {
     bool getStdout = true,
     bool getStderr = false,
   }) async {
+    print('sd');
     if (completer != null) {
       while (!completer.isCompleted) {
         await Future<void>.delayed(const Duration(milliseconds: 100));
@@ -106,9 +107,9 @@ class NiProcess {
       );
     }
     if (getStdout) {
-      await processStdout.transform(utf8.decoder).every(
+      processStdout.transform(utf8.decoder).every(
         (String out) {
-          // print('processStdout输出为======>$out');
+          print('processStdout输出为======>$out');
           buffer.write(out);
           callback?.call(out);
           completer.complete(buffer);
