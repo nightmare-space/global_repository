@@ -132,7 +132,7 @@ class DialogBuilderState extends State<DialogBuilder>
         shadowColor: Theme.of(context).backgroundColor == Colors.black
             ? Colors.white.withOpacity(0.2)
             : Colors.black.withOpacity(0.6),
-        elevation: 12.0,
+        elevation: 0.0,
         color: Theme.of(context).dialogBackgroundColor,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(
