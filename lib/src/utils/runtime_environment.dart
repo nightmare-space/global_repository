@@ -72,6 +72,14 @@ class RuntimeEnvir {
     throw Exception();
   }
 
+  /// 这是是 PATH 这个变量的值
+  static String get path {
+    if (_environment.containsKey(_binKey)) {
+      return _environment[_binKey];
+    }
+    throw Exception();
+  }
+
   static String get dataPath {
     if (_environment.containsKey(_dataKey)) {
       return _environment[_dataKey];
