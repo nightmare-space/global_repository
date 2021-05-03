@@ -12,6 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  signale:
+    git: https://github.com/Nightmare-MY/signale
   # 屏幕适配
   flutter_screenutil: ^2.3.0
   # 提供路径访问

@@ -12,3 +12,4 @@ export 'src/widgets/custom_scaffold.dart';
 export 'src/foundation/constants.dart';
 export 'src/utils/dimens.dart';
 export 'src/widgets/custom_card_button.dart';
+export 'package:signale/signale.dart';

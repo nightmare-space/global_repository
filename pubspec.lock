@@ -165,6 +165,15 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.1.0"
+  signale:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "8edb0192348d6e63ec63a3c653e6949fb9ff494d"
+      url: "https://github.com/Nightmare-MY/signale"
+    source: git
+    version: "0.0.3"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -241,5 +250,5 @@ packages:
     source: hosted
     version: "0.2.0"
 sdks:
-  dart: ">=2.12.0-259.9.beta <3.0.0"
+  dart: ">=2.12.0 <3.0.0"
   flutter: ">=1.20.0"
