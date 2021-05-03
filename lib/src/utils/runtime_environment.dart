@@ -11,6 +11,7 @@ String _filesKey = 'FILES';
 String _usrKey = 'USR';
 // 在安卓端是沙盒路径
 String _dataKey = 'DATA';
+String _pathKey = 'PATH';
 
 class RuntimeEnvir {
   static bool _isInit = false;
@@ -21,11 +22,13 @@ class RuntimeEnvir {
       return;
     }
     _environment[_dataKey] = '/data/data/$packageName';
-    _environment[_filesKey] = '/data/data/$packageName/files';
-    _environment[_usrKey] = '/data/data/$packageName/files/usr';
-    _environment[_binKey] = '/data/data/$packageName/files/usr/bin';
-    _environment[_homeKey] = '/data/data/$packageName/files/home';
-    _environment[_tmpKey] = '/data/data/$packageName/files/usr/tmp';
+    _environment[_filesKey] = '${_environment[_dataKey]}/files';
+    _environment[_usrKey] = '${_environment[_filesKey]}/usr';
+    _environment[_binKey] = '${_environment[_usrKey]}/bin';
+    _environment[_homeKey] = '${_environment[_filesKey]}/home';
+    _environment[_tmpKey] = '${_environment[_usrKey]}/tmp';
+    _environment[_pathKey] =
+        '${_environment[_binKey]}:' + Platform.environment['PATH'];
     _isInit = true;
   }
 
