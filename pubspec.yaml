@@ -12,9 +12,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  signale:
+    git: https://github.com/Nightmare-MY/signale
   # 屏幕适配
   flutter_screenutil: ^2.3.0
-  provider: 5.0.0-nullsafety.3
   # 提供路径访问
   path_provider: ^2.0.1
   # 事件总线
