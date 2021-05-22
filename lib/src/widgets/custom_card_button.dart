@@ -87,7 +87,7 @@ class _NiCardButtonState extends State<NiCardButton>
         alignment: Alignment.center,
         transform: Matrix4.identity()
           ..scale(
-            1.0 - animationController.value * 0.05,
+            1.0 - animationController.value * 0.02,
           ),
         child: Container(
           margin: widget.margin,
