@@ -19,7 +19,8 @@ void showToast(
               horizontal: 24.0,
               vertical: 48.0,
             ),
-            child: ClipRRect(
+            child: Material(
+              color: Colors.transparent,
               borderRadius: BorderRadius.circular(
                 16,
               ),
