@@ -19,8 +19,7 @@ void showToast(
               horizontal: 24.0,
               vertical: 48.0,
             ),
-            child: Material(
-              color: Colors.transparent,
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(
                 16,
               ),
@@ -45,12 +44,15 @@ void showToast(
                           horizontal: 16,
                           vertical: 12,
                         ),
-                        child: Text(
-                          message,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                        child: Material(
+                          color: Colors.transparent,
+                          child: Text(
+                            message,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
                           ),
                         ),
                       ),
