@@ -38,11 +38,9 @@ class _ResponsiveState extends State<Responsive> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    print(' Build');
     return OrientationBuilder(
       builder: (_, Orientation orientation) {
         final Size size = window.physicalSize / window.devicePixelRatio;
-        print(window.devicePixelRatio);
         if (size.width < 500) {
           return widget.builder(_, ScreenType.phone);
         } else if (size.width > 600) {
