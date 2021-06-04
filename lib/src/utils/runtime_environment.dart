@@ -16,11 +16,14 @@ String _pathKey = 'PATH';
 class RuntimeEnvir {
   static bool _isInit = false;
   static Map<String, String> _environment = {};
+  static String _packageName;
+  static String get packageName => _packageName;
 
   static void initEnvirWithPackageName(String packageName) {
     if (_isInit) {
       return;
     }
+    _packageName = packageName;
     _environment[_dataKey] = '/data/data/$packageName';
     _environment[_filesKey] = '${_environment[_dataKey]}/files';
     _environment[_usrKey] = '${_environment[_filesKey]}/usr';
