@@ -70,7 +70,7 @@ class PlatformUtil {
       return {};
     }
     final Map<String, String> map = Map.from(Platform.environment);
-    map['PATH'] = RuntimeEnvir.binPath + ';' + map['PATH'];
+    map['PATH'] = RuntimeEnvir.binPath + ':' + map['PATH'];
     return map;
   }
 
