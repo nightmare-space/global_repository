@@ -14,11 +14,17 @@ class Responsive extends StatefulWidget {
 
   final ResponsiveWidgetBuilder builder;
 
+  static ResponsiveState of(BuildContext context) {
+    return context.findAncestorStateOfType<ResponsiveState>();
+  }
+
   @override
-  _ResponsiveState createState() => _ResponsiveState();
+  ResponsiveState createState() => ResponsiveState();
 }
 
-class _ResponsiveState extends State<Responsive> with WidgetsBindingObserver {
+class ResponsiveState extends State<Responsive> with WidgetsBindingObserver {
+  ScreenType screenType = ScreenType.phone;
+
   @override
   void initState() {
     super.initState();
@@ -42,12 +48,13 @@ class _ResponsiveState extends State<Responsive> with WidgetsBindingObserver {
       builder: (_, Orientation orientation) {
         final Size size = window.physicalSize / window.devicePixelRatio;
         if (size.width < 500) {
-          return widget.builder(_, ScreenType.phone);
+          screenType = ScreenType.phone;
         } else if (size.width > 600) {
-          return widget.builder(_, ScreenType.desktop);
+          screenType = ScreenType.desktop;
         } else {
-          return widget.builder(_, ScreenType.tablet);
+          screenType = ScreenType.tablet;
         }
+        return widget.builder(_, screenType);
       },
     );
   }
