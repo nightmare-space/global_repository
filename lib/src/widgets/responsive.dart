@@ -7,7 +7,10 @@ enum ScreenType {
   tablet,
   phone,
 }
-typedef ResponsiveWidgetBuilder = Widget Function(BuildContext, ScreenType);
+typedef ResponsiveWidgetBuilder = Widget Function(
+  BuildContext context,
+  ScreenType screenType,
+);
 
 class Responsive extends StatefulWidget {
   const Responsive({Key key, this.builder}) : super(key: key);

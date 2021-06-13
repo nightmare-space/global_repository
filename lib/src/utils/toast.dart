@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:global_repository/src/widgets/theme.dart';
 
 void showToast(
   String message, {
@@ -92,6 +93,10 @@ class NiToastNew extends StatefulWidget {
   _NiToastState createState() => _NiToastState();
 }
 
+Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates sync* {
+  yield DefaultMaterialLocalizations.delegate;
+}
+
 class _NiToastState extends State<NiToastNew> {
   @override
   Widget build(BuildContext context) {
@@ -111,6 +116,8 @@ class _NiToastState extends State<NiToastNew> {
       child: overlay,
       textDirection: direction,
     );
-    return w;
+    return ToastTheme(
+      child: w,
+    );
   }
 }
