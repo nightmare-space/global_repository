@@ -1,0 +1,24 @@
+import 'dart:io';
+
+typedef CallBack = void Function(String address);
+
+class HttpServerUtil {
+  static void bindServer(int port, CallBack callBack) {
+    HttpServer.bind(InternetAddress.anyIPv4, port).then((server) {
+      //显示服务器地址和端口
+      print('Serving at ${server.address}:${server.port}');
+      //通过编写HttpResponse对象让服务器响应请求
+      server.listen((HttpRequest request) {
+        //HttpResponse对象用于返回客户端
+        print('${request.connectionInfo.remoteAddress}');
+        request.response
+          ..headers.contentType = ContentType('text', 'plain', charset: 'utf-8')
+          ..write('success')
+          //结束与客户端连接
+          ..close();
+        // 这儿感觉短时间内call了两次，考虑做个防抖
+        callBack?.call(request.connectionInfo.remoteAddress.address);
+      });
+    });
+  }
+}
