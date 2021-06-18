@@ -70,7 +70,11 @@ class PlatformUtil {
       return {};
     }
     final Map<String, String> map = Map.from(Platform.environment);
-    map['PATH'] = RuntimeEnvir.binPath + ':' + map['PATH'];
+    if (Platform.isWindows) {
+      map['PATH'] = RuntimeEnvir.binPath + ';' + map['PATH'];
+    } else {
+      map['PATH'] = RuntimeEnvir.binPath + ':' + map['PATH'];
+    }
     return map;
   }
 
