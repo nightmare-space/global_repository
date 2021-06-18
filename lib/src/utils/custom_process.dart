@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:signale/signale.dart';
+
 import 'platform_util.dart';
 
 // 自实现的Process基于dart:io库中的Process.start
@@ -57,7 +59,7 @@ class NiProcess {
     // }
     // 不加这个，会出现err输出会累计到最后输出
     processStderr.transform(utf8.decoder).listen((event) {
-      print('$NiProcess------>processStderr $event');
+      Log.e('$event', tag: 'NiProcess');
     });
   }
 
