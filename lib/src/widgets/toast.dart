@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:global_repository/src/widgets/theme.dart';
 
 void showToast(
   String message, {
@@ -9,6 +8,9 @@ void showToast(
 }) {
   //创建一个OverlayEntry对象
   // final EdgeInsets padding = MediaQuery.of(toastContext).viewInsets;
+  if (contexts.isEmpty) {
+    throw '使用祖先节点兄弟';
+  }
   final OverlayEntry overlayEntry = OverlayEntry(
     builder: (BuildContext context) {
       return Positioned(
@@ -81,9 +83,12 @@ void showToast(
   });
 }
 
-List<BuildContext> contexts = [];
+Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates sync* {
+  yield DefaultMaterialLocalizations.delegate;
+  yield DefaultWidgetsLocalizations.delegate;
+}
 
-class NiToast extends NiToastNew {}
+List<BuildContext> contexts = [];
 
 class NiToastNew extends StatefulWidget {
   const NiToastNew({Key key, this.child}) : super(key: key);
@@ -93,31 +98,64 @@ class NiToastNew extends StatefulWidget {
   _NiToastState createState() => _NiToastState();
 }
 
-Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates sync* {
-  yield DefaultMaterialLocalizations.delegate;
-}
-
 class _NiToastState extends State<NiToastNew> {
   @override
   Widget build(BuildContext context) {
-    TextDirection direction = TextDirection.ltr;
     var overlay = Overlay(
       initialEntries: [
         OverlayEntry(
-          builder: (BuildContext context) {
-            contexts.add(context);
+          builder: (BuildContext ctx) {
+            contexts.add(ctx);
             return widget.child;
           },
         ),
       ],
     );
-
-    Widget w = Directionality(
-      child: overlay,
-      textDirection: direction,
+    return Directionality(
+      child: MediaQuery(
+        data: MediaQueryData.fromWindow(window),
+        child: Localizations(
+          locale: const Locale('en', 'US'),
+          delegates: _localizationsDelegates.toList(),
+          child: overlay,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
     );
-    return ToastTheme(
-      child: w,
+  }
+}
+
+class ToastApp extends StatefulWidget {
+  const ToastApp({Key key, this.child}) : super(key: key);
+  final Widget child;
+
+  @override
+  _ToastAppState createState() => _ToastAppState();
+}
+
+class _ToastAppState extends State<ToastApp> {
+  @override
+  Widget build(BuildContext context) {
+    var overlay = Overlay(
+      initialEntries: [
+        OverlayEntry(
+          builder: (BuildContext ctx) {
+            contexts.add(ctx);
+            return widget.child;
+          },
+        ),
+      ],
+    );
+    return Directionality(
+      child: MediaQuery(
+        data: MediaQueryData.fromWindow(window),
+        child: Localizations(
+          locale: const Locale('en', 'US'),
+          delegates: _localizationsDelegates.toList(),
+          child: overlay,
+        ),
+      ),
+      textDirection: TextDirection.ltr,
     );
   }
 }
