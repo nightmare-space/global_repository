@@ -13,6 +13,8 @@ dependencies:
   flutter:
     sdk: flutter
   path: ^1.8.0
+
+  get: ^4.1.3
   signale:
     git: https://github.com/Nightmare-MY/signale
   # 屏幕适配
