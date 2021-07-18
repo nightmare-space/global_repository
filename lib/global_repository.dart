@@ -18,4 +18,3 @@ export 'src/widgets/custom_card_button.dart';
 export 'package:signale/signale.dart';
 export 'src/style/candy_colors.dart';
 export 'package:permission_handler/permission_handler.dart';
-export 'package:get/get.dart' hide ScreenType;
