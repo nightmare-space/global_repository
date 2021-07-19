@@ -6,7 +6,7 @@ class HttpServerUtil {
   static void bindServer(int port, CallBack callBack) {
     HttpServer.bind(InternetAddress.anyIPv4, port).then((server) {
       //显示服务器地址和端口
-      // print('Serving at ${server.address}:${server.port}');
+      print('Serving at ${server.address}:${server.port}');
       //通过编写HttpResponse对象让服务器响应请求
       server.listen((HttpRequest request) {
         //HttpResponse对象用于返回客户端
