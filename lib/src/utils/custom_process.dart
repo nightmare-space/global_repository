@@ -129,7 +129,7 @@ class NiProcess {
 
 const exitKey = 'process_exit';
 
-class YanProcess extends Process {
+class YanProcess implements XProcess {
   YanProcess();
   io.Process _process;
   io.Process get process => _process;
@@ -184,7 +184,7 @@ class YanProcess extends Process {
   //     // _process.stdin.write('echo exitCode\n');
   //   }
   // }
-
+  @override
   Future<String> exec(
     String script, {
     ProcessCallBack callback,
