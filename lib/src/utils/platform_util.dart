@@ -31,6 +31,7 @@ class PlatformUtil {
       type: io.InternetAddressType.IPv4,
     );
     for (final io.NetworkInterface netInterface in interfaces) {
+      Log.i('netInterface name -> ${netInterface.name}');
       // 遍历网卡
       for (final io.InternetAddress netAddress in netInterface.addresses) {
         // 遍历网卡的IP地址
