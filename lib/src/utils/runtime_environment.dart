@@ -24,6 +24,11 @@ class RuntimeEnvir {
       return;
     }
     _packageName = packageName;
+    if (!Platform.isAndroid) {
+      _initEnvirForDesktop();
+      _isInit = true;
+      return;
+    }
     _environment[_dataKey] = '/data/data/$packageName';
     _environment[_filesKey] = '${_environment[_dataKey]}/files';
     _environment[_usrKey] = '${_environment[_filesKey]}/usr';
@@ -35,7 +40,10 @@ class RuntimeEnvir {
     _isInit = true;
   }
 
-  static void initEnvirForDesktop() {
+  // 这个不再开放，统一只调用initEnvirWithPackageName函数
+  // 即使是PC也需要用packageName来作为标识独立运行
+  // 还是作为集成包运行
+  static void _initEnvirForDesktop() {
     if (_isInit) {
       return;
     }
