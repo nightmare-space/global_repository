@@ -19,3 +19,4 @@ export 'package:signale/signale.dart';
 export 'src/style/candy_colors.dart';
 export 'package:permission_handler/permission_handler.dart';
 export 'src/interface/process.dart';
+export 'src/utils/screen_util.dart';

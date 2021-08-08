@@ -1,5 +1,8 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
+import 'package:global_repository/global_repository.dart';
+
 class ScreenAdapter {
   factory ScreenAdapter() => _getInstance();
 
@@ -12,12 +15,19 @@ class ScreenAdapter {
   }
 
   double uiWidth;
-  double scale;
+  double scale = 1.0;
   static void init(double width) {
+    double widthDp = window.physicalSize.width / window.devicePixelRatio;
+    if (kIsWeb || PlatformUtil.isDesktop() || widthDp >= 600) {
+      width = widthDp / 1.2;
+    }
     print(' -> ${window.physicalSize.width}');
     instance.uiWidth = width;
-    double widthDp = window.physicalSize.width / window.devicePixelRatio;
     instance.scale = widthDp / width;
+  }
+
+  static double setWidth(num width) {
+    return width.w;
   }
 }
 

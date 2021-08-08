@@ -52,7 +52,7 @@ class ResponsiveState extends State<Responsive> with WidgetsBindingObserver {
         final Size size = window.physicalSize / window.devicePixelRatio;
         if (size.width < 500) {
           screenType = ScreenType.phone;
-        } else if (size.width > 600) {
+        } else if (size.width > 800) {
           screenType = ScreenType.desktop;
         } else {
           screenType = ScreenType.tablet;
