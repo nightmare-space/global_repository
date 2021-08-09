@@ -17,13 +17,18 @@ class ScreenAdapter {
   double uiWidth;
   double scale = 1.0;
   static void init(double width) {
-    double widthDp = window.physicalSize.width / window.devicePixelRatio;
-    if (kIsWeb || PlatformUtil.isDesktop() || widthDp >= 600) {
-      width = widthDp / 1.2;
+    Size dpSize = window.physicalSize / window.devicePixelRatio;
+    if (kIsWeb || PlatformUtil.isDesktop()) {
+      // 桌面端直接不适配
+      width = dpSize.width;
+    } else if (dpSize.longestSide > 1000) {
+      // 长边的dp大于1000，适配平板，就不能在对组件进行比例缩放
+      // 小米10的长边是800多一点
+      width = dpSize.width / 1.2;
     }
-    print(' -> ${window.physicalSize.width}');
+    print(' -> ${window.physicalSize.width} $width');
     instance.uiWidth = width;
-    instance.scale = widthDp / width;
+    instance.scale = dpSize.width / width;
   }
 
   static double setWidth(num width) {
