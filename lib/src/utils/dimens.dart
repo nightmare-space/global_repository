@@ -1,4 +1,3 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:global_repository/global_repository.dart';
 
 // ignore_for_file: non_constant_identifier_names
