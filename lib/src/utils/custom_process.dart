@@ -83,9 +83,7 @@ class YanProcess implements Executable {
     bool getStderr = false,
   }) async {
     if (completer != null) {
-      while (!completer.isCompleted) {
-        await Future<void>.delayed(const Duration(milliseconds: 100));
-      }
+      await completer.future;
     }
     completer = Completer();
     if (_process == null) {

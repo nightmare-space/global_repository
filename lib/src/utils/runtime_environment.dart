@@ -26,7 +26,6 @@ class RuntimeEnvir {
     _packageName = packageName;
     if (!Platform.isAndroid) {
       _initEnvirForDesktop();
-      _isInit = true;
       return;
     }
     _environment[_dataKey] = '/data/data/$packageName';

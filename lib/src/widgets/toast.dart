@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:global_repository/src/utils/screen_util.dart';
 
 void showToast(
   String message, {
@@ -13,55 +14,50 @@ void showToast(
   }
   final OverlayEntry overlayEntry = OverlayEntry(
     builder: (BuildContext context) {
+      double deviceWidth = window.physicalSize.width / window.devicePixelRatio;
+      double horizontal = (deviceWidth - 400.w) / 2;
       return Positioned(
         top: 0,
-        child: SizedBox(
-          width: window.physicalSize.width / window.devicePixelRatio,
+        child: Align(
+          alignment: Alignment.topCenter,
           child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 24.0,
-              vertical: 48.0,
+            padding: EdgeInsets.symmetric(
+              horizontal: horizontal,
+              vertical: 24.w,
             ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(
-                16,
-              ),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  BackdropFilter(
+            child: SizedBox(
+              width: 400.w,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(
+                  12.w,
+                ),
+                child: Material(
+                  color: Color(0xffeeeeee).withOpacity(0.8),
+                  child: BackdropFilter(
                     filter: ImageFilter.blur(
                       sigmaX: 3.0,
                       sigmaY: 3.0,
                     ),
                     child: Container(
                       alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          16,
-                        ),
-                        color: const Color(0xfff0f0f0).withOpacity(0.5),
-                      ),
+                      decoration: BoxDecoration(),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 12.w,
                         ),
-                        child: Material(
-                          color: Colors.transparent,
-                          child: Text(
-                            message,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
+                        child: Text(
+                          message,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.w,
                           ),
                         ),
                       ),
                     ),
                   ),
-                ],
+                ),
               ),
             ),
           ),

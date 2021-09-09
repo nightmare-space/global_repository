@@ -24,7 +24,7 @@ class ScreenAdapter {
     } else if (dpSize.longestSide > 1000) {
       // 长边的dp大于1000，适配平板，就不能在对组件进行比例缩放
       // 小米10的长边是800多一点
-      width = dpSize.width / 1.2;
+      width = dpSize.width / 1;
     }
     print(' -> ${window.physicalSize.width} $width');
     instance.uiWidth = width;
