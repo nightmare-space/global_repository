@@ -18,40 +18,42 @@ void showToast(
       double horizontal = (deviceWidth - 400.w) / 2;
       return Positioned(
         top: 0,
-        child: Align(
-          alignment: Alignment.topCenter,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: horizontal,
-              vertical: 24.w,
-            ),
-            child: SizedBox(
-              width: 400.w,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  12.w,
-                ),
-                child: Material(
-                  color: Color(0xffeeeeee).withOpacity(0.8),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(
-                      sigmaX: 3.0,
-                      sigmaY: 3.0,
-                    ),
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 12.w,
-                        ),
-                        child: Text(
-                          message,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.w,
+        child: SafeArea(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: horizontal,
+                vertical: 24.w,
+              ),
+              child: SizedBox(
+                width: 400.w,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(
+                    12.w,
+                  ),
+                  child: Material(
+                    color: Color(0xffeeeeee).withOpacity(0.8),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(
+                        sigmaX: 3.0,
+                        sigmaY: 3.0,
+                      ),
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16.w,
+                            vertical: 12.w,
+                          ),
+                          child: Text(
+                            message,
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16.w,
+                            ),
                           ),
                         ),
                       ),

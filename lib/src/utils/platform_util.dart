@@ -1,12 +1,11 @@
-import 'dart:io' as io;
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:path_provider/path_provider.dart';
 
 Future<String> exec(String cmd) async {
   String value = '';
-  final io.ProcessResult result = await io.Process.run(
+  final ProcessResult result = await Process.run(
     'sh',
     ['-c', cmd],
     environment: PlatformUtil.environment(),
@@ -26,14 +25,14 @@ bool isAddress(String content) {
 class PlatformUtil {
   static Future<List<String>> localAddress() async {
     List<String> address = [];
-    final List<io.NetworkInterface> interfaces = await io.NetworkInterface.list(
+    final List<NetworkInterface> interfaces = await NetworkInterface.list(
       includeLoopback: false,
-      type: io.InternetAddressType.IPv4,
+      type: InternetAddressType.IPv4,
     );
-    for (final io.NetworkInterface netInterface in interfaces) {
+    for (final NetworkInterface netInterface in interfaces) {
       // Log.i('netInterface name -> ${netInterface.name}');
       // 遍历网卡
-      for (final io.InternetAddress netAddress in netInterface.addresses) {
+      for (final InternetAddress netAddress in netInterface.addresses) {
         // 遍历网卡的IP地址
         if (isAddress(netAddress.address)) {
           address.add(netAddress.address);
@@ -44,7 +43,7 @@ class PlatformUtil {
   }
 
   static bool isMobilePhone() {
-    return io.Platform.isAndroid || io.Platform.isIOS;
+    return Platform.isAndroid || Platform.isIOS;
   }
 
   static String getLsPath() {
@@ -57,10 +56,10 @@ class PlatformUtil {
   }
 
   static String getDownloadPath() {
-    if (io.Platform.isAndroid) {
+    if (Platform.isAndroid) {
       return '/sdcard/download';
     }
-    final Map<String, String> map = Map.from(io.Platform.environment);
+    final Map<String, String> map = Map.from(Platform.environment);
     // print(map);
     return map['HOME'] + '/downloads';
   }
@@ -69,8 +68,8 @@ class PlatformUtil {
     if (kIsWeb) {
       return {};
     }
-    final Map<String, String> map = Map.from(io.Platform.environment);
-    if (io.Platform.isWindows) {
+    final Map<String, String> map = Map.from(Platform.environment);
+    if (Platform.isWindows) {
       map['PATH'] = RuntimeEnvir.binPath + ';' + map['PATH'];
     } else {
       map['PATH'] = RuntimeEnvir.binPath + ':' + map['PATH'];
@@ -79,7 +78,7 @@ class PlatformUtil {
   }
 
   static Map<String, String> environmentByPackage(String packageName) {
-    final Map<String, String> map = Map.from(io.Platform.environment);
+    final Map<String, String> map = Map.from(Platform.environment);
     map['PATH'] = RuntimeEnvir.binPath + ';' + map['PATH'];
     return map;
   }
@@ -87,8 +86,8 @@ class PlatformUtil {
   static Future<bool> cmdIsExist(String cmd) async {
     String stderr;
     String stdout;
-    final io.ProcessResult result = await io.Process.run(
-      io.Platform.isWindows ? 'where' : 'which',
+    final ProcessResult result = await Process.run(
+      Platform.isWindows ? 'where' : 'which',
       [cmd],
       environment: PlatformUtil.environment(),
     );
@@ -96,7 +95,7 @@ class PlatformUtil {
     stderr = result.stderr.toString();
     // print('stderr->${result.stderr.toString()}');
     // print('stdout->${result.stdout.toString()}');
-    if (io.Platform.isWindows)
+    if (Platform.isWindows)
       return stderr.isEmpty;
     else
       return stdout.isNotEmpty;
@@ -106,14 +105,10 @@ class PlatformUtil {
     // 获取外部储存路径的函数
     // 原path_provider中有提供，后来被删除了
     String path;
-    if (io.Platform.isAndroid) {
-      io.Directory storageDirectory = await getExternalStorageDirectory();
-      path = storageDirectory.path.replaceAll(
-        RegExp('/Android.*'),
-        '',
-      ); //初始化外部储存的路径
+    if (Platform.isAndroid) {
+      path = '/sdcard';
     } else if (isDesktop()) {
-      path = io.FileSystemEntity.parentOf(io.Platform.resolvedExecutable);
+      path = FileSystemEntity.parentOf(Platform.resolvedExecutable);
     }
     return path;
   }

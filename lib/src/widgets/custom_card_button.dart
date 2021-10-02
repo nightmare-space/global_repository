@@ -60,6 +60,7 @@ class _NiCardButtonState extends State<NiCardButton>
         isOnTap = false;
         setState(() {});
         Feedback.forLongPress(context);
+        Feedback.forTap(context);
         animationController.reverse();
         if (widget.onTap != null) {
           widget.onTap();
@@ -71,6 +72,7 @@ class _NiCardButtonState extends State<NiCardButton>
         }
         animationController.forward();
         Feedback.forLongPress(context);
+        Feedback.forTap(context);
         isOnTap = true;
         setState(() {});
       },
@@ -80,6 +82,7 @@ class _NiCardButtonState extends State<NiCardButton>
         }
         animationController.reverse();
         Feedback.forLongPress(context);
+        Feedback.forTap(context);
         isOnTap = false;
         setState(() {});
       },

@@ -1,7 +1,6 @@
 name: global_repository
 description: A new Flutter package project.
 version: 0.0.1
-author:
 homepage:
 publish_to: none
 
@@ -18,7 +17,6 @@ dependencies:
   signale:
     git: https://github.com/Nightmare-MY/signale
   # 提供路径访问
-  path_provider: ^2.0.1
   # 事件总线
   event_bus: ^1.1.0
   permission_handler: 6.0.0
