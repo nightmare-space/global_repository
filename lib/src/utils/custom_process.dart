@@ -114,7 +114,8 @@ class YanProcess implements Executable {
           // print('processStdout输出为======>$out');
           buffer.write(out);
           callback?.call(out);
-          if (out.contains('$exitKey')) {
+          if (out.contains('$exitKey') && !completer.isCompleted) {
+            Log.w('${script.trim()}释放');
             completer.complete(buffer);
             return false;
           }
@@ -122,7 +123,9 @@ class YanProcess implements Executable {
         },
       );
     }
+    // Log.w('${script}等待返回');
     StringBuffer completerBuffer = await completer.future;
+    // Log.w('$script返回');
     return completerBuffer.toString().replaceAll('$exitKey', '').trim();
   }
 
