@@ -4,7 +4,7 @@ import 'dart:io';
 
 import 'package:global_repository/src/interface/process.dart';
 import 'package:signale/signale.dart';
-
+import 'package:synchronized/synchronized.dart';
 import 'platform_util.dart';
 
 // 自实现的Process基于dart:io库中的Process.start
@@ -66,8 +66,6 @@ class YanProcess implements Executable {
     });
   }
 
-  Completer<StringBuffer> completer;
-
   Stream<List<int>> processStdout;
   Stream<List<int>> processStderr;
   // static void exit() {
@@ -75,6 +73,16 @@ class YanProcess implements Executable {
   //     // _process.stdin.write('echo exitCode\n');
   //   }
   // }
+  // Future<String> rawExec(
+  //   String script, {
+  //   ProcessCallBack callback,
+  //   bool getStdout = true,
+  //   bool getStderr = false,
+  // }) async {
+
+  // }
+
+  var lock = Lock();
   @override
   Future<String> exec(
     String script, {
@@ -82,51 +90,54 @@ class YanProcess implements Executable {
     bool getStdout = true,
     bool getStderr = false,
   }) async {
-    if (completer != null) {
-      await completer.future;
-    }
-    completer = Completer();
-    if (_process == null) {
-      /// 如果初始为空需要城初始化Process
-      await _init();
-    }
-    final StringBuffer buffer = StringBuffer();
-    if (!script.endsWith('\n')) {
-      script += '\n';
-    }
-    _process.stdin.write(script);
-    // print('脚本====>$script');
-    _process.stdin.write('echo $exitKey\n');
-    if (getStderr) {
-      print('等待错误');
-      processStderr.transform(utf8.decoder).every(
-        (String out) {
-          // print('processStdout错误输出为======>$out');
-          buffer.write(out);
-          callback?.call(out);
-          return !completer.isCompleted;
-        },
-      );
-    }
-    if (getStdout) {
-      processStdout.transform(utf8.decoder).every(
-        (String out) {
-          // print('processStdout输出为======>$out');
-          buffer.write(out);
-          callback?.call(out);
-          if (out.contains('$exitKey') && !completer.isCompleted) {
-            Log.w('${script.trim()}释放');
-            completer.complete(buffer);
-            return false;
-          }
-          return true;
-        },
-      );
-    }
-    // Log.w('${script}等待返回');
-    StringBuffer completerBuffer = await completer.future;
-    // Log.w('$script返回');
-    return completerBuffer.toString().replaceAll('$exitKey', '').trim();
+    return lock.synchronized(() async {
+      // Log.e('${script.trim()} 执行');
+      Completer<String> resultComp = Completer();
+      if (_process == null) {
+        /// 如果初始为空需要城初始化Process
+        await _init();
+      }
+      final StringBuffer buffer = StringBuffer();
+      // 加上换行符
+      if (!script.endsWith('\n')) {
+        script += '\n';
+      }
+      _process.stdin.write(script);
+      // print('脚本====>$script');
+      _process.stdin.write('echo $exitKey\n');
+      if (getStderr) {
+        // print('等待错误');
+        processStderr.transform(utf8.decoder).every(
+          (String out) {
+            // print('processStdout错误输出为======>$out');
+            buffer.write(out);
+            callback?.call(out);
+            return !resultComp.isCompleted;
+          },
+        );
+      }
+      if (getStdout) {
+        processStdout.transform(utf8.decoder).every(
+          (String out) {
+            // print('processStdout输出为======>$out');
+            buffer.write(out);
+            callback?.call(out);
+            if (out.contains('$exitKey') && !resultComp.isCompleted) {
+              // Log.e('${script.trim()}释放');
+              resultComp.complete(
+                buffer.toString().replaceAll('$exitKey', '').trim(),
+              );
+              return false;
+            }
+            return true;
+          },
+        );
+      }
+      // Log.e('${script.trim()}等待返回');
+      String result = await resultComp.future;
+      // Log.e('${script.trim()}返回');
+      return result;
+    });
   }
 
   Future<bool> isRoot() async {

@@ -19,6 +19,9 @@ class ScreenAdapter {
   double scale = 1.0;
   static void init(double width) {
     Size dpSize = window.physicalSize / window.devicePixelRatio;
+    if (dpSize == Size.zero) {
+      return;
+    }
     // Log.e(dpSize);
     if (kIsWeb || PlatformUtil.isDesktop()) {
       // 桌面端直接不适配
@@ -28,7 +31,7 @@ class ScreenAdapter {
       // 小米10的长边是800多一点
       width = dpSize.width / 1;
     }
-    // print(' -> ${window.physicalSize.width} $width');
+    // Log.i('ScreenAdapter init -> ${window.physicalSize.width} $width');
     instance.uiWidth = width;
     instance.scale = dpSize.width / width;
   }
@@ -44,21 +47,6 @@ extension ScreenExt on num {
 
 extension ScreenInitExt on BuildContext {
   void init(double width) {
-    Size dpSize = MediaQuery.of(this).size;
-    // Log.e(dpSize);
-    if (dpSize == Size.zero) {
-      return;
-    }
-    if (kIsWeb || PlatformUtil.isDesktop()) {
-      // 桌面端直接不适配
-      width = dpSize.width;
-    } else if (dpSize.longestSide > 1000) {
-      // 长边的dp大于1000，适配平板，就不能在对组件进行比例缩放
-      // 小米10的长边是800多一点
-      width = dpSize.width / 1;
-    }
-    // print(' -> ${window.physicalSize.width} $width');
-    ScreenAdapter().uiWidth = width;
-    ScreenAdapter().scale = dpSize.width / width;
+    ScreenAdapter.init(width);
   }
 }
