@@ -34,26 +34,20 @@ void showToast(
                   ),
                   child: Material(
                     color: Color(0xffeeeeee).withOpacity(0.8),
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(
-                        sigmaX: 3.0,
-                        sigmaY: 3.0,
-                      ),
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(),
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 16.w,
-                            vertical: 12.w,
-                          ),
-                          child: Text(
-                            message,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16.w,
-                            ),
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 16.w,
+                          vertical: 12.w,
+                        ),
+                        child: Text(
+                          message,
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.w,
                           ),
                         ),
                       ),
