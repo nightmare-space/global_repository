@@ -22,7 +22,7 @@ class ScreenAdapter {
     if (dpSize == Size.zero) {
       return;
     }
-    // Log.e(dpSize);
+    // Log.e('ScreenAdapter init -> $width');
     if (kIsWeb || PlatformUtil.isDesktop()) {
       // 桌面端直接不适配
       width = dpSize.width;
