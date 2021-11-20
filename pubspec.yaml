@@ -14,8 +14,9 @@ dependencies:
   path: ^1.8.0
   synchronized: ^3.0.0
   get: ^4.1.3
+
   signale:
-    git: https://github.com/Nightmare-MY/signale
+    git: https://github.com/nightmare-space/signale
   # 提供路径访问
   # 事件总线
   event_bus: ^1.1.0
