@@ -6,8 +6,6 @@ import 'package:global_repository/src/utils/screen_util.dart';
 
 import 'responsive.dart';
 
-
-
 class MyApp extends StatefulWidget {
   const MyApp({Key key}) : super(key: key);
 
@@ -177,7 +175,7 @@ class WrapContainerList extends StatefulWidget {
   const WrapContainerList({
     Key key,
     this.children = const [],
-    this.width,
+    this.width = 100,
     this.phoneChangeBreakPoint = 100,
   }) : super(key: key);
   final List<Widget> children;
@@ -193,11 +191,11 @@ class _WrapContainerListState extends State<WrapContainerList> {
     final double dpWidth = maxWidth;
     // debugPrint('$dpWidth');
     final ScreenType screenType = Responsive.of(context).screenType;
-    int i = 3;
+    int i = 7;
     if (screenType == ScreenType.phone) {
       for (; dpWidth / i < widget.phoneChangeBreakPoint; i--) {}
     } else {
-      for (; dpWidth / i > 200; i++) {}
+      for (; dpWidth / i < widget.width; i--) {}
     }
     return (dpWidth - 2 * padding - 2) / i;
   }

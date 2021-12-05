@@ -18,6 +18,7 @@ export 'src/utils/dimens.dart';
 export 'src/widgets/custom_card_button.dart';
 export 'src/widgets/custom_icon_button.dart';
 export 'src/widgets/wrap_list.dart';
+export 'src/widgets/gesture.dart';
 export 'package:signale/signale.dart';
 export 'src/style/candy_colors.dart';
 export 'package:permission_handler/permission_handler.dart';

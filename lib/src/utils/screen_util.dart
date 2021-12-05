@@ -2,7 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:global_repository/global_repository.dart';
+
+import 'platform_util.dart';
 
 class ScreenAdapter {
   factory ScreenAdapter() => _getInstance();
