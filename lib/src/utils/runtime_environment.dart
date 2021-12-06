@@ -61,7 +61,19 @@ class RuntimeEnvir {
     _environment[_homeKey] = '$dataPath${Platform.pathSeparator}home';
     _environment[_tmpKey] =
         '${_environment[_usrKey]}${Platform.pathSeparator}tmp';
+    _environment[_pathKey] =
+        '${_environment[_binKey]}:' + Platform.environment['PATH'];
     _isInit = true;
+  }
+
+  static Map<String, String> envir() {
+    final Map<String, String> map = Map.from(Platform.environment);
+    if (Platform.isWindows) {
+      map['PATH'] = RuntimeEnvir.binPath + ';' + map['PATH'];
+    } else {
+      map['PATH'] = RuntimeEnvir.binPath + ':' + map['PATH'];
+    }
+    return map;
   }
 
   static void write(String key, String value) {

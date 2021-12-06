@@ -8,7 +8,7 @@ Future<String> exec(String cmd) async {
   final ProcessResult result = await Process.run(
     'sh',
     ['-c', cmd],
-    environment: PlatformUtil.environment(),
+    environment: PlatformUtil.envir(),
   );
   value += result.stdout.toString();
   value += result.stderr.toString();
@@ -64,7 +64,7 @@ class PlatformUtil {
     return map['HOME'] + '/downloads';
   }
 
-  static Map<String, String> environment() {
+  static Map<String, String> envir() {
     if (kIsWeb) {
       return {};
     }
@@ -89,7 +89,7 @@ class PlatformUtil {
     final ProcessResult result = await Process.run(
       Platform.isWindows ? 'where' : 'which',
       [cmd],
-      environment: PlatformUtil.environment(),
+      environment: PlatformUtil.envir(),
     );
     stdout = result.stdout.toString();
     stderr = result.stderr.toString();

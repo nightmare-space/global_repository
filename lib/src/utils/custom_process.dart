@@ -47,7 +47,7 @@ class YanProcess implements Executable {
   }
 
   Future<void> _init() async {
-    Map<String, String> envirTmp = PlatformUtil.environment();
+    Map<String, String> envirTmp = PlatformUtil.envir();
     for (String key in envir.keys) {
       envirTmp[key] = envir[key];
     }
