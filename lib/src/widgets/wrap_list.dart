@@ -213,7 +213,10 @@ class _WrapContainerListState extends State<WrapContainerList> {
             runSpacing: 0.w,
             children: [
               ...widget.children
-                  .map((widget) => SizedBox(width: boxWidth, child: widget))
+                  .map((widget) => AnimatedContainer(
+                      duration: Duration(milliseconds: 300),
+                      width: boxWidth,
+                      child: widget))
                   .toList(),
             ],
           );

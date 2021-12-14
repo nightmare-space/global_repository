@@ -15,40 +15,31 @@ void showToast(
   final OverlayEntry overlayEntry = OverlayEntry(
     builder: (BuildContext context) {
       double deviceWidth = window.physicalSize.width / window.devicePixelRatio;
-      double horizontal = (deviceWidth - 400.w) / 2;
       return Positioned(
-        top: 0,
+        bottom: 64.w,
         child: SafeArea(
           child: Align(
-            alignment: Alignment.topCenter,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: horizontal,
-                vertical: 24.w,
-              ),
-              child: SizedBox(
-                width: 400.w,
+            alignment: Alignment.center,
+            child: SizedBox(
+              width: deviceWidth,
+              child: Center(
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(
                     12.w,
                   ),
                   child: Material(
-                    color: Color(0xffeeeeee).withOpacity(0.8),
-                    child: Container(
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 12.w,
-                        ),
-                        child: Text(
-                          message,
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16.w,
-                          ),
+                    color: Color(0xff303030),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 16.w,
+                        vertical: 8.w,
+                      ),
+                      child: Text(
+                        message,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.w,
                         ),
                       ),
                     ),
