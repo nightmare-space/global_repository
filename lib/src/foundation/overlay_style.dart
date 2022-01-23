@@ -5,4 +5,8 @@ class OverlayStyle {
     statusBarBrightness: Brightness.dark,
     statusBarIconBrightness: Brightness.dark,
   );
+  static SystemUiOverlayStyle light = SystemUiOverlayStyle(
+    statusBarBrightness: Brightness.light,
+    statusBarIconBrightness: Brightness.light,
+  );
 }
