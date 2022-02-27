@@ -5,9 +5,11 @@ class GestureWithScale extends StatefulWidget {
     Key key,
     this.onTap,
     this.child,
+    this.radio = 0.02,
   }) : super(key: key);
   final void Function() onTap;
   final Widget child;
+  final double radio;
 
   @override
   _GestureWithScaleState createState() => _GestureWithScaleState();
@@ -41,7 +43,7 @@ class _GestureWithScaleState extends State<GestureWithScale>
       alignment: Alignment.center,
       transform: Matrix4.identity()
         ..scale(
-          1.0 - animationController.value * 0.02,
+          1.0 - animationController.value * widget.radio,
         ),
       child: GestureDetector(
         onTap: () {

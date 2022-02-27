@@ -47,12 +47,11 @@ class ResponsiveState extends State<Responsive> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return OrientationBuilder(
-      builder: (_, Orientation orientation) {
-        final Size size = window.physicalSize / window.devicePixelRatio;
-        if (size.width < 500) {
+    return LayoutBuilder(
+      builder: (_, BoxConstraints constraints) {
+        if (constraints.maxWidth < 500) {
           screenType = ScreenType.phone;
-        } else if (size.width > 800) {
+        } else if (constraints.maxWidth > 800) {
           screenType = ScreenType.desktop;
         } else {
           screenType = ScreenType.tablet;
