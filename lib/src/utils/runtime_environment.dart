@@ -7,6 +7,8 @@ import 'dart:io';
 String _binKey = 'BIN';
 String _tmpKey = 'TMP';
 String _homeKey = 'HOME';
+String _internalKey = 'INTERNAL';
+String _configKey = 'CONFIG';
 String _filesKey = 'FILES';
 String _usrKey = 'USR';
 // 在安卓端是沙盒路径
@@ -25,7 +27,7 @@ class RuntimeEnvir {
     }
     _packageName = packageName;
     if (!Platform.isAndroid) {
-      _initEnvirForDesktop();
+      _initEnvirForDesktop(packageName);
       return;
     }
     _environment[_dataKey] = '/data/data/$packageName';
@@ -42,7 +44,7 @@ class RuntimeEnvir {
   // 这个不再开放，统一只调用initEnvirWithPackageName函数
   // 即使是PC也需要用packageName来作为标识独立运行
   // 还是作为集成包运行
-  static void _initEnvirForDesktop() {
+  static void _initEnvirForDesktop(String package) {
     if (_isInit) {
       return;
     }
@@ -50,8 +52,17 @@ class RuntimeEnvir {
         Platform.pathSeparator +
         'data';
     Directory dataDir = Directory(dataPath);
-    if (!dataDir.existsSync()) {
-      dataDir.createSync();
+    if (Platform.isLinux) {
+      String configPath = Platform.environment['HOME'] + '/.config/$package';
+      Directory configDir = Directory(configPath);
+      if (!configDir.existsSync()) {
+        configDir.createSync();
+      }
+      _environment[_configKey] = configPath;
+    } else {
+      if (!dataDir.existsSync()) {
+        dataDir.createSync();
+      }
     }
     _environment[_dataKey] = dataPath;
     _environment[_filesKey] = dataPath;
@@ -105,6 +116,13 @@ class RuntimeEnvir {
   static String get dataPath {
     if (_environment.containsKey(_dataKey)) {
       return _environment[_dataKey];
+    }
+    throw Exception();
+  }
+
+  static String get configPath {
+    if (_environment.containsKey(_configKey)) {
+      return _environment[_configKey];
     }
     throw Exception();
   }
