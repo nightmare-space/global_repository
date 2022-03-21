@@ -63,6 +63,7 @@ class RuntimeEnvir {
       if (!dataDir.existsSync()) {
         dataDir.createSync();
       }
+      _environment[_configKey] = dataPath;
     }
     _environment[_dataKey] = dataPath;
     _environment[_filesKey] = dataPath;
