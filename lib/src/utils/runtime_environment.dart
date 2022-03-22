@@ -32,6 +32,7 @@ class RuntimeEnvir {
     }
     _environment[_dataKey] = '/data/data/$packageName';
     _environment[_filesKey] = '${_environment[_dataKey]}/files';
+    _environment[_configKey] = '${_environment[_dataKey]}/files';
     _environment[_usrKey] = '${_environment[_filesKey]}/usr';
     _environment[_binKey] = '${_environment[_usrKey]}/bin';
     _environment[_homeKey] = '${_environment[_filesKey]}/home';
