@@ -26,3 +26,7 @@ export 'package:permission_handler/permission_handler.dart';
 export 'src/interface/process.dart';
 export 'src/utils/screen_util.dart';
 export 'src/foundation/overlay_style.dart';
+
+
+
+export 'src/utils/assets_manager.dart';
