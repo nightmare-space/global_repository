@@ -13,10 +13,8 @@ Future<int> getSafePort(int rangeStart, int rangeEnd) async {
       rangeStart,
       shared: true,
     );
-    Log.d('端口$rangeStart绑定成功');
     return rangeStart;
   } catch (e) {
-    Log.e('端口$rangeStart绑定失败');
     return await getSafePort(rangeStart + 1, rangeEnd);
   }
 }
