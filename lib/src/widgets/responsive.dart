@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -32,11 +33,29 @@ class ResponsiveState extends State<Responsive> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
+    initial().then((value) {
+      setState(() {});
+    });
   }
 
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
+  }
+
+  Future<void> initial() async {
+    final completer = Completer();
+    if (window.physicalSize.width != 0) {
+      completer.complete();
+    }
+    void Function() callback = window.onMetricsChanged;
+    window.onMetricsChanged = () {
+      if (!completer.isCompleted) {
+        completer.complete();
+      }
+      callback();
+    };
+    await completer.future;
   }
 
   @override
