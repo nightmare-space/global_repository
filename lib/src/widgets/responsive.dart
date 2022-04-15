@@ -41,6 +41,7 @@ class ResponsiveState extends State<Responsive> with WidgetsBindingObserver {
   @override
   void didChangeMetrics() {
     super.didChangeMetrics();
+    setState(() {});
   }
 
   Future<void> initial() async {

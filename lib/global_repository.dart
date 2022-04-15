@@ -9,6 +9,8 @@ export 'src/utils/runtime_environment.dart';
 export 'src/utils/permission_utils.dart';
 export 'src/utils/http_server_util.dart';
 export 'src/utils/assets_utils.dart';
+export 'src/utils/statusbar_utils.dart';
+
 export 'src/widgets/custom_dialog.dart';
 export 'src/widgets/toast.dart';
 export 'src/widgets/custom_scaffold.dart';
