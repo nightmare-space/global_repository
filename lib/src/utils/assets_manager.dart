@@ -15,6 +15,7 @@ class AssetsManager {
     List<String> windows,
     List<String> global,
     @required String localPath,
+    String package = '',
   }) async {
     if (Platform.isAndroid) {
       final Directory dir = Directory(localPath);
@@ -23,7 +24,10 @@ class AssetsManager {
       }
       for (final String fileName in android) {
         final filePath = localPath + fileName.replaceAll(RegExp('.*/'), '');
-        await AssetsUtils.copyAssetToPath('assets/$fileName', filePath);
+        await AssetsUtils.copyAssetToPath(
+          '${package}assets/$fileName',
+          filePath,
+        );
         final ProcessResult result = await Process.run(
           'chmod',
           <String>['+x', filePath],
@@ -40,7 +44,10 @@ class AssetsManager {
       }
       for (final String fileName in macOS) {
         final filePath = localPath + fileName.replaceAll(RegExp('.*/'), '');
-        await AssetsUtils.copyAssetToPath('assets/$fileName', filePath);
+        await AssetsUtils.copyAssetToPath(
+          '${package}assets/$fileName',
+          filePath,
+        );
         final ProcessResult result = await Process.run(
           'chmod',
           <String>['+x', filePath],
@@ -56,7 +63,10 @@ class AssetsManager {
     }
     for (final String fileName in global) {
       final filePath = localPath + fileName.replaceAll(RegExp('.*/'), '');
-      await AssetsUtils.copyAssetToPath('assets/$fileName', filePath);
+      await AssetsUtils.copyAssetToPath(
+        '${package}assets/$fileName',
+        filePath,
+      );
       if (!Platform.isWindows) {
         final ProcessResult result = await Process.run(
           'chmod',
