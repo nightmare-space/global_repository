@@ -17,7 +17,7 @@ String _pathKey = 'PATH';
 
 class RuntimeEnvir {
   static bool _isInit = false;
-  static Map<String, String> _environment = {};
+  static Map<String, dynamic> _environment = {};
   static String _packageName;
   static String get packageName => _packageName;
 
@@ -89,11 +89,11 @@ class RuntimeEnvir {
     return map;
   }
 
-  static void write(String key, String value) {
+  static void put(String key, dynamic value) {
     _environment[key] = value;
   }
 
-  static String getValue(String key) {
+  static dynamic get(String key) {
     if (_environment.containsKey(key)) {
       return _environment[key];
     }
