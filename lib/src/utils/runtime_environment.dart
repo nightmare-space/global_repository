@@ -4,6 +4,9 @@
 
 import 'dart:io';
 
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+
 String _binKey = 'BIN';
 String _tmpKey = 'TMP';
 String _homeKey = 'HOME';
@@ -21,13 +24,19 @@ class RuntimeEnvir {
   static String _packageName;
   static String get packageName => _packageName;
 
-  static void initEnvirWithPackageName(String packageName) {
+  static void initEnvirWithPackageName(
+    String packageName, {
+    String appSupportDirectory,
+  }) {
     if (_isInit) {
       return;
     }
     _packageName = packageName;
     if (!Platform.isAndroid) {
-      _initEnvirForDesktop(packageName);
+      _initEnvirForDesktop(
+        packageName,
+        appSupportDirectory: appSupportDirectory,
+      );
       return;
     }
     _environment[_dataKey] = '/data/data/$packageName';
@@ -45,13 +54,15 @@ class RuntimeEnvir {
   // 这个不再开放，统一只调用initEnvirWithPackageName函数
   // 即使是PC也需要用packageName来作为标识独立运行
   // 还是作为集成包运行
-  static void _initEnvirForDesktop(String package) {
+  static void _initEnvirForDesktop(
+    String package, {
+    String appSupportDirectory,
+  }) {
     if (_isInit) {
       return;
     }
-    String dataPath = FileSystemEntity.parentOf(Platform.resolvedExecutable) +
-        Platform.pathSeparator +
-        'data';
+    String dataPath = appSupportDirectory ??
+        dirname(Platform.resolvedExecutable) + Platform.pathSeparator + 'data';
     Directory dataDir = Directory(dataPath);
     if (Platform.isLinux) {
       String configPath = Platform.environment['HOME'] + '/.config/$package';
