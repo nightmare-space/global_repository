@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
 class NiIconButton extends StatelessWidget {
-  const NiIconButton({Key key, this.child, this.onTap}) : super(key: key);
-  final Widget child;
-  final GestureTapCallback onTap;
+  const NiIconButton({Key? key, this.child, this.onTap}) : super(key: key);
+  final Widget? child;
+  final GestureTapCallback? onTap;
   @override
   Widget build(BuildContext context) {
     return Container(

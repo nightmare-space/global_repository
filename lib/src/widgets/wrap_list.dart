@@ -7,7 +7,7 @@ import 'package:global_repository/src/utils/screen_util.dart';
 import 'responsive.dart';
 
 class MyApp extends StatefulWidget {
-  const MyApp({Key key}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   _MyAppState createState() => _MyAppState();
@@ -173,7 +173,7 @@ class _MyAppState extends State<MyApp> {
 
 class WrapContainerList extends StatefulWidget {
   const WrapContainerList({
-    Key key,
+    Key? key,
     this.children = const [],
     this.width = 100,
     this.phoneChangeBreakPoint = 100,
@@ -190,7 +190,7 @@ class _WrapContainerListState extends State<WrapContainerList> {
   double getWidth(double maxWidth) {
     final double dpWidth = maxWidth;
     // debugPrint('$dpWidth');
-    final ScreenType screenType = Responsive.of(context).screenType;
+    final ScreenType screenType = Responsive.of(context)!.screenType;
     int i = 7;
     if (screenType == ScreenType.phone) {
       for (; dpWidth / i < widget.phoneChangeBreakPoint; i--) {}
@@ -228,17 +228,17 @@ class _WrapContainerListState extends State<WrapContainerList> {
 
 class CheckContainer extends StatelessWidget {
   const CheckContainer({
-    Key key,
+    Key? key,
     this.onChanged,
     this.value,
     this.groupValue,
     this.child,
   }) : super(key: key);
 
-  final void Function(int value) onChanged;
-  final int value;
-  final int groupValue;
-  final Widget child;
+  final void Function(int value)? onChanged;
+  final int? value;
+  final int? groupValue;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -262,7 +262,7 @@ class CheckContainer extends StatelessWidget {
       padding: EdgeInsets.all(4.w),
       child: GestureDetector(
         onTap: () {
-          onChanged?.call(value);
+          onChanged?.call(value!);
         },
         child: Container(
           decoration: BoxDecoration(

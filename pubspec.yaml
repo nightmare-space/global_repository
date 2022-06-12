@@ -5,7 +5,7 @@ homepage:
 publish_to: none
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
   flutter: ">=1.20.0 <2.0.0"
 
 dependencies:
@@ -16,8 +16,6 @@ dependencies:
 
   signale: ^0.0.6
   # 提供路径访问
-  # 事件总线
-  event_bus: ^1.1.0
   permission_handler: 6.0.0
 
 dev_dependencies:

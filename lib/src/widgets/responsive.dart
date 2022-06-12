@@ -14,11 +14,11 @@ typedef ResponsiveWidgetBuilder = Widget Function(
 );
 
 class Responsive extends StatefulWidget {
-  const Responsive({Key key, this.builder}) : super(key: key);
+  const Responsive({Key? key, this.builder}) : super(key: key);
 
-  final ResponsiveWidgetBuilder builder;
+  final ResponsiveWidgetBuilder? builder;
 
-  static ResponsiveState of(BuildContext context) {
+  static ResponsiveState? of(BuildContext context) {
     return context.findAncestorStateOfType<ResponsiveState>();
   }
 
@@ -49,12 +49,12 @@ class ResponsiveState extends State<Responsive> with WidgetsBindingObserver {
     if (window.physicalSize.width != 0) {
       completer.complete();
     }
-    void Function() callback = window.onMetricsChanged;
+    void Function()? callback = window.onMetricsChanged;
     window.onMetricsChanged = () {
       if (!completer.isCompleted) {
         completer.complete();
       }
-      callback();
+      callback!();
     };
     await completer.future;
   }
@@ -76,7 +76,7 @@ class ResponsiveState extends State<Responsive> with WidgetsBindingObserver {
         } else {
           screenType = ScreenType.tablet;
         }
-        return widget.builder(_, screenType);
+        return widget.builder!(_, screenType);
       },
     );
   }

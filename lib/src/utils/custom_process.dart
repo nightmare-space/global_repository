@@ -18,9 +18,9 @@ class YanProcess implements Executable {
     this.envir = const {},
   });
   Map<String, String> envir;
-  Process _process;
-  Process get process => _process;
-  bool _isRoot;
+  Process? _process;
+  Process? get process => _process;
+  bool? _isRoot;
   String get shPath {
     switch (Platform.operatingSystem) {
       case 'linux':
@@ -49,7 +49,7 @@ class YanProcess implements Executable {
   Future<void> _init() async {
     Map<String, String> envirTmp = PlatformUtil.envir();
     for (String key in envir.keys) {
-      envirTmp[key] = envir[key];
+      envirTmp[key] = envir[key]!;
     }
     _process = await Process.start(
       shPath,
@@ -58,16 +58,16 @@ class YanProcess implements Executable {
       runInShell: false,
       environment: envirTmp,
     );
-    processStdout = _process.stdout.asBroadcastStream();
-    processStderr = _process.stderr.asBroadcastStream();
+    processStdout = _process!.stdout.asBroadcastStream();
+    processStderr = _process!.stderr.asBroadcastStream();
     // 不加这个，会出现err输出会累计到最后输出
     processStderr.transform(utf8.decoder).listen((event) {
       Log.e('$event', tag: 'NiProcess');
     });
   }
 
-  Stream<List<int>> processStdout;
-  Stream<List<int>> processStderr;
+  late Stream<List<int>> processStdout;
+  late Stream<List<int>> processStderr;
   // static void exit() {
   //   if (isUseing) {
   //     // _process.stdin.write('echo exitCode\n');
@@ -86,7 +86,7 @@ class YanProcess implements Executable {
   @override
   Future<String> exec(
     String script, {
-    ProcessCallBack callback,
+    ProcessCallBack? callback,
     bool getStdout = true,
     bool getStderr = false,
   }) async {
@@ -102,9 +102,9 @@ class YanProcess implements Executable {
       if (!script.endsWith('\n')) {
         script += '\n';
       }
-      _process.stdin.write(script);
+      _process!.stdin.write(script);
       // print('脚本====>$script');
-      _process.stdin.write('echo $exitKey\n');
+      _process!.stdin.write('echo $exitKey\n');
       if (getStderr) {
         // print('等待错误');
         processStderr.transform(utf8.decoder).every(
@@ -140,7 +140,7 @@ class YanProcess implements Executable {
     });
   }
 
-  Future<bool> isRoot() async {
+  Future<bool?> isRoot() async {
     if (_isRoot != null) {
       return _isRoot;
     }

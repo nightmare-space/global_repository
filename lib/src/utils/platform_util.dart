@@ -61,7 +61,7 @@ class PlatformUtil {
     }
     final Map<String, String> map = Map.from(Platform.environment);
     // print(map);
-    return map['HOME'] + '/downloads';
+    return map['HOME']! + '/downloads';
   }
 
   static Map<String, String> envir() {
@@ -70,16 +70,16 @@ class PlatformUtil {
     }
     final Map<String, String> map = Map.from(Platform.environment);
     if (Platform.isWindows) {
-      map['PATH'] = RuntimeEnvir.binPath + ';' + map['PATH'];
+      map['PATH'] = RuntimeEnvir.binPath! + ';' + map['PATH']!;
     } else {
-      map['PATH'] = RuntimeEnvir.binPath + ':' + map['PATH'];
+      map['PATH'] = RuntimeEnvir.binPath! + ':' + map['PATH']!;
     }
     return map;
   }
 
   static Map<String, String> environmentByPackage(String packageName) {
     final Map<String, String> map = Map.from(Platform.environment);
-    map['PATH'] = RuntimeEnvir.binPath + ';' + map['PATH'];
+    map['PATH'] = RuntimeEnvir.binPath! + ';' + map['PATH']!;
     return map;
   }
 
@@ -101,10 +101,10 @@ class PlatformUtil {
       return stdout.isNotEmpty;
   }
 
-  static Future<String> getDocumentDirectory() async {
+  static Future<String?> getDocumentDirectory() async {
     // 获取外部储存路径的函数
     // 原path_provider中有提供，后来被删除了
-    String path;
+    String? path;
     if (Platform.isAndroid) {
       path = '/sdcard';
     } else if (isDesktop()) {

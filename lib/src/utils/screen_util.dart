@@ -6,17 +6,17 @@ import 'package:flutter/material.dart';
 import 'platform_util.dart';
 
 class ScreenAdapter {
-  factory ScreenAdapter() => _getInstance();
+  factory ScreenAdapter() => _getInstance()!;
 
   ScreenAdapter._internal();
-  static ScreenAdapter get instance => _getInstance();
-  static ScreenAdapter _instance;
-  static ScreenAdapter _getInstance() {
+  static ScreenAdapter? get instance => _getInstance();
+  static ScreenAdapter? _instance;
+  static ScreenAdapter? _getInstance() {
     _instance ??= ScreenAdapter._internal();
     return _instance;
   }
 
-  double uiWidth;
+  double? uiWidth;
   double scale = 1.0;
   static void init(double width) {
     Size dpSize = window.physicalSize / window.devicePixelRatio;
@@ -33,8 +33,8 @@ class ScreenAdapter {
       width = dpSize.width / 1;
     }
     // Log.i('ScreenAdapter init -> ${window.physicalSize.width} $width');
-    instance.uiWidth = width;
-    instance.scale = dpSize.width / width;
+    instance!.uiWidth = width;
+    instance!.scale = dpSize.width / width;
   }
 
   static double setWidth(num width) {

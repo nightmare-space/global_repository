@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:event_bus/event_bus.dart';
 
-Future<T> showCustomDialog<T>({
-  BuildContext context,
+Future<T?> showCustomDialog<T>({
+  required BuildContext context,
   Duration duration = const Duration(milliseconds: 300),
-  double height,
-  Widget child,
+  double? height,
+  Widget? child,
   bool bval = true,
   bool ispadding = true,
-  String tag,
+  String? tag,
 }) {
   // print(tag);
   //if (tag == null) tag = "dialog";
@@ -34,7 +33,7 @@ class Height {
 
 class DialogBuilder extends StatefulWidget {
   const DialogBuilder({
-    Key key,
+    Key? key,
     this.child,
     this.actions,
     this.title,
@@ -48,36 +47,36 @@ class DialogBuilder extends StatefulWidget {
     this.isPadding = true,
   }) : super(key: key);
 
-  final Widget child;
-  final List<Widget> actions;
-  final Widget title;
+  final Widget? child;
+  final List<Widget>? actions;
+  final Widget? title;
   final EdgeInsetsGeometry padding;
   final Duration duration;
   final double height;
-  final String tag;
+  final String? tag;
   final bool isPadding;
   static void changeHeight(double height) {
-    dialogeventBus.fire(Height(height));
+    // dialogeventBus.fire(Height(height));
   }
 
   @override
   State<StatefulWidget> createState() => DialogBuilderState();
 }
 
-EventBus dialogeventBus;
+// EventBus dialogeventBus;
 
 class DialogBuilderState extends State<DialogBuilder>
     with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
-  Animation<double> dialogHeight;
-  Animation<double> curve;
-  Key _key;
+  late AnimationController _animationController;
+  late Animation<double> dialogHeight;
+  late Animation<double> curve;
+  Key? _key;
 
   @override
   void initState() {
     super.initState();
     if (widget.tag != null)
-      _key = GlobalObjectKey(widget.tag);
+      _key = GlobalObjectKey(widget.tag!);
     else
       _key = GlobalKey();
     _animationController = AnimationController(
@@ -102,17 +101,17 @@ class DialogBuilderState extends State<DialogBuilder>
   }
 
   Future<void> _onAfterRendering(Duration timeStamp) async {
-    dialogeventBus = EventBus()
-      ..on<Height>().listen((Height event) {
-        dialogHeight = Tween<double>(
-          begin: dialogHeight.value,
-          end: event.height,
-        ).animate(curve);
-        if (_animationController != null) {
-          _animationController.reset();
-          _animationController.forward();
-        }
-      });
+    // dialogeventBus = EventBus()
+    //   ..on<Height>().listen((Height event) {
+    //     dialogHeight = Tween<double>(
+    //       begin: dialogHeight.value,
+    //       end: event.height,
+    //     ).animate(curve);
+    //     if (_animationController != null) {
+    //       _animationController.reset();
+    //       _animationController.forward();
+    //     }
+    //   });
   }
 
   @override
@@ -159,8 +158,8 @@ class DialogBuilderState extends State<DialogBuilder>
 
 //这个Widget会默认把ListView显示到最大
 class FullHeightListView extends StatefulWidget {
-  const FullHeightListView({Key key, this.child}) : super(key: key);
-  final Widget child;
+  const FullHeightListView({Key? key, this.child}) : super(key: key);
+  final Widget? child;
 
   @override
   _FullHeightListViewState createState() => _FullHeightListViewState();
@@ -175,10 +174,10 @@ class _FullHeightListViewState extends State<FullHeightListView> {
   }
 
   Future<void> _onAfterRendering(Duration timeStamp) async {
-    dialogeventBus.fire(Height(
-      _scrollController.position.viewportDimension +
-          _scrollController.position.maxScrollExtent,
-    ));
+    // dialogeventBus.fire(Height(
+    //   _scrollController.position.viewportDimension +
+    //       _scrollController.position.maxScrollExtent,
+    // ));
   }
 
   @override
@@ -200,7 +199,7 @@ class _FullHeightListViewState extends State<FullHeightListView> {
         controller: _scrollController,
         physics: const NeverScrollableScrollPhysics(),
         children: <Widget>[
-          widget.child,
+          widget.child!,
         ],
       ),
     );

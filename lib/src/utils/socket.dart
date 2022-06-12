@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:signale/signale.dart';
 
-Future<int> getSafePort(int rangeStart, int rangeEnd) async {
+Future<int?> getSafePort(int rangeStart, int rangeEnd) async {
   if (rangeStart == rangeEnd) {
     // 说明都失败了
     return null;

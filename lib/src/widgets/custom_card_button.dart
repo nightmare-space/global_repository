@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class NiCardButton extends StatefulWidget {
   const NiCardButton({
-    Key key,
+    Key? key,
     this.child,
     this.onTap,
     this.blurRadius = 4.0,
@@ -12,13 +12,13 @@ class NiCardButton extends StatefulWidget {
     this.spreadRadius = 0,
     this.margin = const EdgeInsets.all(8.0),
   }) : super(key: key);
-  final Widget child;
-  final Function onTap;
+  final Widget? child;
+  final Function? onTap;
   final double blurRadius;
   final double borderRadius;
   final double spreadRadius;
   final Color shadowColor;
-  final Color color;
+  final Color? color;
   final EdgeInsetsGeometry margin;
   @override
   _NiCardButtonState createState() => _NiCardButtonState();
@@ -26,7 +26,7 @@ class NiCardButton extends StatefulWidget {
 
 class _NiCardButtonState extends State<NiCardButton>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
   bool isOnTap = false;
   @override
   void initState() {
@@ -63,7 +63,7 @@ class _NiCardButtonState extends State<NiCardButton>
         Feedback.forTap(context);
         animationController.reverse();
         if (widget.onTap != null) {
-          widget.onTap();
+          widget.onTap!();
         }
       },
       onTapDown: (_) {

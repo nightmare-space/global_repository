@@ -4,9 +4,9 @@ enum FlashMemoryCell { bit, kb, mb, gb, tb }
 
 class FileSizeUtils {
 //将int的字节长度装换为可读的字符串
-  static String getFileSize(int size,
+  static String? getFileSize(int size,
       [FlashMemoryCell flashMemoryCell = FlashMemoryCell.bit]) {
-    String _human;
+    String? _human;
     if (size < 1024) {
       _human = '${size}Byte';
     } else if (size >= 1024 && size < pow(1024, 2)) {
@@ -23,9 +23,9 @@ class FileSizeUtils {
     return _human;
   }
 
-  static String getFileSizeFromStr(String str) {
-    int size = int.tryParse(str);
-    String _human;
+  static String? getFileSizeFromStr(String str) {
+    int size = int.tryParse(str)!;
+    String? _human;
     if (size < 1024) {
       _human = '$size字节';
     } else if (size >= 1024 && size < pow(1024, 2)) {

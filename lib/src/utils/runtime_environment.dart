@@ -5,7 +5,6 @@
 import 'dart:io';
 
 import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 
 String _binKey = 'BIN';
 String _tmpKey = 'TMP';
@@ -21,12 +20,12 @@ String _pathKey = 'PATH';
 class RuntimeEnvir {
   static bool _isInit = false;
   static Map<String, dynamic> _environment = {};
-  static String _packageName;
-  static String get packageName => _packageName;
+  static String? _packageName;
+  static String? get packageName => _packageName;
 
   static void initEnvirWithPackageName(
     String packageName, {
-    String appSupportDirectory,
+    String? appSupportDirectory,
   }) {
     if (_isInit) {
       return;
@@ -47,7 +46,7 @@ class RuntimeEnvir {
     _environment[_homeKey] = '${_environment[_filesKey]}/home';
     _environment[_tmpKey] = '${_environment[_usrKey]}/tmp';
     _environment[_pathKey] =
-        '${_environment[_binKey]}:' + Platform.environment['PATH'];
+        '${_environment[_binKey]}:' + Platform.environment['PATH']!;
     _isInit = true;
   }
 
@@ -56,7 +55,7 @@ class RuntimeEnvir {
   // 还是作为集成包运行
   static void _initEnvirForDesktop(
     String package, {
-    String appSupportDirectory,
+    String? appSupportDirectory,
   }) {
     if (_isInit) {
       return;
@@ -65,7 +64,7 @@ class RuntimeEnvir {
         dirname(Platform.resolvedExecutable) + Platform.pathSeparator + 'data';
     Directory dataDir = Directory(dataPath);
     if (Platform.isLinux) {
-      String configPath = Platform.environment['HOME'] + '/.config/$package';
+      String configPath = Platform.environment['HOME']! + '/.config/$package';
       Directory configDir = Directory(configPath);
       if (!configDir.existsSync()) {
         configDir.createSync();
@@ -86,16 +85,16 @@ class RuntimeEnvir {
     _environment[_tmpKey] =
         '${_environment[_usrKey]}${Platform.pathSeparator}tmp';
     _environment[_pathKey] =
-        '${_environment[_binKey]}:' + Platform.environment['PATH'];
+        '${_environment[_binKey]}:' + Platform.environment['PATH']!;
     _isInit = true;
   }
 
   static Map<String, String> envir() {
     final Map<String, String> map = Map.from(Platform.environment);
     if (Platform.isWindows) {
-      map['PATH'] = RuntimeEnvir.binPath + ';' + map['PATH'];
+      map['PATH'] = RuntimeEnvir.binPath! + ';' + map['PATH']!;
     } else {
-      map['PATH'] = RuntimeEnvir.binPath + ':' + map['PATH'];
+      map['PATH'] = RuntimeEnvir.binPath! + ':' + map['PATH']!;
     }
     return map;
   }
@@ -111,7 +110,7 @@ class RuntimeEnvir {
     return '';
   }
 
-  static String get binPath {
+  static String? get binPath {
     if (_environment.containsKey(_binKey)) {
       return _environment[_binKey];
     }
@@ -119,72 +118,72 @@ class RuntimeEnvir {
   }
 
   /// 这是是 PATH 这个变量的值
-  static String get path {
+  static String? get path {
     if (_environment.containsKey(_pathKey)) {
       return _environment[_pathKey];
     }
     throw Exception();
   }
 
-  static String get dataPath {
+  static String? get dataPath {
     if (_environment.containsKey(_dataKey)) {
       return _environment[_dataKey];
     }
     throw Exception();
   }
 
-  static String get configPath {
+  static String? get configPath {
     if (_environment.containsKey(_configKey)) {
       return _environment[_configKey];
     }
     throw Exception();
   }
 
-  static set binPath(String value) {
+  static set binPath(String? value) {
     _environment[_binKey] = value;
   }
 
-  static String get usrPath {
+  static String? get usrPath {
     if (_environment.containsKey(_usrKey)) {
       return _environment[_usrKey];
     }
     throw Exception();
   }
 
-  static set usrPath(String value) {
+  static set usrPath(String? value) {
     _environment[_usrKey] = value;
   }
 
-  static String get tmpPath {
+  static String? get tmpPath {
     if (_environment.containsKey(_tmpKey)) {
       return _environment[_tmpKey];
     }
     throw Exception();
   }
 
-  static set tmpPath(String value) {
+  static set tmpPath(String? value) {
     _environment[_tmpKey] = value;
   }
 
-  static String get homePath {
+  static String? get homePath {
     if (_environment.containsKey(_homeKey)) {
       return _environment[_homeKey];
     }
     throw Exception();
   }
 
-  static set homePath(String value) {
+  static set homePath(String? value) {
     _environment[_homeKey] = value;
   }
 
-  static String get filesPath {
+  static String? get filesPath {
     if (_environment.containsKey(_filesKey)) {
       return _environment[_filesKey];
     }
     throw Exception();
   }
 
-  static set filesPath(String value) {
+  static set filesPath(String? value) {
     _environment[_filesKey] = value;
   }
 }

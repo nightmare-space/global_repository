@@ -10,11 +10,11 @@ import 'package:global_repository/global_repository.dart';
 class AssetsManager {
   AssetsManager._();
   static Future<void> copyFiles({
-    List<String> android,
-    List<String> macOS,
-    List<String> windows,
-    List<String> global,
-    @required String localPath,
+    List<String>? android,
+    List<String>? macOS,
+    List<String>? windows,
+    required List<String> global,
+    required String localPath,
     String package = '',
   }) async {
     if (Platform.isAndroid) {
@@ -22,7 +22,7 @@ class AssetsManager {
       if (!dir.existsSync()) {
         await dir.create(recursive: true);
       }
-      for (final String fileName in android) {
+      for (final String fileName in android!) {
         final filePath = localPath + fileName.replaceAll(RegExp('.*/'), '');
         await AssetsUtils.copyAssetToPath(
           '${package}assets/$fileName',
@@ -42,7 +42,7 @@ class AssetsManager {
       if (!dir.existsSync()) {
         await dir.create(recursive: true);
       }
-      for (final String fileName in macOS) {
+      for (final String fileName in macOS!) {
         final filePath = localPath + fileName.replaceAll(RegExp('.*/'), '');
         await AssetsUtils.copyAssetToPath(
           '${package}assets/$fileName',

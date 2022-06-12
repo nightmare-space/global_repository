@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 class GestureWithScale extends StatefulWidget {
   const GestureWithScale({
-    Key key,
+    Key? key,
     this.onTap,
     this.child,
     this.radio = 0.02,
   }) : super(key: key);
-  final void Function() onTap;
-  final Widget child;
+  final void Function()? onTap;
+  final Widget? child;
   final double radio;
 
   @override
@@ -17,7 +17,7 @@ class GestureWithScale extends StatefulWidget {
 
 class _GestureWithScaleState extends State<GestureWithScale>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
 
   @override
   void initState() {
@@ -26,7 +26,7 @@ class _GestureWithScaleState extends State<GestureWithScale>
       vsync: this,
       duration: const Duration(milliseconds: 100),
     );
-    animationController.addListener(() {
+    animationController!.addListener(() {
       setState(() {});
     });
   }
@@ -43,7 +43,7 @@ class _GestureWithScaleState extends State<GestureWithScale>
       alignment: Alignment.center,
       transform: Matrix4.identity()
         ..scale(
-          1.0 - animationController.value * widget.radio,
+          1.0 - animationController!.value * widget.radio,
         ),
       child: GestureDetector(
         onTap: () {
@@ -53,14 +53,14 @@ class _GestureWithScaleState extends State<GestureWithScale>
           setState(() {});
           Feedback.forLongPress(context);
           Feedback.forTap(context);
-          animationController.reverse();
-          widget.onTap();
+          animationController!.reverse();
+          widget.onTap!();
         },
         onPanDown: (_) {
           if (widget.onTap == null) {
             return;
           }
-          animationController.forward();
+          animationController!.forward();
           Feedback.forLongPress(context);
           setState(() {});
         },
@@ -68,7 +68,7 @@ class _GestureWithScaleState extends State<GestureWithScale>
           if (widget.onTap == null) {
             return;
           }
-          animationController.reverse();
+          animationController!.reverse();
           Feedback.forLongPress(context);
           Feedback.forTap(context);
           setState(() {});

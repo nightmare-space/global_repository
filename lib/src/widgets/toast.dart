@@ -53,7 +53,7 @@ void showToast(
     },
   );
   //往Overlay中插入插入OverlayEntry
-  Overlay.of(contexts.last).insert(overlayEntry);
+  Overlay.of(contexts.last)!.insert(overlayEntry);
   //两秒后，移除Toast
   Future<void>.delayed(duration).then((_) {
     // ExplosionWidget.bang();
@@ -74,8 +74,8 @@ Iterable<LocalizationsDelegate<dynamic>> get _localizationsDelegates sync* {
 List<BuildContext> contexts = [];
 
 class NiToastNew extends StatefulWidget {
-  const NiToastNew({Key key, this.child}) : super(key: key);
-  final Widget child;
+  const NiToastNew({Key? key, this.child}) : super(key: key);
+  final Widget? child;
 
   @override
   _NiToastState createState() => _NiToastState();
@@ -89,7 +89,7 @@ class _NiToastState extends State<NiToastNew> {
         OverlayEntry(
           builder: (BuildContext ctx) {
             contexts.add(ctx);
-            return widget.child;
+            return widget.child!;
           },
         ),
       ],
@@ -109,8 +109,8 @@ class _NiToastState extends State<NiToastNew> {
 }
 
 class ToastApp extends StatefulWidget {
-  const ToastApp({Key key, this.child}) : super(key: key);
-  final Widget child;
+  const ToastApp({Key? key, this.child}) : super(key: key);
+  final Widget? child;
 
   @override
   _ToastAppState createState() => _ToastAppState();
@@ -124,7 +124,7 @@ class _ToastAppState extends State<ToastApp> {
         OverlayEntry(
           builder: (BuildContext ctx) {
             contexts.add(ctx);
-            return widget.child;
+            return widget.child!;
           },
         ),
       ],

@@ -9,14 +9,14 @@ enum DrawerType {
 // 主要动态适配桌面端与移动端的侧栏
 class NiScaffold extends StatefulWidget {
   const NiScaffold({
-    Key key,
+    Key? key,
     this.drawer,
     this.body,
     this.backgroundColor,
   }) : super(key: key);
-  final Widget drawer;
-  final Widget body;
-  final Color backgroundColor;
+  final Widget? drawer;
+  final Widget? body;
+  final Color? backgroundColor;
   @override
   _NiScaffoldState createState() => _NiScaffoldState();
 }
@@ -39,9 +39,9 @@ class _NiScaffoldState extends State<NiScaffold> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               if (drawerType == DrawerType.row && widget.drawer != null)
-                widget.drawer,
+                widget.drawer!,
               Expanded(
-                child: widget.body,
+                child: widget.body!,
               ),
             ],
           ),
