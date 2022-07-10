@@ -60,8 +60,11 @@ class RuntimeEnvir {
     if (_isInit) {
       return;
     }
-    String dataPath = appSupportDirectory ??
-        dirname(Platform.resolvedExecutable) + Platform.pathSeparator + 'data';
+    String execPath = dirname(Platform.resolvedExecutable);
+    String s = Platform.pathSeparator;
+    String execDataPath = execPath + s + 'data';
+    String execBinPath = execPath + s + 'data/usr/bin';
+    String dataPath = appSupportDirectory ?? execDataPath;
     Directory dataDir = Directory(dataPath);
     if (Platform.isLinux) {
       String configPath = Platform.environment['HOME']! + '/.config/$package';
@@ -78,14 +81,13 @@ class RuntimeEnvir {
     }
     _environment[_dataKey] = dataPath;
     _environment[_filesKey] = dataPath;
-    _environment[_usrKey] = '$dataPath${Platform.pathSeparator}usr';
-    _environment[_binKey] =
-        '${_environment[_usrKey]}${Platform.pathSeparator}bin';
-    _environment[_homeKey] = '$dataPath${Platform.pathSeparator}home';
-    _environment[_tmpKey] =
-        '${_environment[_usrKey]}${Platform.pathSeparator}tmp';
-    _environment[_pathKey] =
-        '${_environment[_binKey]}:' + Platform.environment['PATH']!;
+    _environment[_usrKey] = '$dataPath${s}usr';
+    _environment[_binKey] = '${_environment[_usrKey]}${s}bin';
+    _environment[_homeKey] = '$dataPath${s}home';
+    _environment[_tmpKey] = '${_environment[_usrKey]}${s}tmp';
+    _environment[_pathKey] = '$execBinPath/:' +
+        '${_environment[_binKey]}:' +
+        Platform.environment['PATH']!;
     _isInit = true;
   }
 
