@@ -63,7 +63,7 @@ class RuntimeEnvir {
     String execPath = dirname(Platform.resolvedExecutable);
     String s = Platform.pathSeparator;
     String execDataPath = execPath + s + 'data';
-    String execBinPath = execPath + s + 'data/usr/bin';
+    String execBinPath = execPath + s + 'data${s}usr${s}bin';
     String dataPath = appSupportDirectory ?? execDataPath;
     Directory dataDir = Directory(dataPath);
     if (Platform.isLinux) {
