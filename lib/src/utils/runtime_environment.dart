@@ -85,19 +85,21 @@ class RuntimeEnvir {
     _environment[_binKey] = '${_environment[_usrKey]}${s}bin';
     _environment[_homeKey] = '$dataPath${s}home';
     _environment[_tmpKey] = '${_environment[_usrKey]}${s}tmp';
-    _environment[_pathKey] = '$execBinPath/:' +
-        '${_environment[_binKey]}:' +
-        Platform.environment['PATH']!;
+    if (Platform.isWindows) {
+      _environment[_pathKey] = '$execBinPath;' +
+          '${_environment[_binKey]};' +
+          Platform.environment['PATH']!;
+    } else {
+      _environment[_pathKey] = '$execBinPath/:' +
+          '${_environment[_binKey]}:' +
+          Platform.environment['PATH']!;
+    }
     _isInit = true;
   }
 
   static Map<String, String> envir() {
     final Map<String, String> map = Map.from(Platform.environment);
-    if (Platform.isWindows) {
-      map['PATH'] = RuntimeEnvir.binPath! + ';' + map['PATH']!;
-    } else {
-      map['PATH'] = RuntimeEnvir.binPath! + ':' + map['PATH']!;
-    }
+    map['PATH'] = path!;
     return map;
   }
 
