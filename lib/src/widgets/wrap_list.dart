@@ -3,8 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:global_repository/src/utils/screen_util.dart';
-
-import 'responsive.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -23,8 +22,10 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         backgroundColor: const Color(0xfff5f5f7),
-        body: Responsive(
-          builder: (_, ScreenType __) {
+        body: Builder(
+          builder: (
+            _,
+          ) {
             return WrapContainerList(
               children: [
                 CheckContainer(
@@ -190,9 +191,8 @@ class _WrapContainerListState extends State<WrapContainerList> {
   double getWidth(double maxWidth) {
     final double dpWidth = maxWidth;
     // debugPrint('$dpWidth');
-    final ScreenType screenType = Responsive.of(context)!.screenType;
     int i = 7;
-    if (screenType == ScreenType.phone) {
+    if (ResponsiveWrapper.of(context).isPhone) {
       for (; dpWidth / i < widget.phoneChangeBreakPoint; i--) {}
     } else {
       for (; dpWidth / i < widget.width; i--) {}
