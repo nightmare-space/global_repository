@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:global_repository/src/utils/page_util.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -100,7 +101,7 @@ class AboutPage extends StatelessWidget {
                           _SettingItem(
                             title: '更新日志',
                             onTap: () {
-                              Get.to(const ChangeLogPage());
+                              openPage(const ChangeLogPage(), title: '更新日志');
                             },
                             suffix: Icon(
                               Icons.arrow_forward_ios,
@@ -147,7 +148,7 @@ class AboutPage extends StatelessWidget {
                               size: 16.w,
                             ),
                             onTap: () {
-                              Get.to(const PrivacyPage());
+                              openPage(const PrivacyPage(), title: '隐私政策');
                             },
                           ),
                           _SettingItem(
@@ -157,9 +158,12 @@ class AboutPage extends StatelessWidget {
                               size: 16.w,
                             ),
                             onTap: () {
-                              Get.to(LicensePage(
-                                applicationName: appName,
-                              ));
+                              openPage(
+                                LicensePage(
+                                  applicationName: appName,
+                                ),
+                                title: '开源协议',
+                              );
                             },
                           ),
                         ],

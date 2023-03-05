@@ -11,6 +11,7 @@ export 'src/utils/http_server_util.dart';
 export 'src/utils/assets_utils.dart';
 export 'src/utils/statusbar_utils.dart';
 
+export 'src/widgets/widgets.dart';
 export 'src/widgets/custom_dialog.dart';
 export 'src/widgets/toast.dart';
 export 'src/widgets/custom_scaffold.dart';
@@ -31,5 +32,6 @@ export 'src/foundation/overlay_style.dart';
 export 'src/pages/page.dart';
 
 
+export 'src/controller/tab_controller.dart';
 
 export 'src/utils/assets_manager.dart';
