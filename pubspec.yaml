@@ -22,6 +22,10 @@ dependencies:
   # 提供路径访问
   permission_handler: 6.0.0
   window_manager: ^0.3.0
+  xterm:
+    git:
+      url: https://github.com/TerminalStudio/xterm.dart
+      ref: master
 
 dev_dependencies:
   flutter_test:
