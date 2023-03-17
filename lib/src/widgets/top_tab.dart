@@ -73,6 +73,9 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     Color tabColor = Color(0xffe8e9ee);
+    if (GetPlatform.isMobile) {
+      return const SizedBox();
+    }
     return Material(
       color: tabColor,
       child: SizedBox(
@@ -80,164 +83,165 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
         width: double.infinity,
         child: Row(
           children: [
-            Expanded(
-              child: DragToMoveArea(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: GetPlatform.isMacOS ? 60.w : 0,
-                  ),
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: [
-                      SizedBox(
-                        width: double.infinity,
-                        child: Padding(
-                          padding: EdgeInsets.only(top: paddingTop),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                AnimatedBuilder(
-                                  animation: controller,
-                                  builder: (context, c) {
-                                    return SizedBox(
-                                      width: offset.value,
-                                    );
-                                  },
-                                ),
-                                Stack(
-                                  children: [
-                                    Material(
+            if (GetPlatform.isDesktop)
+              Expanded(
+                child: DragToMoveArea(
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      left: GetPlatform.isMacOS ? 60.w : 0,
+                    ),
+                    child: Stack(
+                      fit: StackFit.expand,
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: Padding(
+                            padding: EdgeInsets.only(top: paddingTop),
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.horizontal,
+                              child: Row(
+                                children: [
+                                  AnimatedBuilder(
+                                    animation: controller,
+                                    builder: (context, c) {
+                                      return SizedBox(
+                                        width: offset.value,
+                                      );
+                                    },
+                                  ),
+                                  Stack(
+                                    children: [
+                                      Material(
+                                        color: Color(0xfff3f4f9),
+                                        child: SizedBox(
+                                          height: tabHeight,
+                                          width: 10.w,
+                                        ),
+                                      ),
+                                      Material(
+                                        color: tabColor,
+                                        borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(16.w),
+                                        ),
+                                        child: SizedBox(
+                                          height: tabHeight,
+                                          width: 10.w,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    height: tabHeight,
+                                    width: tabWidth,
+                                    decoration: BoxDecoration(
                                       color: Color(0xfff3f4f9),
-                                      child: SizedBox(
-                                        height: tabHeight,
-                                        width: 10.w,
-                                      ),
-                                    ),
-                                    Material(
-                                      color: tabColor,
                                       borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(16.w),
+                                        topLeft: Radius.circular(12.w),
+                                        topRight: Radius.circular(12.w),
                                       ),
-                                      child: SizedBox(
-                                        height: tabHeight,
-                                        width: 10.w,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Container(
-                                  height: tabHeight,
-                                  width: tabWidth,
-                                  decoration: BoxDecoration(
-                                    color: Color(0xfff3f4f9),
-                                    borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(12.w),
-                                      topRight: Radius.circular(12.w),
                                     ),
                                   ),
+                                  Stack(
+                                    children: [
+                                      Material(
+                                        color: Color(0xfff3f4f9),
+                                        child: SizedBox(
+                                          height: tabHeight,
+                                          width: 10.w,
+                                        ),
+                                      ),
+                                      Material(
+                                        color: tabColor,
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(16.w),
+                                        ),
+                                        child: SizedBox(
+                                          height: tabHeight,
+                                          width: 10.w,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: double.infinity,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            physics: BouncingScrollPhysics(),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 10.w,
                                 ),
-                                Stack(
-                                  children: [
-                                    Material(
-                                      color: Color(0xfff3f4f9),
-                                      child: SizedBox(
-                                        height: tabHeight,
-                                        width: 10.w,
+                                for (int i = 0; i < widget.children.length; i++)
+                                  Padding(
+                                    padding: EdgeInsets.only(top: paddingTop, right: 10.w),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      onTap: () {
+                                        index = 0;
+                                        offset = Tween<double>(begin: offset.value, end: (tabWidth + 10.w) * i).animate(controller);
+                                        controller.reset();
+                                        controller.forward();
+                                        setState(() {});
+                                        // 等待200ms，让动画执行完毕
+                                        Future<void>.delayed(const Duration(milliseconds: 200), () {
+                                          widget.onChanged?.call(i);
+                                        });
+                                      },
+                                      child: Material(
+                                        borderRadius: BorderRadius.only(),
+                                        color: Colors.transparent,
+                                        child: Stack(
+                                          alignment: Alignment.centerRight,
+                                          children: [
+                                            Container(
+                                              height: tabHeight,
+                                              width: tabWidth,
+                                              child: Center(child: widget.children[i]),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                Container(
+                                                  width: tabHeight,
+                                                  height: tabHeight,
+                                                  child: InkWell(
+                                                    borderRadius: BorderRadius.circular(tabHeight / 2),
+                                                    onTap: () {
+                                                      tabController.closePage(i);
+                                                    },
+                                                    child: Center(
+                                                      child: Icon(
+                                                        Icons.clear,
+                                                        size: 18.w,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(width: 8.w),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
-                                    Material(
-                                      color: tabColor,
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(16.w),
-                                      ),
-                                      child: SizedBox(
-                                        height: tabHeight,
-                                        width: 10.w,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
                               ],
                             ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: double.infinity,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          physics: BouncingScrollPhysics(),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              for (int i = 0; i < widget.children.length; i++)
-                                Padding(
-                                  padding: EdgeInsets.only(top: paddingTop, right: 10.w),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    onTap: () {
-                                      index = 0;
-                                      offset = Tween<double>(begin: offset.value, end: (tabWidth + 10.w) * i).animate(controller);
-                                      controller.reset();
-                                      controller.forward();
-                                      setState(() {});
-                                      // 等待200ms，让动画执行完毕
-                                      Future<void>.delayed(const Duration(milliseconds: 200), () {
-                                        widget.onChanged?.call(i);
-                                      });
-                                    },
-                                    child: Material(
-                                      borderRadius: BorderRadius.only(),
-                                      color: Colors.transparent,
-                                      child: Stack(
-                                        alignment: Alignment.centerRight,
-                                        children: [
-                                          Container(
-                                            height: tabHeight,
-                                            width: tabWidth,
-                                            child: Center(child: widget.children[i]),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.end,
-                                            children: [
-                                              Container(
-                                                width: tabHeight,
-                                                height: tabHeight,
-                                                child: InkWell(
-                                                  borderRadius: BorderRadius.circular(tabHeight / 2),
-                                                  onTap: () {
-                                                    tabController.closePage(i);
-                                                  },
-                                                  child: Center(
-                                                    child: Icon(
-                                                      Icons.clear,
-                                                      size: 18.w,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              SizedBox(width: 8.w),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
             if (GetPlatform.isDesktop)
               Container(
                 height: 24,

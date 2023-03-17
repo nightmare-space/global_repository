@@ -45,8 +45,7 @@ class RuntimeEnvir {
     _environment[_binKey] = '${_environment[_usrKey]}/bin';
     _environment[_homeKey] = '${_environment[_filesKey]}/home';
     _environment[_tmpKey] = '${_environment[_usrKey]}/tmp';
-    _environment[_pathKey] =
-        '${_environment[_binKey]}:' + Platform.environment['PATH']!;
+    _environment[_pathKey] = '${_environment[_binKey]}:' + Platform.environment['PATH']!;
     _isInit = true;
   }
 
@@ -86,20 +85,16 @@ class RuntimeEnvir {
     _environment[_homeKey] = '$dataPath${s}home';
     _environment[_tmpKey] = '${_environment[_usrKey]}${s}tmp';
     if (Platform.isWindows) {
-      _environment[_pathKey] = '$execBinPath;' +
-          '${_environment[_binKey]};' +
-          Platform.environment['PATH']!;
+      _environment[_pathKey] = '$execBinPath;' + '${_environment[_binKey]};' + Platform.environment['PATH']!;
     } else {
-      _environment[_pathKey] = '$execBinPath/:' +
-          '${_environment[_binKey]}:' +
-          Platform.environment['PATH']!;
+      _environment[_pathKey] = '$execBinPath/:' + '${_environment[_binKey]}:' + Platform.environment['PATH']!;
     }
     _isInit = true;
   }
 
   static Map<String, String> envir() {
     final Map<String, String> map = Map.from(Platform.environment);
-    map['PATH'] = path!;
+    map['PATH'] = path;
     return map;
   }
 
@@ -122,21 +117,21 @@ class RuntimeEnvir {
   }
 
   /// 这是是 PATH 这个变量的值
-  static String? get path {
+  static String get path {
     if (_environment.containsKey(_pathKey)) {
       return _environment[_pathKey];
     }
     throw Exception();
   }
 
-  static String? get dataPath {
+  static String get dataPath {
     if (_environment.containsKey(_dataKey)) {
       return _environment[_dataKey];
     }
     throw Exception();
   }
 
-  static String? get configPath {
+  static String get configPath {
     if (_environment.containsKey(_configKey)) {
       return _environment[_configKey];
     }
@@ -147,7 +142,7 @@ class RuntimeEnvir {
     _environment[_binKey] = value;
   }
 
-  static String? get usrPath {
+  static String get usrPath {
     if (_environment.containsKey(_usrKey)) {
       return _environment[_usrKey];
     }
@@ -158,7 +153,7 @@ class RuntimeEnvir {
     _environment[_usrKey] = value;
   }
 
-  static String? get tmpPath {
+  static String get tmpPath {
     if (_environment.containsKey(_tmpKey)) {
       return _environment[_tmpKey];
     }
@@ -169,7 +164,7 @@ class RuntimeEnvir {
     _environment[_tmpKey] = value;
   }
 
-  static String? get homePath {
+  static String get homePath {
     if (_environment.containsKey(_homeKey)) {
       return _environment[_homeKey];
     }
@@ -180,7 +175,7 @@ class RuntimeEnvir {
     _environment[_homeKey] = value;
   }
 
-  static String? get filesPath {
+  static String get filesPath {
     if (_environment.containsKey(_filesKey)) {
       return _environment[_filesKey];
     }
