@@ -44,7 +44,7 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     AppBar? appBar;
     final appName = applicationName ?? _defaultApplicationName(context);
-    if (ResponsiveWrapper.of(context).isPhone) {
+    if (ResponsiveBreakpoints.of(context).isPhone) {
       appBar = AppBar(
         title: Text('关于'),
         automaticallyImplyLeading: false,

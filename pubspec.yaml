@@ -1,7 +1,7 @@
 name: global_repository
 description: A new Flutter package project.
 version: 0.0.1
-homepage:
+# homepage:
 publish_to: none
 
 environment:
@@ -17,7 +17,7 @@ dependencies:
   get: ^4.1.3
   # launcher url
   url_launcher: ^6.0.18
-  responsive_framework: ^0.2.0
+  responsive_framework: ^1.0.0
   signale: ^0.0.6
   # 提供路径访问
   permission_handler: 6.0.0
