@@ -4,15 +4,17 @@ import 'package:flutter/foundation.dart';
 import 'package:get/utils.dart';
 import 'package:global_repository/global_repository.dart';
 
-/// 
+///
 class UniqueUtil {
   UniqueUtil._();
   static Future<String> getDevicesId() async {
     if (GetPlatform.isWeb) {
       return 'web';
     }
-    if (PlatformUtil.isDesktop()) {
+    if (GetPlatform.isDesktop) {
       return Platform.operatingSystem;
+    } else if (GetPlatform.isIOS) {
+      return 'iOS';
     } else {
       props ??= await exec('getprop');
       // print(props);

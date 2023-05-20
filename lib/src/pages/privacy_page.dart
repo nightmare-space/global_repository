@@ -18,54 +18,56 @@ class _PrivacyAgreePageState extends State<PrivacyAgreePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(child: PrivacyPage()),
-          Row(
-            children: [
-              Expanded(
-                child: GestureWithScale(
-                  onTap: () {
-                    SystemNavigator.pop();
-                  },
-                  child: Container(
-                    height: 48.w,
-                    color: Theme.of(context).primaryColor.withOpacity(0.08),
-                    child: Center(
-                      child: Text(
-                        '我不同意',
-                        style: TextStyle(
-                          fontSize: 16.w,
-                          color: Theme.of(context).colorScheme.onSurface,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(child: PrivacyPage()),
+            Row(
+              children: [
+                Expanded(
+                  child: GestureWithScale(
+                    onTap: () {
+                      SystemNavigator.pop();
+                    },
+                    child: Container(
+                      height: 48.w,
+                      color: Theme.of(context).primaryColor.withOpacity(0.08),
+                      child: Center(
+                        child: Text(
+                          '我不同意',
+                          style: TextStyle(
+                            fontSize: 16.w,
+                            color: Theme.of(context).colorScheme.onSurface,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: GestureWithScale(
-                  onTap: () {
-                    widget.onAgreeTap?.call();
-                  },
-                  child: Container(
-                    color: Theme.of(context).primaryColor,
-                    height: 48.w,
-                    child: Center(
-                      child: Text(
-                        '同意继续',
-                        style: TextStyle(
-                          fontSize: 16.w,
-                          color: Theme.of(context).colorScheme.onPrimary,
+                Expanded(
+                  child: GestureWithScale(
+                    onTap: () {
+                      widget.onAgreeTap?.call();
+                    },
+                    child: Container(
+                      color: Theme.of(context).primaryColor,
+                      height: 48.w,
+                      child: Center(
+                        child: Text(
+                          '同意继续',
+                          style: TextStyle(
+                            fontSize: 16.w,
+                            color: Theme.of(context).colorScheme.onPrimary,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

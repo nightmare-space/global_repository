@@ -4,6 +4,7 @@
 
 import 'dart:io';
 
+import 'package:get/get.dart';
 import 'package:path/path.dart';
 
 String _binKey = 'BIN';
@@ -31,21 +32,28 @@ class RuntimeEnvir {
       return;
     }
     _packageName = packageName;
-    if (!Platform.isAndroid) {
+    if (GetPlatform.isDesktop) {
       _initEnvirForDesktop(
         packageName,
         appSupportDirectory: appSupportDirectory,
       );
       return;
     }
-    _environment[_dataKey] = '/data/data/$packageName';
+    if (GetPlatform.isIOS) {
+      _environment[_dataKey] = appSupportDirectory;
+    } else {
+      _environment[_dataKey] = '/data/data/$packageName';
+    }
     _environment[_filesKey] = '${_environment[_dataKey]}/files';
+    Directory(_environment[_filesKey]).createSync();
     _environment[_configKey] = '${_environment[_dataKey]}/files';
     _environment[_usrKey] = '${_environment[_filesKey]}/usr';
     _environment[_binKey] = '${_environment[_usrKey]}/bin';
     _environment[_homeKey] = '${_environment[_filesKey]}/home';
     _environment[_tmpKey] = '${_environment[_usrKey]}/tmp';
-    _environment[_pathKey] = '${_environment[_binKey]}:' + Platform.environment['PATH']!;
+    if (!GetPlatform.isIOS) {
+      _environment[_pathKey] = '${_environment[_binKey]}:' + Platform.environment['PATH']!;
+    }
     _isInit = true;
   }
 

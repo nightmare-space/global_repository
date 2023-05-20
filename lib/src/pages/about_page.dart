@@ -31,6 +31,9 @@ class AboutPage extends StatelessWidget {
     this.coolapkLink,
     this.license,
     this.logo = const SizedBox(),
+    this.otherVersionLink,
+    this.openSourceLink,
+    this.hasTerms = false,
   }) : super(key: key);
 
   final String appVersion;
@@ -38,7 +41,10 @@ class AboutPage extends StatelessWidget {
   final String? applicationName;
   final String? coolapkLink;
   final String? license;
+  final String? otherVersionLink;
+  final String? openSourceLink;
   final Widget logo;
+  final bool hasTerms;
 
   @override
   Widget build(BuildContext context) {
@@ -108,24 +114,47 @@ class AboutPage extends StatelessWidget {
                               size: 16.w,
                             ),
                           ),
-                          _SettingItem(
-                            title: '其他版本下载',
-                            suffix: Icon(
-                              Icons.arrow_forward_ios,
-                              size: 16.w,
+                          if (otherVersionLink != null)
+                            _SettingItem(
+                              title: '其他版本下载',
+                              suffix: Icon(
+                                Icons.arrow_forward_ios,
+                                size: 16.w,
+                              ),
+                              onTap: () async {
+                                if (otherVersionLink == null) {
+                                  return;
+                                }
+                                String url = otherVersionLink!;
+                                if (await canLaunchUrlString(url)) {
+                                  await launchUrlString(
+                                    url,
+                                    mode: LaunchMode.externalNonBrowserApplication,
+                                  );
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
                             ),
-                            onTap: () async {
-                              const String url = 'http://nightmare.fun/YanTool/resources/ADBTool/?C=N;O=A';
-                              if (await canLaunchUrlString(url)) {
-                                await launchUrlString(
-                                  url,
-                                  mode: LaunchMode.externalNonBrowserApplication,
-                                );
-                              } else {
-                                throw 'Could not launch $url';
-                              }
-                            },
-                          ),
+                          if (openSourceLink != null)
+                            _SettingItem(
+                              title: '${applicationName ?? '应用'}开源地址',
+                              suffix: Icon(
+                                Icons.arrow_forward_ios,
+                                size: 16.w,
+                              ),
+                              onTap: () async {
+                                String url = openSourceLink!;
+                                if (await canLaunchUrlString(url)) {
+                                  await launchUrlString(
+                                    url,
+                                    mode: LaunchMode.externalNonBrowserApplication,
+                                  );
+                                } else {
+                                  throw 'Could not launch $url';
+                                }
+                              },
+                            ),
                         ],
                       ),
                     ),
@@ -134,13 +163,14 @@ class AboutPage extends StatelessWidget {
                       padding: EdgeInsets.zero,
                       child: Column(
                         children: [
-                          _SettingItem(
-                            title: '服务条款',
-                            suffix: Icon(
-                              Icons.arrow_forward_ios,
-                              size: 16.w,
+                          if (hasTerms)
+                            _SettingItem(
+                              title: '服务条款',
+                              suffix: Icon(
+                                Icons.arrow_forward_ios,
+                                size: 16.w,
+                              ),
                             ),
-                          ),
                           _SettingItem(
                             title: '隐私政策',
                             suffix: Icon(
