@@ -131,7 +131,7 @@ class _ToastAppState extends State<ToastApp> {
     );
     return Directionality(
       child: MediaQuery(
-        data: MediaQueryData.fromWindow(window),
+        data: MediaQuery.of(context),
         child: Localizations(
           locale: const Locale('en', 'US'),
           delegates: _localizationsDelegates.toList(),
