@@ -4,7 +4,11 @@ import 'package:xterm/xterm.dart';
 import 'xterm_wrapper.dart';
 
 class LoggerView extends StatefulWidget {
-  const LoggerView({Key? key}) : super(key: key);
+  const LoggerView({
+    Key? key,
+    this.showActionButton = true,
+  }) : super(key: key);
+  final bool showActionButton;
 
   @override
   _LoggerViewState createState() => _LoggerViewState();
@@ -31,22 +35,27 @@ class _LoggerViewState extends State<LoggerView> {
     terminal.eraseScrollbackOnly();
     terminal.setCursor(0, 0);
     for (var v in Log.buffer) {
-      final String data = v.data;
-      if (v.level == LogLevel.verbose && verbose) {
-        terminal.write(data + "\r\n");
-      }
-      if (v.level == LogLevel.debug && debug) {
-        terminal.write(data + "\r\n");
-      }
-      if (v.level == LogLevel.info && info) {
-        terminal.write(data + "\r\n");
-      }
-      if (v.level == LogLevel.warning && warning) {
-        terminal.write(data + "\r\n");
-      }
-      if (v.level == LogLevel.error && error) {
-        terminal.write(data + "\r\n");
-      }
+      printToConsole(v);
+    }
+    Log.defaultLogger.stream.listen(printToConsole);
+  }
+
+  void printToConsole(LogEntity entity) {
+    final String data = entity.data;
+    if (entity.level == LogLevel.verbose && verbose) {
+      terminal.write(data + "\r\n");
+    }
+    if (entity.level == LogLevel.debug && debug) {
+      terminal.write(data + "\r\n");
+    }
+    if (entity.level == LogLevel.info && info) {
+      terminal.write(data + "\r\n");
+    }
+    if (entity.level == LogLevel.warning && warning) {
+      terminal.write(data + "\r\n");
+    }
+    if (entity.level == LogLevel.error && error) {
+      terminal.write(data + "\r\n");
     }
   }
 
@@ -61,55 +70,56 @@ class _LoggerViewState extends State<LoggerView> {
             ),
           ),
           SizedBox(height: 8.w),
-          WrapContainerList(
-            children: [
-              CheckContainer(
-                value: verbose,
-                data: 'verbose',
-                onChanged: (value) {
-                  verbose = value;
-                  setState(() {});
-                  onChange();
-                },
-              ),
-              CheckContainer(
-                value: debug,
-                data: 'debug',
-                onChanged: (value) {
-                  debug = value;
-                  setState(() {});
-                  onChange();
-                },
-              ),
-              CheckContainer(
-                value: info,
-                data: 'info',
-                onChanged: (value) {
-                  info = value;
-                  setState(() {});
-                  onChange();
-                },
-              ),
-              CheckContainer(
-                value: warning,
-                data: 'warning',
-                onChanged: (value) {
-                  warning = value;
-                  setState(() {});
-                  onChange();
-                },
-              ),
-              CheckContainer(
-                value: error,
-                data: 'error',
-                onChanged: (value) {
-                  error = value;
-                  setState(() {});
-                  onChange();
-                },
-              ),
-            ],
-          ),
+          if (widget.showActionButton)
+            WrapContainerList(
+              children: [
+                CheckContainer(
+                  value: verbose,
+                  data: 'verbose',
+                  onChanged: (value) {
+                    verbose = value;
+                    setState(() {});
+                    onChange();
+                  },
+                ),
+                CheckContainer(
+                  value: debug,
+                  data: 'debug',
+                  onChanged: (value) {
+                    debug = value;
+                    setState(() {});
+                    onChange();
+                  },
+                ),
+                CheckContainer(
+                  value: info,
+                  data: 'info',
+                  onChanged: (value) {
+                    info = value;
+                    setState(() {});
+                    onChange();
+                  },
+                ),
+                CheckContainer(
+                  value: warning,
+                  data: 'warning',
+                  onChanged: (value) {
+                    warning = value;
+                    setState(() {});
+                    onChange();
+                  },
+                ),
+                CheckContainer(
+                  value: error,
+                  data: 'error',
+                  onChanged: (value) {
+                    error = value;
+                    setState(() {});
+                    onChange();
+                  },
+                ),
+              ],
+            ),
         ],
       ),
     );

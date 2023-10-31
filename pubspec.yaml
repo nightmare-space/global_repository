@@ -35,3 +35,6 @@ dev_dependencies:
 flutter:
   assets:
     - assets/icon/
+dependency_overrides:
+  signale:
+    path: ../signale
