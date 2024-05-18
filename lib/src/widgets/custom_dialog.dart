@@ -65,8 +65,7 @@ class DialogBuilder extends StatefulWidget {
 
 // EventBus dialogeventBus;
 
-class DialogBuilderState extends State<DialogBuilder>
-    with SingleTickerProviderStateMixin {
+class DialogBuilderState extends State<DialogBuilder> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> dialogHeight;
   late Animation<double> curve;
@@ -128,9 +127,7 @@ class DialogBuilderState extends State<DialogBuilder>
       key: _key,
       backgroundColor: Colors.transparent,
       child: Material(
-        shadowColor: Theme.of(context).backgroundColor == Colors.black
-            ? Colors.white.withOpacity(0.2)
-            : Colors.black.withOpacity(0.6),
+        shadowColor: Theme.of(context).scaffoldBackgroundColor == Colors.black ? Colors.white.withOpacity(0.2) : Colors.black.withOpacity(0.6),
         elevation: 0.0,
         color: Theme.of(context).dialogBackgroundColor,
         shape: const RoundedRectangleBorder(
@@ -142,9 +139,7 @@ class DialogBuilderState extends State<DialogBuilder>
             Radius.circular(12.0),
           ),
           child: Padding(
-            padding: widget.isPadding
-                ? const EdgeInsets.all(6.0)
-                : const EdgeInsets.all(0),
+            padding: widget.isPadding ? const EdgeInsets.all(6.0) : const EdgeInsets.all(0),
             child: SizedBox(
               height: dialogHeight.value,
               child: widget.child,

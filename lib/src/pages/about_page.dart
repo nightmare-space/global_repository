@@ -21,6 +21,8 @@ String _defaultApplicationName(BuildContext context) {
   return ancestorTitle?.title ?? Platform.resolvedExecutable.split(Platform.pathSeparator).last;
 }
 
+String baseUri = 'http://nightmare.press';
+
 /// 关于页面
 class AboutPage extends StatelessWidget {
   const AboutPage({
@@ -50,9 +52,12 @@ class AboutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     AppBar? appBar;
     final appName = applicationName ?? _defaultApplicationName(context);
-    if (ResponsiveBreakpoints.of(context).isPhone) {
+    if (ResponsiveBreakpoints.of(context).isMobile) {
       appBar = AppBar(
         title: Text('关于'),
+        leading: DrawerOpenButton(
+          scaffoldContext: context,
+        ),
         automaticallyImplyLeading: false,
       );
     }
@@ -78,7 +83,6 @@ class AboutPage extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 20.w,
                         fontWeight: _bold,
-                        color: Colors.black,
                       ),
                     ),
                     SizedBox(height: 24.w),
@@ -211,7 +215,7 @@ class AboutPage extends StatelessWidget {
                               padding: EdgeInsets.symmetric(vertical: 8.w),
                               child: ClipOval(
                                 child: Image.network(
-                                  'http://nightmare.fun/YanTool/image/hong.jpg',
+                                  '$baseUri/YanTool/image/hong.jpg',
                                   width: 44.w,
                                 ),
                               ),
@@ -240,7 +244,7 @@ class AboutPage extends StatelessWidget {
                               padding: EdgeInsets.symmetric(vertical: 8.w),
                               child: ClipOval(
                                 child: Image.network(
-                                  'http://nightmare.fun/YanTool/image/hong.jpg',
+                                  '$baseUri/YanTool/image/hong.jpg',
                                   width: 44.w,
                                 ),
                               ),
@@ -269,7 +273,7 @@ class AboutPage extends StatelessWidget {
                               padding: EdgeInsets.symmetric(vertical: 8.w),
                               child: ClipOval(
                                 child: Image.network(
-                                  'http://nightmare.fun/YanTool/image/hong.jpg',
+                                  '$baseUri/YanTool/image/hong.jpg',
                                   width: 44.w,
                                 ),
                               ),
@@ -279,7 +283,7 @@ class AboutPage extends StatelessWidget {
                               size: 16.w,
                             ),
                             onTap: () async {
-                              const String url = 'http://nightmare.fun';
+                              String url = '$baseUri';
                               if (await canLaunchUrlString(url)) {
                                 await launchUrlString(
                                   url,
@@ -373,7 +377,6 @@ class _SettingItemState extends State<_SettingItem> {
                             Text(
                               widget.title ?? '',
                               style: TextStyle(
-                                // color: Theme.of(context).colorScheme.primaryVariant,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 16.w,
                                 // height: 1.0,
@@ -429,7 +432,7 @@ class GlobalCardItem extends StatelessWidget {
     return Material(
       borderRadius: BorderRadius.circular(12.w),
       clipBehavior: Clip.hardEdge,
-      color: backgroundColor,
+      color: backgroundColor ?? Theme.of(context).cardColor,
       child: Padding(
         padding: padding ?? EdgeInsets.all(8.w),
         child: child,

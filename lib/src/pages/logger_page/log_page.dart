@@ -164,7 +164,7 @@ class CheckContainer extends StatelessWidget {
               child: Text(
                 data,
                 style: TextStyle(
-                  color: value ? Colors.white : Theme.of(context).textTheme.bodyText2?.color,
+                  color: value ? Colors.white : Theme.of(context).textTheme.bodyMedium?.color,
                 ),
               ),
             ),

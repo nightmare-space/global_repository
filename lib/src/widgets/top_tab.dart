@@ -72,7 +72,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Color tabColor = Color(0xffe8e9ee);
+    Color tabColor = Theme.of(context).brightness == Brightness.light ? Color(0xffe8e9ee) : Colors.black;
     if (GetPlatform.isMobile) {
       return const SizedBox();
     }
@@ -112,7 +112,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
                                   Stack(
                                     children: [
                                       Material(
-                                        color: Color(0xfff3f4f9),
+                                        color: Theme.of(context).colorScheme.background,
                                         child: SizedBox(
                                           height: tabHeight,
                                           width: 10.w,
@@ -134,7 +134,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
                                     height: tabHeight,
                                     width: tabWidth,
                                     decoration: BoxDecoration(
-                                      color: Color(0xfff3f4f9),
+                                      color: Theme.of(context).colorScheme.background,
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(12.w),
                                         topRight: Radius.circular(12.w),
@@ -144,7 +144,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
                                   Stack(
                                     children: [
                                       Material(
-                                        color: Color(0xfff3f4f9),
+                                        color: Theme.of(context).colorScheme.background,
                                         child: SizedBox(
                                           height: tabHeight,
                                           width: 10.w,

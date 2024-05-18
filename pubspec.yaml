@@ -18,7 +18,7 @@ dependencies:
   # launcher url
   url_launcher: ^6.0.18
   responsive_framework: ^1.0.0
-  signale: ^0.0.6
+  signale: ^0.0.10
   # 提供路径访问
   permission_handler: 6.0.0
   window_manager: ^0.3.0
@@ -35,6 +35,6 @@ dev_dependencies:
 flutter:
   assets:
     - assets/icon/
-dependency_overrides:
-  signale:
-    path: ../signale
+# dependency_overrides:
+  # signale:
+  #   path: ../signale
