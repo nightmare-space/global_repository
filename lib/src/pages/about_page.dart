@@ -1,9 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
+import 'package:global_repository/generated/l10n.dart';
 import 'package:global_repository/global_repository.dart';
 import 'package:global_repository/src/utils/page_util.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -36,6 +39,7 @@ class AboutPage extends StatelessWidget {
     this.otherVersionLink,
     this.openSourceLink,
     this.hasTerms = false,
+    this.canOpenDrawer = true,
   }) : super(key: key);
 
   final String appVersion;
@@ -47,278 +51,290 @@ class AboutPage extends StatelessWidget {
   final String? openSourceLink;
   final Widget logo;
   final bool hasTerms;
+  final bool canOpenDrawer;
 
   @override
   Widget build(BuildContext context) {
-    AppBar? appBar;
-    final appName = applicationName ?? _defaultApplicationName(context);
-    if (ResponsiveBreakpoints.of(context).isMobile) {
-      appBar = AppBar(
-        title: Text('关于'),
-        leading: DrawerOpenButton(
-          scaffoldContext: context,
-        ),
-        automaticallyImplyLeading: false,
-      );
-    }
-    return Scaffold(
-      body: Column(
-        children: [
-          if (appBar != null) appBar,
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                controller: ScrollController(),
-                padding: EdgeInsets.only(bottom: 48.w),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 24.w),
-                    logo,
-                    SizedBox(height: 8.w),
-                    Text(
-                      appName,
-                      style: TextStyle(
-                        fontSize: 20.w,
-                        fontWeight: _bold,
-                      ),
-                    ),
-                    SizedBox(height: 24.w),
-                    GlobalCardItem(
-                      padding: EdgeInsets.zero,
-                      child: Column(
-                        children: [
-                          _SettingItem(
-                            title: '当前版本',
-                            suffix: Text(
-                              '$appVersion($versionCode)',
-                              style: TextStyle(
-                                color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
-                              ),
-                            ),
+    Log.i('Localizations.localeOf(context) -> ${Localizations.localeOf(context)}');
+    S.load(Localizations.localeOf(context));
+    return Localizations(
+      locale: Localizations.localeOf(context),
+      delegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      child: Builder(builder: (context) {
+        AppBar? appBar;
+        final appName = applicationName ?? _defaultApplicationName(context);
+        if (ResponsiveBreakpoints.of(context).isMobile) {
+          appBar = AppBar(
+            title: Text(S.of(context).aboutTitle),
+            leading: canOpenDrawer ? DrawerOpenButton(scaffoldContext: context) : null,
+            automaticallyImplyLeading: false,
+          );
+        }
+        return Scaffold(
+          body: Column(
+            children: [
+              if (appBar != null) appBar,
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    controller: ScrollController(),
+                    padding: EdgeInsets.only(bottom: 48.w),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 24.w),
+                        logo,
+                        SizedBox(height: 8.w),
+                        Text(
+                          appName,
+                          style: TextStyle(
+                            fontSize: 20.w,
+                            fontWeight: _bold,
                           ),
-                          _SettingItem(
-                            title: '分支',
-                            suffix: Text(
-                              'dev',
-                              style: TextStyle(
-                                color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
+                        ),
+                        SizedBox(height: 24.w),
+                        GlobalCardItem(
+                          padding: EdgeInsets.zero,
+                          child: Column(
+                            children: [
+                              _SettingItem(
+                                title: S.current.currentVersion,
+                                suffix: Text(
+                                  '$appVersion($versionCode)',
+                                  style: TextStyle(
+                                    color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          _SettingItem(
-                            title: '更新日志',
-                            onTap: () {
-                              openPage(const ChangeLogPage(), title: '更新日志');
-                            },
-                            suffix: Icon(
-                              Icons.arrow_forward_ios,
-                              size: 16.w,
-                            ),
-                          ),
-                          if (otherVersionLink != null)
-                            _SettingItem(
-                              title: '其他版本下载',
-                              suffix: Icon(
-                                Icons.arrow_forward_ios,
-                                size: 16.w,
+                              _SettingItem(
+                                title: S.current.ref,
+                                suffix: Text(
+                                  'dev',
+                                  style: TextStyle(
+                                    color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
+                                  ),
+                                ),
                               ),
-                              onTap: () async {
-                                if (otherVersionLink == null) {
-                                  return;
-                                }
-                                String url = otherVersionLink!;
-                                if (await canLaunchUrlString(url)) {
-                                  await launchUrlString(
-                                    url,
-                                    mode: LaunchMode.externalNonBrowserApplication,
+                              _SettingItem(
+                                title: S.current.changelog,
+                                onTap: () {
+                                  openPage(const ChangeLogPage(), title: S.current.changelog);
+                                },
+                                suffix: Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 16.w,
+                                ),
+                              ),
+                              if (otherVersionLink != null)
+                                _SettingItem(
+                                  title: S.current.otherVersionDownload,
+                                  suffix: Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 16.w,
+                                  ),
+                                  onTap: () async {
+                                    if (otherVersionLink == null) {
+                                      return;
+                                    }
+                                    String url = otherVersionLink!;
+                                    if (await canLaunchUrlString(url)) {
+                                      await launchUrlString(
+                                        url,
+                                        mode: LaunchMode.externalNonBrowserApplication,
+                                      );
+                                    } else {
+                                      throw 'Could not launch $url';
+                                    }
+                                  },
+                                ),
+                              if (openSourceLink != null)
+                                _SettingItem(
+                                  title: '${applicationName ?? '应用'}${S.current.openSourceLink}',
+                                  suffix: Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 16.w,
+                                  ),
+                                  onTap: () async {
+                                    String url = openSourceLink!;
+                                    if (await canLaunchUrlString(url)) {
+                                      await launchUrlString(
+                                        url,
+                                        mode: LaunchMode.externalNonBrowserApplication,
+                                      );
+                                    } else {
+                                      throw 'Could not launch $url';
+                                    }
+                                  },
+                                ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 16.w),
+                        GlobalCardItem(
+                          padding: EdgeInsets.zero,
+                          child: Column(
+                            children: [
+                              if (hasTerms)
+                                _SettingItem(
+                                  title: '服务条款',
+                                  suffix: Icon(
+                                    Icons.arrow_forward_ios,
+                                    size: 16.w,
+                                  ),
+                                ),
+                              _SettingItem(
+                                title: S.current.privacyPolicy,
+                                suffix: Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 16.w,
+                                ),
+                                onTap: () {
+                                  openPage(const PrivacyPage(), title: '隐私政策');
+                                },
+                              ),
+                              _SettingItem(
+                                title: S.current.openSourceLink,
+                                suffix: Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 16.w,
+                                ),
+                                onTap: () {
+                                  openPage(
+                                    LicensePage(
+                                      applicationName: appName,
+                                    ),
+                                    title: '开源协议',
                                   );
-                                } else {
-                                  throw 'Could not launch $url';
-                                }
-                              },
-                            ),
-                          if (openSourceLink != null)
-                            _SettingItem(
-                              title: '${applicationName ?? '应用'}开源地址',
-                              suffix: Icon(
-                                Icons.arrow_forward_ios,
-                                size: 16.w,
+                                },
                               ),
-                              onTap: () async {
-                                String url = openSourceLink!;
-                                if (await canLaunchUrlString(url)) {
-                                  await launchUrlString(
-                                    url,
-                                    mode: LaunchMode.externalNonBrowserApplication,
-                                  );
-                                } else {
-                                  throw 'Could not launch $url';
-                                }
-                              },
-                            ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16.w),
-                    GlobalCardItem(
-                      padding: EdgeInsets.zero,
-                      child: Column(
-                        children: [
-                          if (hasTerms)
-                            _SettingItem(
-                              title: '服务条款',
-                              suffix: Icon(
-                                Icons.arrow_forward_ios,
-                                size: 16.w,
-                              ),
-                            ),
-                          _SettingItem(
-                            title: '隐私政策',
-                            suffix: Icon(
-                              Icons.arrow_forward_ios,
-                              size: 16.w,
-                            ),
-                            onTap: () {
-                              openPage(const PrivacyPage(), title: '隐私政策');
-                            },
+                            ],
                           ),
-                          _SettingItem(
-                            title: '开源协议',
-                            suffix: Icon(
-                              Icons.arrow_forward_ios,
-                              size: 16.w,
-                            ),
-                            onTap: () {
-                              openPage(
-                                LicensePage(
-                                  applicationName: appName,
+                        ),
+                        SizedBox(height: 16.w),
+                        GlobalCardItem(
+                          padding: EdgeInsets.zero,
+                          child: Column(
+                            children: [
+                              _SettingItem(
+                                title: 'github.com/mengyanshou',
+                                subTitle: '关注开发者Github',
+                                prefix: Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 8.w),
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      '$baseUri/YanTool/image/hong.jpg',
+                                      width: 44.w,
+                                    ),
+                                  ),
                                 ),
-                                title: '开源协议',
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16.w),
-                    GlobalCardItem(
-                      padding: EdgeInsets.zero,
-                      child: Column(
-                        children: [
-                          _SettingItem(
-                            title: 'github.com/mengyanshou',
-                            subTitle: '关注开发者Github',
-                            prefix: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.w),
-                              child: ClipOval(
-                                child: Image.network(
-                                  '$baseUri/YanTool/image/hong.jpg',
-                                  width: 44.w,
+                                suffix: Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 16.w,
                                 ),
+                                onTap: () async {
+                                  const String url = 'https://github.com/mengyanshou';
+                                  if (await canLaunchUrlString(url)) {
+                                    await launchUrlString(
+                                      url,
+                                      mode: LaunchMode.externalNonBrowserApplication,
+                                    );
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                },
                               ),
-                            ),
-                            suffix: Icon(
-                              Icons.arrow_forward_ios,
-                              size: 16.w,
-                            ),
-                            onTap: () async {
-                              const String url = 'https://github.com/mengyanshou';
-                              if (await canLaunchUrlString(url)) {
-                                await launchUrlString(
-                                  url,
-                                  mode: LaunchMode.externalNonBrowserApplication,
-                                );
-                              } else {
-                                throw 'Could not launch $url';
-                              }
-                            },
+                              SizedBox(height: 8.w),
+                              _SettingItem(
+                                title: '梦魇兽',
+                                subTitle: '关注开发者酷安',
+                                prefix: Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 8.w),
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      '$baseUri/YanTool/image/hong.jpg',
+                                      width: 44.w,
+                                    ),
+                                  ),
+                                ),
+                                suffix: Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 16.w,
+                                ),
+                                onTap: () async {
+                                  const String url = 'http://www.coolapk.com/u/1345256';
+                                  if (await canLaunchUrlString(url)) {
+                                    await launchUrlString(
+                                      url,
+                                      mode: LaunchMode.externalNonBrowserApplication,
+                                    );
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                },
+                              ),
+                              SizedBox(height: 8.w),
+                              _SettingItem(
+                                title: '其他相关软件下载',
+                                subTitle: '“无界”、“魇·工具箱”、“速享”、“Code FA”等相关作品下载',
+                                prefix: Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 8.w),
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      '$baseUri/YanTool/image/hong.jpg',
+                                      width: 44.w,
+                                    ),
+                                  ),
+                                ),
+                                suffix: Icon(
+                                  Icons.arrow_forward_ios,
+                                  size: 16.w,
+                                ),
+                                onTap: () async {
+                                  String url = '$baseUri';
+                                  if (await canLaunchUrlString(url)) {
+                                    await launchUrlString(
+                                      url,
+                                      mode: LaunchMode.externalNonBrowserApplication,
+                                    );
+                                  } else {
+                                    throw 'Could not launch $url';
+                                  }
+                                },
+                              ),
+                            ],
                           ),
-                          SizedBox(height: 8.w),
-                          _SettingItem(
-                            title: '梦魇兽',
-                            subTitle: '关注开发者酷安',
-                            prefix: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.w),
-                              child: ClipOval(
-                                child: Image.network(
-                                  '$baseUri/YanTool/image/hong.jpg',
-                                  width: 44.w,
+                        ),
+                        SizedBox(height: 16.w),
+                        GlobalCardItem(
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Padding(
+                              padding: EdgeInsets.all(10.w),
+                              child: Text(
+                                license ?? '',
+                                style: TextStyle(
+                                  color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
                                 ),
                               ),
-                            ),
-                            suffix: Icon(
-                              Icons.arrow_forward_ios,
-                              size: 16.w,
-                            ),
-                            onTap: () async {
-                              const String url = 'http://www.coolapk.com/u/1345256';
-                              if (await canLaunchUrlString(url)) {
-                                await launchUrlString(
-                                  url,
-                                  mode: LaunchMode.externalNonBrowserApplication,
-                                );
-                              } else {
-                                throw 'Could not launch $url';
-                              }
-                            },
-                          ),
-                          SizedBox(height: 8.w),
-                          _SettingItem(
-                            title: '其他相关软件下载',
-                            subTitle: '“无界”、“魇·工具箱”、“速享”、“Code FA”等相关作品下载',
-                            prefix: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.w),
-                              child: ClipOval(
-                                child: Image.network(
-                                  '$baseUri/YanTool/image/hong.jpg',
-                                  width: 44.w,
-                                ),
-                              ),
-                            ),
-                            suffix: Icon(
-                              Icons.arrow_forward_ios,
-                              size: 16.w,
-                            ),
-                            onTap: () async {
-                              String url = '$baseUri';
-                              if (await canLaunchUrlString(url)) {
-                                await launchUrlString(
-                                  url,
-                                  mode: LaunchMode.externalNonBrowserApplication,
-                                );
-                              } else {
-                                throw 'Could not launch $url';
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 16.w),
-                    GlobalCardItem(
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: Padding(
-                          padding: EdgeInsets.all(10.w),
-                          child: Text(
-                            license ?? '',
-                            style: TextStyle(
-                              color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
                             ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      }),
     );
   }
 }
@@ -432,7 +448,7 @@ class GlobalCardItem extends StatelessWidget {
     return Material(
       borderRadius: BorderRadius.circular(12.w),
       clipBehavior: Clip.hardEdge,
-      color: backgroundColor ?? Theme.of(context).cardColor,
+      color: backgroundColor ?? Theme.of(context).colorScheme.surfaceContainer,
       child: Padding(
         padding: padding ?? EdgeInsets.all(8.w),
         child: child,

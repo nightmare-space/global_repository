@@ -29,7 +29,6 @@ class _ChangeLogPageState extends State<ChangeLogPage> {
     String data = await rootBundle.loadString('CHANGELOG.md');
     // Log.i(data);
     RegExp regExp = RegExp('##');
-    Log.w(data.split(regExp));
     for (String line in data.split(regExp)) {
       String title = line.split('\n').first.trim();
       String summary = line.replaceAll(title, '').trim();
@@ -43,9 +42,7 @@ class _ChangeLogPageState extends State<ChangeLogPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-        title: Text('更新日志'),
-      ),
+      appBar: AppBar(title: Text('更新日志')),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 12.w),
         child: ListView.builder(
@@ -66,7 +63,13 @@ class _ChangeLogPageState extends State<ChangeLogPage> {
                       padding: EdgeInsets.all(10.w),
                       child: SizedBox(
                         width: double.infinity,
-                        child: Text(changes[i].summary),
+                        child: GestureDetector(
+                          onTap: () {
+                            Clipboard.setData(ClipboardData(text: changes[i].summary));
+                            showToast('已复制到剪切板');
+                          },
+                          child: Text(changes[i].summary),
+                        ),
                       ),
                     ),
                 ],

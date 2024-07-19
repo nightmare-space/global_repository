@@ -7,8 +7,12 @@ class LoggerView extends StatefulWidget {
   const LoggerView({
     Key? key,
     this.showActionButton = true,
+    this.fontSize = 12,
+    this.background = Colors.transparent,
   }) : super(key: key);
   final bool showActionButton;
+  final double fontSize;
+  final Color background;
 
   @override
   _LoggerViewState createState() => _LoggerViewState();
@@ -62,11 +66,13 @@ class _LoggerViewState extends State<LoggerView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: widget.background,
       body: Column(
         children: [
           Expanded(
             child: XTermWrapper(
               terminal: terminal,
+              fontSize: widget.fontSize,
             ),
           ),
           SizedBox(height: 8.w),
@@ -81,6 +87,7 @@ class _LoggerViewState extends State<LoggerView> {
                     setState(() {});
                     onChange();
                   },
+                  fontSize: widget.fontSize,
                 ),
                 CheckContainer(
                   value: debug,
@@ -90,6 +97,7 @@ class _LoggerViewState extends State<LoggerView> {
                     setState(() {});
                     onChange();
                   },
+                  fontSize: widget.fontSize,
                 ),
                 CheckContainer(
                   value: info,
@@ -99,6 +107,7 @@ class _LoggerViewState extends State<LoggerView> {
                     setState(() {});
                     onChange();
                   },
+                  fontSize: widget.fontSize,
                 ),
                 CheckContainer(
                   value: warning,
@@ -108,6 +117,7 @@ class _LoggerViewState extends State<LoggerView> {
                     setState(() {});
                     onChange();
                   },
+                  fontSize: widget.fontSize,
                 ),
                 CheckContainer(
                   value: error,
@@ -117,6 +127,7 @@ class _LoggerViewState extends State<LoggerView> {
                     setState(() {});
                     onChange();
                   },
+                  fontSize: widget.fontSize,
                 ),
               ],
             ),
@@ -132,11 +143,13 @@ class CheckContainer extends StatelessWidget {
     required this.onChanged,
     required this.value,
     required this.data,
+    required this.fontSize,
   }) : super(key: key);
 
   final void Function(bool value) onChanged;
   final bool value;
   final String data;
+  final double fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +168,7 @@ class CheckContainer extends StatelessWidget {
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
-            color: value ? Theme.of(context).primaryColor : Colors.grey.shade200,
+            color: value ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.onSurface,
             borderRadius: BorderRadius.circular(8.w),
           ),
           child: Center(
@@ -164,7 +177,9 @@ class CheckContainer extends StatelessWidget {
               child: Text(
                 data,
                 style: TextStyle(
-                  color: value ? Colors.white : Theme.of(context).textTheme.bodyMedium?.color,
+                  color: Colors.white,
+                  // color: value ? Colors.white : Theme.of(context).textTheme.bodyMedium?.color,
+                  fontSize: fontSize,
                 ),
               ),
             ),
