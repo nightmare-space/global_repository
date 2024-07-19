@@ -11,3 +11,5 @@ export 'http_server_util.dart';
 export 'assets_utils.dart';
 export 'statusbar_utils.dart';
 export 'unique_util.dart';
+export 'dependency_manager.dart';
+export 'http.dart';

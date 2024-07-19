@@ -1,13 +1,16 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:global_repository/global_repository.dart';
 import 'package:xterm/xterm.dart';
 
 class XTermWrapper extends StatefulWidget {
   const XTermWrapper({
     Key? key,
     required this.terminal,
+    required this.fontSize,
   }) : super(key: key);
   final Terminal terminal;
+  final double fontSize;
 
   @override
   State<XTermWrapper> createState() => _XTermWrapperState();
@@ -30,7 +33,7 @@ class _XTermWrapperState extends State<XTermWrapper> {
         backgroundOpacity: 0,
         readOnly: true,
         keyboardType: TextInputType.text,
-        textStyle: const TerminalStyle(fontSize: 12),
+        textStyle: TerminalStyle(fontSize: widget.fontSize),
         theme: Platform.isAndroid ? android : theme,
       ),
     );

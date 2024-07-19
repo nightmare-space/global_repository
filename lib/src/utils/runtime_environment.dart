@@ -4,6 +4,7 @@
 
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:path/path.dart';
 
@@ -29,6 +30,9 @@ class RuntimeEnvir {
     String? appSupportDirectory,
   }) {
     if (_isInit) {
+      return;
+    }
+    if (kIsWeb) {
       return;
     }
     _packageName = packageName;
@@ -121,7 +125,8 @@ class RuntimeEnvir {
     if (_environment.containsKey(_binKey)) {
       return _environment[_binKey];
     }
-    throw Exception();
+    if (!kIsWeb) throw Exception();
+    return '';
   }
 
   /// 这是是 PATH 这个变量的值
@@ -129,21 +134,24 @@ class RuntimeEnvir {
     if (_environment.containsKey(_pathKey)) {
       return _environment[_pathKey];
     }
-    throw Exception();
+    if (!kIsWeb) throw Exception();
+    return '';
   }
 
   static String get dataPath {
     if (_environment.containsKey(_dataKey)) {
       return _environment[_dataKey];
     }
-    throw Exception();
+    if (!kIsWeb) throw Exception();
+    return '';
   }
 
   static String get configPath {
     if (_environment.containsKey(_configKey)) {
       return _environment[_configKey];
     }
-    throw Exception();
+    if (!kIsWeb) throw Exception();
+    return '';
   }
 
   static set binPath(String? value) {
@@ -154,7 +162,8 @@ class RuntimeEnvir {
     if (_environment.containsKey(_usrKey)) {
       return _environment[_usrKey];
     }
-    throw Exception();
+    if (!kIsWeb) throw Exception();
+    return '';
   }
 
   static set usrPath(String? value) {
@@ -165,7 +174,8 @@ class RuntimeEnvir {
     if (_environment.containsKey(_tmpKey)) {
       return _environment[_tmpKey];
     }
-    throw Exception();
+    if (!kIsWeb) throw Exception();
+    return '';
   }
 
   static set tmpPath(String? value) {
@@ -176,7 +186,8 @@ class RuntimeEnvir {
     if (_environment.containsKey(_homeKey)) {
       return _environment[_homeKey];
     }
-    throw Exception();
+    if (!kIsWeb) throw Exception();
+    return '';
   }
 
   static set homePath(String? value) {
@@ -187,7 +198,8 @@ class RuntimeEnvir {
     if (_environment.containsKey(_filesKey)) {
       return _environment[_filesKey];
     }
-    throw Exception();
+    if (!kIsWeb) throw Exception();
+    return '';
   }
 
   static set filesPath(String? value) {
