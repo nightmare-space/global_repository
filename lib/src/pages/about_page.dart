@@ -200,7 +200,7 @@ class AboutPage extends StatelessWidget {
                                 },
                               ),
                               _SettingItem(
-                                title: S.current.openSourceLink,
+                                title: S.current.OpenSourceLicenses,
                                 suffix: Icon(
                                   Icons.arrow_forward_ios,
                                   size: 16.w,

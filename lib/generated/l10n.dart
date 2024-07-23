@@ -1,7 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:signale/signale.dart';
 import 'intl/messages_all.dart';
 
 // **************************************************************************
@@ -31,10 +30,8 @@ class S {
         ? locale.languageCode
         : locale.toString();
     final localeName = Intl.canonicalizedLocale(name);
-    Log.i('load: The locale is $localeName');
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      Log.i('initializeMessages call The locale is $localeName');
       final instance = S();
       S._current = instance;
 
@@ -55,7 +52,6 @@ class S {
 
   /// `Current Version`
   String get currentVersion {
-    Log.i('currentVersion -> get ${this.aboutTitle}');
     return Intl.message(
       'Current Version',
       name: 'currentVersion',
@@ -114,7 +110,15 @@ class S {
     );
   }
 
-  // skipped getter for the 'Open Source Licenses' key
+  /// `Open Source Licenses`
+  String get OpenSourceLicenses {
+    return Intl.message(
+      'Open Source Licenses',
+      name: 'OpenSourceLicenses',
+      desc: '',
+      args: [],
+    );
+  }
 
   /// `Other Version Download`
   String get otherVersionDownload {

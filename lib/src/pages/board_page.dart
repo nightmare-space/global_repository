@@ -2,9 +2,66 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/src/widgets/screen_query.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-// import 'package:speed_share/modules/personal/screen_util.dart';
-
 import 'board_util.dart';
+import 'diary.dart';
+
+class SelectTab extends StatefulWidget {
+  const SelectTab({
+    Key? key,
+    required this.onTabChange,
+    required this.value,
+  }) : super(key: key);
+  final int value;
+  final void Function(int index) onTabChange;
+
+  @override
+  State<SelectTab> createState() => _SelectTabState();
+}
+
+class _SelectTabState extends State<SelectTab> {
+  int selectValue = 0;
+  late TextStyle style = TextStyle(
+    fontSize: l(20),
+    fontWeight: FontWeight.bold,
+    color: Colors.white,
+  );
+  List<String> tabs = ['看板', '工作记录&日记'];
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        for (int i = 0; i < tabs.length; i++)
+          Builder(builder: (context) {
+            bool isSelect = selectValue == i;
+            return GestureDetector(
+              onTap: () {
+                selectValue = i;
+                widget.onTabChange(i);
+                setState(() {});
+              },
+              child: Container(
+                height: l(40),
+                decoration: BoxDecoration(
+                  color: isSelect ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.surfaceContainer,
+                  borderRadius: BorderRadius.circular(l(10)),
+                ),
+                margin: i != tabs.length - 1 ? EdgeInsets.only(right: l(20)) : null,
+                padding: EdgeInsets.symmetric(horizontal: l(20)),
+                child: Center(
+                  child: Text(
+                    tabs[i],
+                    style: style.copyWith(
+                      color: isSelect ? Colors.white : Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ),
+                ),
+              ),
+            );
+          }),
+      ],
+    );
+  }
+}
 
 class ProjBoard extends StatefulWidget {
   const ProjBoard();
@@ -15,6 +72,8 @@ class ProjBoard extends StatefulWidget {
 
 class _ProjBoardState extends State<ProjBoard> {
   Map<String, dynamic> projData = {};
+  int page = 0;
+  String time = '';
   @override
   void initState() {
     super.initState();
@@ -24,6 +83,8 @@ class _ProjBoardState extends State<ProjBoard> {
   Future<void> load() async {
     Response<Map<String, dynamic>> result = await Dio().get('https://nightmare.press/YanTool/resources/output.json');
     projData = result.data!;
+    time = projData['time'];
+    projData.remove('time');
     setState(() {});
   }
 
@@ -43,38 +104,76 @@ class _ProjBoardState extends State<ProjBoard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: l(100)),
-                Text(
-                  '''哈喽大家，为了让大家感知到我现在在做的事，和已经收录的问题，现在我把我自己的项目看板公开
-          
-后续会开发一个，需求加急功能，大家对比较关注的问题，可以点赞，我会优先处理
-          
-我目前是自由开发，给自己的要求是上四休三，每天会尽量付出8小时在这些项目          
-          ''',
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: l(20),
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                SizedBox(height: l(64)),
+                SelectTab(
+                  onTabChange: (index) {
+                    page = index;
+                    setState(() {});
+                  },
+                  value: page,
                 ),
-                for (String key in projData.keys)
+                [
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(height: l(20)),
                       Text(
-                        key,
+                        '哈喽大家，为了让大家感知到我现在在做的事，和已经收录的问题，现在我把我自己的项目看板公开',
+                        textAlign: TextAlign.start,
                         style: TextStyle(
-                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: l(20),
                           fontWeight: FontWeight.bold,
-                          fontSize: l(24),
+                          color: Colors.white,
                         ),
                       ),
-                      SizedBox(height: l(12)),
-                      BoardDetail(data: projData[key]),
-                      SizedBox(height: l(24)),
+                      SizedBox(height: l(20)),
+                      Text(
+                        '后续会开发一个，需求加急功能，大家对比较关注的问题，可以点赞，我会优先处理',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontSize: l(20),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: l(20)),
+                      Text(
+                        '我目前是自由开发，给自己的要求是上四休三，每天会尽量付出8小时在这些项目',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          fontSize: l(20),
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      SizedBox(height: l(20)),
+                      Row(
+                        children: [
+                          Text('当前页面更新时间：', style: TextStyle(color: Colors.white)),
+                          Text(time, style: TextStyle(color: Theme.of(context).primaryColor)),
+                        ],
+                      ),
+                      SizedBox(height: l(20)),
+                      for (String key in projData.keys)
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              key.replaceAll('.md', ''),
+                              style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary,
+                                fontWeight: FontWeight.bold,
+                                fontSize: l(24),
+                              ),
+                            ),
+                            SizedBox(height: l(12)),
+                            BoardDetail(data: projData[key]),
+                            SizedBox(height: l(24)),
+                          ],
+                        ),
                     ],
                   ),
+                  DiaryPage(),
+                ][page]
               ],
             ),
           ),
@@ -207,43 +306,5 @@ class HighlightedText extends StatelessWidget {
     return RichText(
       text: TextSpan(children: spans),
     );
-  }
-}
-
-class LineThroughPainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final textPainter = TextPainter(
-      text: TextSpan(
-        text: 'Hello, Flutter!',
-        style: TextStyle(
-          fontSize: 24,
-          color: Colors.black,
-        ),
-      ),
-      textDirection: TextDirection.ltr,
-    );
-
-    textPainter.layout();
-
-    textPainter.paint(canvas, Offset.zero);
-
-    final linePaint = Paint()
-      ..color = Colors.black
-      ..strokeWidth = 2; // 调整线条粗细
-
-    final textHeight = textPainter.size.height;
-    final yOffset = textHeight / 2;
-
-    canvas.drawLine(
-      Offset(0, yOffset),
-      Offset(textPainter.width, yOffset),
-      linePaint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
   }
 }

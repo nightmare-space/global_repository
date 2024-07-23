@@ -22,6 +22,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
+        "OpenSourceLicenses": MessageLookupByLibrary.simpleMessage("开源协议"),
         "aboutTitle": MessageLookupByLibrary.simpleMessage("关于"),
         "changelog": MessageLookupByLibrary.simpleMessage("更新日志"),
         "currentVersion": MessageLookupByLibrary.simpleMessage("当前版本"),
