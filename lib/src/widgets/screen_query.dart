@@ -8,13 +8,7 @@ class ScreenQuery extends InheritedWidget {
     required Widget child,
     required this.screenWidth,
   }) : super(child: child) {
-    if (screenWidth > 1000) {
-      // 长边的dp大于1000，适配平板，就不能在对组件进行比例缩放
-      // 小米10的长边是800多一点
-      scale = 1.0;
-    } else {
-      scale = screenWidth / uiWidth;
-    }
+    scale = screenWidth / uiWidth;
   }
 
   final double uiWidth;

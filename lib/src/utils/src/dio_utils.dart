@@ -7,7 +7,7 @@ class DioUtils {
   static Dio? _instance;
   static CancelToken? cancelToken;
 
-  static Dio? getInstance() {
+  static Dio getInstance() {
     if (_instance == null) {
       _instance = Dio();
       _instance!.interceptors.add(HeaderInterceptor());
@@ -30,6 +30,6 @@ class DioUtils {
         ),
       );
     }
-    return _instance;
+    return _instance!;
   }
 }
