@@ -16,7 +16,9 @@ class AssetsManager {
     required List<String> global,
     required String localPath,
     String package = '',
+    bool forceCopy = false,
   }) async {
+    String logPrefix = 'Change File Permission';
     if (Platform.isAndroid) {
       final Directory dir = Directory(localPath);
       if (!dir.existsSync()) {
@@ -24,17 +26,13 @@ class AssetsManager {
       }
       for (final String fileName in android!) {
         final filePath = localPath + fileName.replaceAll(RegExp('.*/'), '');
-        await AssetsUtils.copyAssetToPath(
-          '${package}assets/$fileName',
-          filePath,
-        );
-        final ProcessResult result = await Process.run(
-          'chmod',
-          <String>['+x', filePath],
-        );
-        Log.d(
-          '更改文件权限 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
-        );
+        try {
+          await AssetsUtils.copyAssetToPath('${package}assets/$fileName', filePath, forceCopy: forceCopy);
+        } catch (e) {
+          Log.e('copy $fileName error $e');
+        }
+        final ProcessResult result = await Process.run('chmod', ['+x', filePath]);
+        Log.d('$logPrefix $fileName stdout:${result.stdout} stderr:${result.stderr}');
       }
     }
     if (Platform.isMacOS) {
@@ -44,17 +42,13 @@ class AssetsManager {
       }
       for (final String fileName in macOS!) {
         final filePath = localPath + fileName.replaceAll(RegExp('.*/'), '');
-        await AssetsUtils.copyAssetToPath(
-          '${package}assets/$fileName',
-          filePath,
-        );
-        final ProcessResult result = await Process.run(
-          'chmod',
-          <String>['+x', filePath],
-        );
-        Log.d(
-          '更改文件权限 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
-        );
+        try {
+          await AssetsUtils.copyAssetToPath('${package}assets/$fileName', filePath, forceCopy: forceCopy);
+        } catch (e) {
+          Log.e('copy $fileName error $e');
+        }
+        final ProcessResult result = await Process.run('chmod', ['+x', filePath]);
+        Log.d('$logPrefix $fileName stdout:${result.stdout} stderr:${result.stderr}');
       }
     }
     final Directory dir = Directory(localPath);
@@ -63,18 +57,14 @@ class AssetsManager {
     }
     for (final String fileName in global) {
       final filePath = localPath + fileName.replaceAll(RegExp('.*/'), '');
-      await AssetsUtils.copyAssetToPath(
-        '${package}assets/$fileName',
-        filePath,
-      );
+      try {
+        await AssetsUtils.copyAssetToPath('${package}assets/$fileName', filePath, forceCopy: forceCopy);
+      } catch (e) {
+        Log.e('copy $fileName error $e');
+      }
       if (!Platform.isWindows) {
-        final ProcessResult result = await Process.run(
-          'chmod',
-          <String>['+x', filePath],
-        );
-        Log.d(
-          '更改文件权限 $fileName 输出 stdout:${result.stdout} stderr；${result.stderr}',
-        );
+        final ProcessResult result = await Process.run('chmod', ['+x', filePath]);
+        Log.d('$logPrefix $fileName stdout:${result.stdout} stderr:${result.stderr}');
       }
     }
   }

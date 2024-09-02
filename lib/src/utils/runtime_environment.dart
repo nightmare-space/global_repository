@@ -4,8 +4,8 @@
 
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
-import 'package:get/get.dart';
+// import 'package:flutter/foundation.dart';
+import 'package:global_repository/src/utils/document/document.dart';
 import 'package:path/path.dart';
 
 String _binKey = 'BIN';
@@ -25,6 +25,8 @@ class RuntimeEnvir {
   static String? _packageName;
   static String? get packageName => _packageName;
 
+  bool get isDesktop => Platform.isWindows || Platform.isMacOS || Platform.isLinux;
+
   static void initEnvirWithPackageName(
     String packageName, {
     String? appSupportDirectory,
@@ -32,18 +34,18 @@ class RuntimeEnvir {
     if (_isInit) {
       return;
     }
-    if (kIsWeb) {
+    if (isWeb) {
       return;
     }
     _packageName = packageName;
-    if (GetPlatform.isDesktop) {
+    if (!isWeb && Platform.isWindows) {
       _initEnvirForDesktop(
         packageName,
         appSupportDirectory: appSupportDirectory,
       );
       return;
     }
-    if (GetPlatform.isIOS) {
+    if (Platform.isIOS) {
       _environment[_dataKey] = appSupportDirectory;
     } else {
       _environment[_dataKey] = '/data/data/$packageName';
@@ -55,7 +57,7 @@ class RuntimeEnvir {
     _environment[_binKey] = '${_environment[_usrKey]}/bin';
     _environment[_homeKey] = '${_environment[_filesKey]}/home';
     _environment[_tmpKey] = '${_environment[_usrKey]}/tmp';
-    if (!GetPlatform.isIOS) {
+    if (!Platform.isIOS) {
       _environment[_pathKey] = '${_environment[_binKey]}:' + Platform.environment['PATH']!;
     }
     _isInit = true;
@@ -125,7 +127,7 @@ class RuntimeEnvir {
     if (_environment.containsKey(_binKey)) {
       return _environment[_binKey];
     }
-    if (!kIsWeb) throw Exception();
+    if (!isWeb) throw Exception();
     return '';
   }
 
@@ -134,7 +136,7 @@ class RuntimeEnvir {
     if (_environment.containsKey(_pathKey)) {
       return _environment[_pathKey];
     }
-    if (!kIsWeb) throw Exception();
+    if (!isWeb) throw Exception();
     return '';
   }
 
@@ -142,7 +144,7 @@ class RuntimeEnvir {
     if (_environment.containsKey(_dataKey)) {
       return _environment[_dataKey];
     }
-    if (!kIsWeb) throw Exception();
+    if (!isWeb) throw Exception();
     return '';
   }
 
@@ -150,7 +152,7 @@ class RuntimeEnvir {
     if (_environment.containsKey(_configKey)) {
       return _environment[_configKey];
     }
-    if (!kIsWeb) throw Exception();
+    if (!isWeb) throw Exception();
     return '';
   }
 
@@ -162,7 +164,7 @@ class RuntimeEnvir {
     if (_environment.containsKey(_usrKey)) {
       return _environment[_usrKey];
     }
-    if (!kIsWeb) throw Exception();
+    if (!isWeb) throw Exception();
     return '';
   }
 
@@ -174,7 +176,7 @@ class RuntimeEnvir {
     if (_environment.containsKey(_tmpKey)) {
       return _environment[_tmpKey];
     }
-    if (!kIsWeb) throw Exception();
+    if (!isWeb) throw Exception();
     return '';
   }
 
@@ -186,7 +188,7 @@ class RuntimeEnvir {
     if (_environment.containsKey(_homeKey)) {
       return _environment[_homeKey];
     }
-    if (!kIsWeb) throw Exception();
+    if (!isWeb) throw Exception();
     return '';
   }
 
@@ -198,7 +200,7 @@ class RuntimeEnvir {
     if (_environment.containsKey(_filesKey)) {
       return _environment[_filesKey];
     }
-    if (!kIsWeb) throw Exception();
+    if (!isWeb) throw Exception();
     return '';
   }
 

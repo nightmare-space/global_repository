@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:global_repository/src/widgets/screen_query.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'board_util.dart';
-import 'diary.dart';
+import '../board_util.dart';
+import 'diary_page.dart';
 
 class SelectTab extends StatefulWidget {
   const SelectTab({
@@ -40,10 +40,10 @@ class _SelectTabState extends State<SelectTab> {
                 setState(() {});
               },
               child: Container(
-                height: l(40),
+                height: l(48),
                 decoration: BoxDecoration(
                   color: isSelect ? Theme.of(context).primaryColor : Theme.of(context).colorScheme.surfaceContainer,
-                  borderRadius: BorderRadius.circular(l(10)),
+                  borderRadius: BorderRadius.circular(l(12)),
                 ),
                 margin: i != tabs.length - 1 ? EdgeInsets.only(right: l(20)) : null,
                 padding: EdgeInsets.symmetric(horizontal: l(20)),
@@ -52,6 +52,7 @@ class _SelectTabState extends State<SelectTab> {
                     tabs[i],
                     style: style.copyWith(
                       color: isSelect ? Colors.white : Theme.of(context).colorScheme.onSurface,
+                      fontSize: l(18),
                     ),
                   ),
                 ),
@@ -98,84 +99,96 @@ class _ProjBoardState extends State<ProjBoard> {
         backgroundColor: Colors.black,
         body: Padding(
           padding: EdgeInsets.symmetric(horizontal: isMobile ? l(20) : l(120)),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.only(bottom: l(100)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: l(64)),
-                SelectTab(
-                  onTabChange: (index) {
-                    page = index;
-                    setState(() {});
-                  },
-                  value: page,
-                ),
-                [
-                  Column(
-                    children: [
-                      SizedBox(height: l(20)),
-                      Text(
-                        '哈喽大家，为了让大家感知到我现在在做的事，和已经收录的问题，现在我把我自己的项目看板公开',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: l(20),
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: l(64)),
+              SelectTab(
+                onTabChange: (index) {
+                  page = index;
+                  setState(() {});
+                },
+                value: page,
+              ),
+              Expanded(
+                child: [
+                  SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(bottom: l(100)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: l(20)),
+                        Text(
+                          '哈喽大家，为了让大家感知到我现在在做的事，和已经收录的问题，现在我把我自己的项目看板公开',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontSize: l(20),
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: l(20)),
-                      Text(
-                        '后续会开发一个，需求加急功能，大家对比较关注的问题，可以点赞，我会优先处理',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: l(20),
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                        SizedBox(height: l(20)),
+                        Text(
+                          '后续会开发一个，需求加急功能，大家对比较关注的问题，可以点赞，我会优先处理',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontSize: l(20),
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: l(20)),
-                      Text(
-                        '我目前是自由开发，给自己的要求是上四休三，每天会尽量付出8小时在这些项目',
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          fontSize: l(20),
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
+                        SizedBox(height: l(20)),
+                        Text(
+                          '我目前是自由开发，给自己的要求是上四休三，每天会尽量付出8小时在这些项目',
+                          textAlign: TextAlign.start,
+                          style: TextStyle(
+                            fontSize: l(20),
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white,
+                          ),
                         ),
-                      ),
-                      SizedBox(height: l(20)),
-                      Row(
-                        children: [
-                          Text('当前页面更新时间：', style: TextStyle(color: Colors.white)),
-                          Text(time, style: TextStyle(color: Theme.of(context).primaryColor)),
-                        ],
-                      ),
-                      SizedBox(height: l(20)),
-                      for (String key in projData.keys)
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        SizedBox(height: l(20)),
+                        Row(
                           children: [
                             Text(
-                              key.replaceAll('.md', ''),
+                              '当前页面更新时间：',
+                              style: TextStyle(color: Colors.white, fontSize: l(20)),
+                            ),
+                            Text(
+                              time,
                               style: TextStyle(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.bold,
-                                fontSize: l(24),
+                                color: Theme.of(context).primaryColor,
+                                fontSize: l(20),
                               ),
                             ),
-                            SizedBox(height: l(12)),
-                            BoardDetail(data: projData[key]),
-                            SizedBox(height: l(24)),
                           ],
                         ),
-                    ],
+                        SizedBox(height: l(20)),
+                        for (String key in projData.keys)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                key.replaceAll('.md', ''),
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.w500,
+                                  fontSize: l(24),
+                                ),
+                              ),
+                              SizedBox(height: l(12)),
+                              BoardDetail(data: projData[key]),
+                              SizedBox(height: l(24)),
+                            ],
+                          ),
+                      ],
+                    ),
                   ),
                   DiaryPage(),
-                ][page]
-              ],
-            ),
+                ][page],
+              )
+            ],
           ),
         ),
       ),
@@ -201,6 +214,7 @@ class _BoardDetailState extends State<BoardDetail> {
           scrollDirection: Axis.horizontal,
           controller: ScrollController(),
           physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.zero,
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -216,7 +230,7 @@ class _BoardDetailState extends State<BoardDetail> {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: l(20),
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                         SizedBox(height: l(12)),
