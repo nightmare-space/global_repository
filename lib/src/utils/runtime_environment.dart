@@ -25,7 +25,7 @@ class RuntimeEnvir {
   static String? _packageName;
   static String? get packageName => _packageName;
 
-  bool get isDesktop => Platform.isWindows || Platform.isMacOS || Platform.isLinux;
+  static bool get isDesktop => Platform.isWindows || Platform.isMacOS || Platform.isLinux;
 
   static void initEnvirWithPackageName(
     String packageName, {
@@ -38,7 +38,7 @@ class RuntimeEnvir {
       return;
     }
     _packageName = packageName;
-    if (!isWeb && Platform.isWindows) {
+    if (!isWeb && isDesktop) {
       _initEnvirForDesktop(
         packageName,
         appSupportDirectory: appSupportDirectory,
