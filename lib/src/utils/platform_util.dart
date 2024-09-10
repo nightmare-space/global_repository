@@ -16,12 +16,13 @@ Future<String> exec(String cmd) async {
 }
 
 bool isAddress(String content) {
-  final RegExp regExp = RegExp(
-      '((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}');
+  final RegExp regExp = RegExp('((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}');
   return regExp.hasMatch(content);
 }
 
-// 针对平台
+// TODO 重构成不需要 IO 的方式
+// 以适配 Web
+//
 class PlatformUtil {
   static Future<List<String>> localAddress() async {
     List<String> address = [];
