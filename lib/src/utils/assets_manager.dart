@@ -24,15 +24,17 @@ class AssetsManager {
       if (!dir.existsSync()) {
         await dir.create(recursive: true);
       }
-      for (final String fileName in android!) {
-        final filePath = localPath + fileName.replaceAll(RegExp('.*/'), '');
-        try {
-          await AssetsUtils.copyAssetToPath('${package}assets/$fileName', filePath, forceCopy: forceCopy);
-        } catch (e) {
-          Log.e('copy $fileName error $e');
+      if (android != null) {
+        for (final String fileName in android!) {
+          final filePath = localPath + fileName.replaceAll(RegExp('.*/'), '');
+          try {
+            await AssetsUtils.copyAssetToPath('${package}assets/$fileName', filePath, forceCopy: forceCopy);
+          } catch (e) {
+            Log.e('copy $fileName error $e');
+          }
+          final ProcessResult result = await Process.run('chmod', ['+x', filePath]);
+          Log.d('$logPrefix $fileName stdout:${result.stdout} stderr:${result.stderr}');
         }
-        final ProcessResult result = await Process.run('chmod', ['+x', filePath]);
-        Log.d('$logPrefix $fileName stdout:${result.stdout} stderr:${result.stderr}');
       }
     }
     if (Platform.isMacOS) {

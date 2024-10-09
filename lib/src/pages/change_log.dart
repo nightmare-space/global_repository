@@ -11,7 +11,8 @@ class ChangeNode {
 
 ///  更新日志
 class ChangeLogPage extends StatefulWidget {
-  const ChangeLogPage({Key? key}) : super(key: key);
+  const ChangeLogPage({Key? key, this.showAppbar = true}) : super(key: key);
+  final bool showAppbar;
 
   @override
   State createState() => _ChangeLogPageState();
@@ -41,8 +42,7 @@ class _ChangeLogPageState extends State<ChangeLogPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(title: Text('更新日志')),
+      appBar: widget.showAppbar ? AppBar(title: Text('更新日志')) : null,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 12.w),
         child: ListView.builder(

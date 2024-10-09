@@ -123,7 +123,7 @@ class RuntimeEnvir {
     return '';
   }
 
-  static String? get binPath {
+  static String get binPath {
     if (_environment.containsKey(_binKey)) {
       return _environment[_binKey];
     }
