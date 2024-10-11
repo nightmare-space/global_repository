@@ -192,12 +192,12 @@ class _WrapContainerListState extends State<WrapContainerList> {
     final double dpWidth = maxWidth;
     // debugPrint('$dpWidth');
     int i = 7;
-    if (ResponsiveBreakpoints.of(context).isPhone) {
+    if (ResponsiveBreakpoints.of(context).isMobile) {
       for (; dpWidth / i < widget.phoneChangeBreakPoint; i--) {}
     } else {
       for (; dpWidth / i < widget.width; i--) {}
     }
-    return (dpWidth - 2 * padding - 2) / i;
+    return (dpWidth - 2 * padding) / i;
   }
 
   @override
@@ -213,10 +213,13 @@ class _WrapContainerListState extends State<WrapContainerList> {
             runSpacing: 0.w,
             children: [
               ...widget.children
-                  .map((widget) => AnimatedContainer(
+                  .map(
+                    (widget) => AnimatedContainer(
                       duration: Duration(milliseconds: 300),
                       width: boxWidth,
-                      child: widget))
+                      child: widget,
+                    ),
+                  )
                   .toList(),
             ],
           );
