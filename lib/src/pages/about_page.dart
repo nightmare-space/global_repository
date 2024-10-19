@@ -156,7 +156,7 @@ class AboutPage extends StatelessWidget {
                                 ),
                               if (openSourceLink != null)
                                 _SettingItem(
-                                  title: '${applicationName ?? '应用'}${S.current.openSourceLink}',
+                                  title: '${applicationName ?? '应用'} ${S.current.openSourceLink}',
                                   suffix: Icon(
                                     Icons.arrow_forward_ios,
                                     size: 16.w,
