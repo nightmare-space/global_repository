@@ -22,19 +22,22 @@ String _pathKey = 'PATH';
 class RuntimeEnvir {
   static bool _isInit = false;
   static Map<String, dynamic> _environment = {};
+  static Map<String, dynamic> get environment => _environment;
   static String? _packageName;
   static String? get packageName => _packageName;
 
   static bool get isDesktop => Platform.isWindows || Platform.isMacOS || Platform.isLinux;
 
+  static void initEnvirFromMap(Map<String, dynamic> map) {
+    _environment = map;
+    _isInit = true;
+  }
+
   static void initEnvirWithPackageName(
     String packageName, {
     String? appSupportDirectory,
   }) {
-    if (_isInit) {
-      return;
-    }
-    if (isWeb) {
+    if (isWeb || _isInit) {
       return;
     }
     _packageName = packageName;

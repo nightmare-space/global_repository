@@ -190,7 +190,6 @@ class _WrapContainerListState extends State<WrapContainerList> {
   double padding = 0.0;
   double getWidth(double maxWidth) {
     final double dpWidth = maxWidth;
-    // debugPrint('$dpWidth');
     int i = 7;
     if (ResponsiveBreakpoints.of(context).isMobile) {
       for (; dpWidth / i < widget.phoneChangeBreakPoint; i--) {}

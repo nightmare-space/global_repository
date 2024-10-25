@@ -75,7 +75,7 @@ class _DiaryPageState extends State<DiaryPage> {
                 Material(
                   borderRadius: BorderRadius.circular(l(12)),
                   clipBehavior: Clip.hardEdge,
-                  color: Color(0xff141414),
+                  color: Color(0xff121212),
                   child: Padding(
                     padding: EdgeInsets.all(l(10)),
                     child: Text(
