@@ -47,19 +47,19 @@ class _LoggerViewState extends State<LoggerView> {
   void printToConsole(LogEntity entity) {
     final String data = entity.data;
     if (entity.level == LogLevel.verbose && verbose) {
-      terminal.write(data + "\r\n");
+      terminal.write("$data\r\n");
     }
     if (entity.level == LogLevel.debug && debug) {
-      terminal.write(data + "\r\n");
+      terminal.write("$data\r\n");
     }
     if (entity.level == LogLevel.info && info) {
-      terminal.write(data + "\r\n");
+      terminal.write("$data\r\n");
     }
     if (entity.level == LogLevel.warning && warning) {
-      terminal.write(data + "\r\n");
+      terminal.write("$data\r\n");
     }
     if (entity.level == LogLevel.error && error) {
-      terminal.write(data + "\r\n");
+      terminal.write("$data\r\n");
     }
   }
 

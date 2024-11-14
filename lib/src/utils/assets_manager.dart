@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:global_repository/global_repository.dart';
 
 /// Create by Nightmare at 2022/03/01
@@ -25,7 +24,7 @@ class AssetsManager {
         await dir.create(recursive: true);
       }
       if (android != null) {
-        for (final String fileName in android!) {
+        for (final String fileName in android) {
           final filePath = localPath + fileName.replaceAll(RegExp('.*/'), '');
           try {
             await AssetsUtils.copyAssetToPath('${package}assets/$fileName', filePath, forceCopy: forceCopy);

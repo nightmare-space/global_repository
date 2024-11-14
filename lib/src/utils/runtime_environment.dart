@@ -61,7 +61,7 @@ class RuntimeEnvir {
     _environment[_homeKey] = '${_environment[_filesKey]}/home';
     _environment[_tmpKey] = '${_environment[_usrKey]}/tmp';
     if (!Platform.isIOS) {
-      _environment[_pathKey] = '${_environment[_binKey]}:' + Platform.environment['PATH']!;
+      _environment[_pathKey] = '${_environment[_binKey]}:${Platform.environment['PATH']!}';
     }
     _isInit = true;
   }
@@ -78,12 +78,12 @@ class RuntimeEnvir {
     }
     String execPath = dirname(Platform.resolvedExecutable);
     String s = Platform.pathSeparator;
-    String execDataPath = execPath + s + 'data';
-    String execBinPath = execPath + s + 'data${s}usr${s}bin';
+    String execDataPath = '$execPath${s}data';
+    String execBinPath = '$execPath${s}data${s}usr${s}bin';
     String dataPath = appSupportDirectory ?? execDataPath;
     Directory dataDir = Directory(dataPath);
     if (Platform.isLinux) {
-      String configPath = Platform.environment['HOME']! + '/.config/$package';
+      String configPath = '${Platform.environment['HOME']!}/.config/$package';
       Directory configDir = Directory(configPath);
       if (!configDir.existsSync()) {
         configDir.createSync();
@@ -102,9 +102,9 @@ class RuntimeEnvir {
     _environment[_homeKey] = '$dataPath${s}home';
     _environment[_tmpKey] = '${_environment[_usrKey]}${s}tmp';
     if (Platform.isWindows) {
-      _environment[_pathKey] = '$execBinPath;' + '${_environment[_binKey]};' + Platform.environment['PATH']!;
+      _environment[_pathKey] = '$execBinPath;' '${_environment[_binKey]};' + Platform.environment['PATH']!;
     } else {
-      _environment[_pathKey] = '$execBinPath/:' + '${_environment[_binKey]}:' + Platform.environment['PATH']!;
+      _environment[_pathKey] = '$execBinPath/:' '${_environment[_binKey]}:' + Platform.environment['PATH']!;
     }
     _isInit = true;
   }

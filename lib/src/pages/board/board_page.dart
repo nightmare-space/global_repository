@@ -7,7 +7,7 @@ import 'diary_page.dart';
 import 'select_tab.dart';
 
 class ProjBoard extends StatefulWidget {
-  const ProjBoard();
+  const ProjBoard({Key? key}) : super(key: key);
 
   @override
   State<ProjBoard> createState() => _ProjBoardState();

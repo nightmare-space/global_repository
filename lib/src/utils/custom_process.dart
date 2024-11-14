@@ -62,7 +62,7 @@ class YanProcess implements Executable {
     processStderr = _process!.stderr.asBroadcastStream();
     // 不加这个，会出现err输出会累计到最后输出
     processStderr.transform(utf8.decoder).listen((event) {
-      Log.e('$event', tag: 'NiProcess');
+      Log.e(event, tag: 'NiProcess');
     });
   }
 
@@ -122,10 +122,10 @@ class YanProcess implements Executable {
             // print('processStdout输出为======>$out');
             buffer.write(out);
             callback?.call(out);
-            if (out.contains('$exitKey') && !resultComp.isCompleted) {
+            if (out.contains(exitKey) && !resultComp.isCompleted) {
               // Log.e('${script.trim()}释放');
               resultComp.complete(
-                buffer.toString().replaceAll('$exitKey', '').trim(),
+                buffer.toString().replaceAll(exitKey, '').trim(),
               );
               return false;
             }

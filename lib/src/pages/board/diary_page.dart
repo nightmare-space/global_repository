@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:global_repository/src/pages/about_page.dart';
 import 'package:global_repository/src/widgets/widgets.dart';
 import 'package:signale/signale.dart';
 
@@ -37,8 +36,8 @@ class _DiaryPageState extends State<DiaryPage> {
     for (String line in diary.split(regExp)) {
       String title = line.split('\n').first.trim();
       String summary = line.replaceAll(title, '').trim();
-      Log.i('title -> ${title}');
-      Log.i('summary -> ${summary}');
+      Log.i('title -> $title');
+      Log.i('summary -> $summary');
       if (summary.isEmpty) {
         continue;
       }
