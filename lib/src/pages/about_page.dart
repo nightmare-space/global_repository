@@ -5,12 +5,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/generated/l10n.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:global_repository/src/utils/page_util.dart';
-import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
-import 'privacy_page.dart';
 
 FontWeight? _bold = GetPlatform.isLinux ? null : FontWeight.bold;
 String _defaultApplicationName(BuildContext context) {
@@ -297,7 +294,7 @@ class AboutPage extends StatelessWidget {
                                   size: 16.w,
                                 ),
                                 onTap: () async {
-                                  String url = '$baseUri';
+                                  String url = baseUri;
                                   if (await canLaunchUrlString(url)) {
                                     await launchUrlString(
                                       url,

@@ -1,7 +1,5 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:global_repository/src/utils/screen_util.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -219,7 +217,7 @@ class _WrapContainerListState extends State<WrapContainerList> {
                       child: widget,
                     ),
                   )
-                  .toList(),
+                  ,
             ],
           );
         }),

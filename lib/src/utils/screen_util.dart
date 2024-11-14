@@ -46,8 +46,8 @@ class ScreenAdapter {
       double androidDPI = devicePixelRatio * 160;
       Log.i("DP Size.longestSide -> ${dpSize.longestSide}", tag: 'ScreenAdapter');
       Log.i("DP Size.width -> ${dpSize.width}", tag: 'ScreenAdapter');
-      Log.i("devicePixelRatio -> ${devicePixelRatio}", tag: 'ScreenAdapter');
-      Log.i("Android DPI -> ${androidDPI}", tag: 'ScreenAdapter');
+      Log.i("devicePixelRatio -> $devicePixelRatio", tag: 'ScreenAdapter');
+      Log.i("Android DPI -> $androidDPI", tag: 'ScreenAdapter');
       width = dpSize.width;
     }
     // Log.i('ScreenAdapter init -> ${window.physicalSize.width} $width');

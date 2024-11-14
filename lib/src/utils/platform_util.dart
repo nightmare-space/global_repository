@@ -62,7 +62,7 @@ class PlatformUtil {
     }
     final Map<String, String> map = Map.from(Platform.environment);
     // print(map);
-    return map['HOME']! + '/downloads';
+    return '${map['HOME']!}/downloads';
   }
 
   static Map<String, String> envir() {
@@ -71,16 +71,16 @@ class PlatformUtil {
     }
     final Map<String, String> map = Map.from(Platform.environment);
     if (Platform.isWindows) {
-      map['PATH'] = RuntimeEnvir.binPath! + ';' + map['PATH']!;
+      map['PATH'] = '${RuntimeEnvir.binPath};${map['PATH']!}';
     } else {
-      map['PATH'] = RuntimeEnvir.binPath! + ':' + map['PATH']!;
+      map['PATH'] = '${RuntimeEnvir.binPath}:${map['PATH']!}';
     }
     return map;
   }
 
   static Map<String, String> environmentByPackage(String packageName) {
     final Map<String, String> map = Map.from(Platform.environment);
-    map['PATH'] = RuntimeEnvir.binPath! + ';' + map['PATH']!;
+    map['PATH'] = '${RuntimeEnvir.binPath};${map['PATH']!}';
     return map;
   }
 
@@ -96,10 +96,11 @@ class PlatformUtil {
     stderr = result.stderr.toString();
     // print('stderr->${result.stderr.toString()}');
     // print('stdout->${result.stdout.toString()}');
-    if (Platform.isWindows)
+    if (Platform.isWindows) {
       return stderr.isEmpty;
-    else
+    } else {
       return stdout.isNotEmpty;
+    }
   }
 
   static Future<String?> getDocumentDirectory() async {

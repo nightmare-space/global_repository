@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart' hide TabController;
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:global_repository/src/controller/tab_controller.dart';
 import 'package:window_manager/window_manager.dart';
 
 class TopTab extends StatefulWidget {
@@ -112,7 +111,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
                                   Stack(
                                     children: [
                                       Material(
-                                        color: Theme.of(context).colorScheme.background,
+                                        color: Theme.of(context).colorScheme.surface,
                                         child: SizedBox(
                                           height: tabHeight,
                                           width: 10.w,
@@ -134,7 +133,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
                                     height: tabHeight,
                                     width: tabWidth,
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.background,
+                                      color: Theme.of(context).colorScheme.surface,
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(12.w),
                                         topRight: Radius.circular(12.w),
@@ -144,7 +143,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
                                   Stack(
                                     children: [
                                       Material(
-                                        color: Theme.of(context).colorScheme.background,
+                                        color: Theme.of(context).colorScheme.surface,
                                         child: SizedBox(
                                           height: tabHeight,
                                           width: 10.w,
@@ -201,7 +200,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
                                         child: Stack(
                                           alignment: Alignment.centerRight,
                                           children: [
-                                            Container(
+                                            SizedBox(
                                               height: tabHeight,
                                               width: tabWidth,
                                               child: Center(child: widget.children[i]),
@@ -209,7 +208,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
                                             Row(
                                               mainAxisAlignment: MainAxisAlignment.end,
                                               children: [
-                                                Container(
+                                                SizedBox(
                                                   width: tabHeight,
                                                   height: tabHeight,
                                                   child: InkWell(
@@ -243,7 +242,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
                 ),
               ),
             if (GetPlatform.isDesktop)
-              Container(
+              SizedBox(
                 height: 24,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,

@@ -74,10 +74,11 @@ class DialogBuilderState extends State<DialogBuilder> with SingleTickerProviderS
   @override
   void initState() {
     super.initState();
-    if (widget.tag != null)
+    if (widget.tag != null) {
       _key = GlobalObjectKey(widget.tag!);
-    else
+    } else {
       _key = GlobalKey();
+    }
     _animationController = AnimationController(
       duration: widget.duration,
       vsync: this,

@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:signale/signale.dart';
 
 class ScreenQuery extends InheritedWidget {
-  ScreenQuery({
+  ScreenQuery({Key? key, 
     required this.uiWidth,
     required Widget child,
     required this.screenWidth,
     double longWidthScale = 1.0,
-  }) : super(child: child) {
+  }) : super(key: key, child: child) {
     // TODO 屏幕适配这块一直很模糊
     //
     if (screenWidth > 1000) {
@@ -27,9 +27,9 @@ class ScreenQuery extends InheritedWidget {
       // ignore: deprecated_member_use
       double devicePixelRatio = window.devicePixelRatio;
       double androidDPI = devicePixelRatio * 160;
-      Log.i("screenWidth -> ${screenWidth}", tag: 'ScreenAdapter');
-      Log.i("devicePixelRatio -> ${devicePixelRatio}", tag: 'ScreenAdapter');
-      Log.i("Android DPI -> ${androidDPI}", tag: 'ScreenAdapter');
+      Log.i("screenWidth -> $screenWidth", tag: 'ScreenAdapter');
+      Log.i("devicePixelRatio -> $devicePixelRatio", tag: 'ScreenAdapter');
+      Log.i("Android DPI -> $androidDPI", tag: 'ScreenAdapter');
       // 这里其实就是不适配宽高了
       // 但是在 4K 显示器上，所有的 Size 看起来都会非常小
       // 可以参考 Windows 的缩放比例
