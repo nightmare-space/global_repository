@@ -1,4 +1,3 @@
-import 'package:global_repository/global_repository.dart';
 
 void main() {
   // NiProcess.exec('sleep 3&&echo a');

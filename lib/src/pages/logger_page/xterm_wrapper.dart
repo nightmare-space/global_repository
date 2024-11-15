@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:global_repository/global_repository.dart';
 import 'package:xterm/xterm.dart';
 
 class XTermWrapper extends StatefulWidget {

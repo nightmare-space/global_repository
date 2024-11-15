@@ -22,9 +22,9 @@ Future<String> exec(String cmd) async {
 Map<String, String> envir() {
   final Map<String, String> map = Map.from(Platform.environment);
   if (Platform.isWindows) {
-    map['PATH'] = RuntimeEnvir.binPath! + ';' + map['PATH']!;
+    map['PATH'] = '${RuntimeEnvir.binPath};${map['PATH']!}';
   } else {
-    map['PATH'] = RuntimeEnvir.binPath! + ':' + map['PATH']!;
+    map['PATH'] = '${RuntimeEnvir.binPath}:${map['PATH']!}';
   }
   return map;
 }

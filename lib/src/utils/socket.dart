@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:signale/signale.dart';
 
 Future<int?> getSafePort(int rangeStart, int rangeEnd) async {
   if (rangeStart == rangeEnd) {

@@ -53,7 +53,7 @@ void showToast(
     },
   );
   //往Overlay中插入插入OverlayEntry
-  Overlay.of(contexts.last)!.insert(overlayEntry);
+  Overlay.of(contexts.last).insert(overlayEntry);
   //两秒后，移除Toast
   Future<void>.delayed(duration).then((_) {
     // ExplosionWidget.bang();
@@ -95,15 +95,15 @@ class _NiToastState extends State<NiToastNew> {
       ],
     );
     return Directionality(
+      textDirection: TextDirection.ltr,
       child: MediaQuery(
-        data: MediaQueryData.fromWindow(window),
+        data: MediaQueryData.fromView(window),
         child: Localizations(
           locale: const Locale('en', 'US'),
           delegates: _localizationsDelegates.toList(),
           child: overlay,
         ),
       ),
-      textDirection: TextDirection.ltr,
     );
   }
 }
@@ -130,6 +130,7 @@ class _ToastAppState extends State<ToastApp> {
       ],
     );
     return Directionality(
+      textDirection: TextDirection.ltr,
       child: MediaQuery(
         data: MediaQuery.of(context),
         child: Localizations(
@@ -138,7 +139,6 @@ class _ToastAppState extends State<ToastApp> {
           child: overlay,
         ),
       ),
-      textDirection: TextDirection.ltr,
     );
   }
 }
