@@ -26,7 +26,9 @@ class _SelectTabState extends State<SelectTab> {
   );
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    ThemeData theme = Theme.of(context).copyWith(
+      brightness: Brightness.dark,
+    );
     ColorScheme colorScheme = theme.colorScheme;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,

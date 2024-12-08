@@ -33,6 +33,9 @@ class TabController extends GetxController {
 
   /// 初始化页面
   void setInitPage(PageEntity page) {
+    if (pages.isNotEmpty) {
+      return;
+    }
     pages = [page];
     update();
   }

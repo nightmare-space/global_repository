@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/generated/l10n.dart';
@@ -55,7 +56,6 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Log.i('Localizations.localeOf(context) -> ${Localizations.localeOf(context)}');
     S.load(Localizations.localeOf(context));
     return Localizations(
       locale: Localizations.localeOf(context),
@@ -73,6 +73,9 @@ class AboutPage extends StatelessWidget {
             title: Text(S.of(context).aboutTitle),
             leading: canOpenDrawer ? DrawerOpenButton(scaffoldContext: context) : null,
             automaticallyImplyLeading: false,
+            systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarIconBrightness: Brightness.dark,
+            ),
           );
         }
         return Scaffold(

@@ -72,7 +72,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    Color tabColor = Theme.of(context).brightness == Brightness.light ? Color(0xffe8e9ee) : Colors.black;
+    Color tabColor = Theme.of(context).colorScheme.surfaceContainer;
     if (GetPlatform.isMobile) {
       return const SizedBox();
     }
@@ -104,15 +104,13 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
                                   AnimatedBuilder(
                                     animation: controller,
                                     builder: (context, c) {
-                                      return SizedBox(
-                                        width: offset.value,
-                                      );
+                                      return SizedBox(width: offset.value);
                                     },
                                   ),
                                   Stack(
                                     children: [
                                       Material(
-                                        color: Theme.of(context).colorScheme.background,
+                                        color: Theme.of(context).colorScheme.surface,
                                         child: SizedBox(
                                           height: tabHeight,
                                           width: 10.w,
@@ -134,7 +132,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
                                     height: tabHeight,
                                     width: tabWidth,
                                     decoration: BoxDecoration(
-                                      color: Theme.of(context).colorScheme.background,
+                                      color: Theme.of(context).colorScheme.surface,
                                       borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(12.w),
                                         topRight: Radius.circular(12.w),
@@ -144,7 +142,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
                                   Stack(
                                     children: [
                                       Material(
-                                        color: Theme.of(context).colorScheme.background,
+                                        color: Theme.of(context).colorScheme.surface,
                                         child: SizedBox(
                                           height: tabHeight,
                                           width: 10.w,
@@ -174,9 +172,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
                             physics: BouncingScrollPhysics(),
                             child: Row(
                               children: [
-                                SizedBox(
-                                  width: 10.w,
-                                ),
+                                SizedBox(width: 10.w),
                                 for (int i = 0; i < widget.children.length; i++)
                                   Padding(
                                     padding: EdgeInsets.only(top: paddingTop, right: 10.w),

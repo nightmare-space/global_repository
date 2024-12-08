@@ -25,3 +25,5 @@ import 'generated/intl/messages_zh_CN.dart' as zh_CN;
 
 Map<String, dynamic> enMessage = en.messages.messages;
 Map<String, dynamic> zhCNMessage = zh_CN.messages.messages;
+Map<String, dynamic> en_essage = en.messages.messages;
+Map<String, dynamic> zh_cn_messages = zh_CN.messages.messages;

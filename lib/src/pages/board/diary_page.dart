@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart' hide Response;
 import 'package:global_repository/src/pages/about_page.dart';
 import 'package:global_repository/src/widgets/widgets.dart';
 import 'package:signale/signale.dart';
@@ -8,7 +9,8 @@ class DiaryNode {
   DiaryNode(this.title, this.summary);
 
   final String title;
-  final String summary;
+  String summary;
+  final List<DiaryNode> children = [];
 }
 
 class DiaryPage extends StatefulWidget {
@@ -32,66 +34,130 @@ class _DiaryPageState extends State<DiaryPage> {
   Future<void> load() async {
     Response<String> result = await Dio().get('https://nightmare.press/YanTool/resources/工作记录与日记.md');
     diary = result.data!;
+    RegExp regExp = RegExp(r'^(## .+|### .+)$', multiLine: true);
+    List<String> lines = diary.split('\n');
+    DiaryNode? currentNode;
+    StringBuffer currentSummary = StringBuffer();
 
-    RegExp regExp = RegExp('##');
-    for (String line in diary.split(regExp)) {
-      String title = line.split('\n').first.trim();
-      String summary = line.replaceAll(title, '').trim();
-      Log.i('title -> ${title}');
-      Log.i('summary -> ${summary}');
-      if (summary.isEmpty) {
-        continue;
+    for (String line in lines) {
+      if (regExp.hasMatch(line)) {
+        if (currentNode != null && currentSummary.isNotEmpty) {
+          currentNode.summary = currentSummary.toString().trim();
+          if (currentNode.title.startsWith('## ')) {
+            diaries.add(currentNode);
+          } else if (currentNode.title.startsWith('### ')) {
+            diaries.last.children.add(currentNode);
+          }
+        }
+        currentNode = DiaryNode(line.trim(), '');
+        currentSummary.clear();
+      } else {
+        currentSummary.writeln(line);
       }
-      diaries.add(DiaryNode(title, summary));
     }
+
+    if (currentNode != null && currentSummary.isNotEmpty) {
+      currentNode.summary = currentSummary.toString().trim();
+      if (currentNode.title.startsWith('## ')) {
+        diaries.add(currentNode);
+      } else if (currentNode.title.startsWith('### ')) {
+        diaries.last.children.add(currentNode);
+      }
+    }
+
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(top: l(12)),
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        padding: EdgeInsets.zero,
-        itemCount: diaries.length,
-        itemBuilder: (c, i) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: l(8)),
-                child: Text(
-                  diaries[i].title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: l(20),
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(height: l(10)),
-              if (diaries[i].summary.isNotEmpty)
-                Material(
-                  borderRadius: BorderRadius.circular(l(12)),
-                  clipBehavior: Clip.hardEdge,
-                  color: Color(0xff121212),
-                  child: Padding(
-                    padding: EdgeInsets.all(l(10)),
-                    child: Text(
-                      diaries[i].summary,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: l(18),
-                        fontWeight: FontWeight.w500,
-                      ),
+    return SizedBox(
+      height: MediaQuery.of(context).size.height,
+      child: Padding(
+        padding: EdgeInsets.only(top: l(12)),
+        child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          padding: EdgeInsets.only(bottom: l(100)),
+          itemCount: diaries.length,
+          itemBuilder: (c, i) {
+            DiaryNode diary = diaries[i];
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: l(8)),
+                  child: Text(
+                    diary.title,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: l(20),
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-              SizedBox(height: l(20)),
-            ],
-          );
-        },
+                SizedBox(height: l(10)),
+                if (diary.summary.isNotEmpty)
+                  Material(
+                    borderRadius: BorderRadius.circular(l(12)),
+                    clipBehavior: Clip.hardEdge,
+                    color: Color(0xff101010),
+                    child: Padding(
+                      padding: EdgeInsets.all(l(10)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            diary.summary,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: l(18),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          for (DiaryNode child in diary.children)
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: l(8)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    child.title,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: l(18),
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  SizedBox(height: l(10)),
+                                  if (child.summary.isNotEmpty)
+                                    Material(
+                                      borderRadius: BorderRadius.circular(l(12)),
+                                      clipBehavior: Clip.hardEdge,
+                                      color: const Color(0xff050505),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(l(10)),
+                                        child: Text(
+                                          child.summary,
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: l(16),
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  SizedBox(height: l(20)),
+                                ],
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                SizedBox(height: l(20)),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

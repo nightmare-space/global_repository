@@ -12,7 +12,11 @@ class UniqueUtil {
       return 'web';
     }
     if (GetPlatform.isDesktop) {
-      return Platform.operatingSystem;
+      final betterNames = {
+        'macos': 'macOS',
+      };
+
+      return betterNames[Platform.operatingSystem] ?? Platform.operatingSystem;
     } else if (GetPlatform.isIOS) {
       return 'iOS';
     } else {

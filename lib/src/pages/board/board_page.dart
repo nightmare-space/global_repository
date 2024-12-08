@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:global_repository/src/widgets/screen_query.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'board_util.dart';
@@ -51,92 +52,98 @@ class _ProjBoardState extends State<ProjBoard> {
   @override
   Widget build(BuildContext context) {
     bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child: Scaffold(
-        backgroundColor: Colors.black,
-        body: Padding(
-          padding: EdgeInsets.symmetric(horizontal: isMobile ? l(20) : l(120)),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: l(64)),
-                Text(
-                  '哈喽大家，为了让大家感知到我现在在做的事，和已经收录的问题，现在我把我自己的项目看板公开',
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: l(20),
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: l(20)),
-                Text(
-                  '后续会开发一个，需求加急功能，大家对比较关注的问题，可以点赞，我会优先处理',
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: l(20),
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: l(20)),
-                Text(
-                  '我目前是自由开发，给自己的要求是上四休三，每天会尽量付出8小时在这些项目',
-                  textAlign: TextAlign.start,
-                  style: TextStyle(
-                    fontSize: l(20),
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: l(20)),
-                Row(
-                  children: [
-                    Text(
-                      '当前页面更新时间：',
-                      style: TextStyle(color: Colors.white, fontSize: l(20)),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: Brightness.light,
+      ),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Scaffold(
+          backgroundColor: Color(0xff090909),
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: isMobile ? l(20) : l(120)),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: l(64)),
+                  Text(
+                    '哈喽大家，为了让大家感知到我现在在做的事，和已经收录的问题，现在我把我自己的项目看板公开',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: l(20),
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
                     ),
-                    Text(
-                      time,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: l(20),
+                  ),
+                  SizedBox(height: l(20)),
+                  Text(
+                    '后续会开发一个，需求加急功能，大家对比较关注的问题，可以点赞，我会优先处理',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: l(20),
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: l(20)),
+                  Text(
+                    '我目前是自由开发，给自己的要求是上四休三，每天会尽量付出8小时在这些项目',
+                    textAlign: TextAlign.start,
+                    style: TextStyle(
+                      fontSize: l(20),
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                  SizedBox(height: l(20)),
+                  Row(
+                    children: [
+                      Text(
+                        '当前页面更新时间：',
+                        style: TextStyle(color: Colors.white, fontSize: l(20)),
                       ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: l(20)),
-                SelectTab(
-                  onTabChange: (index) {
-                    page = index;
-                    setState(() {});
-                  },
-                  value: page,
-                  tabs: ['看板', '工作记录&日记'],
-                ),
-                if (projData.isNotEmpty)
-                  [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: l(20)),
-                        SelectTab(
-                          onTabChange: (index) {
-                            boardPage = index;
-                            setState(() {});
-                          },
-                          value: boardPage,
-                          tabs: projData.keys.map((e) => e.replaceAll('.md', '')).toList(),
+                      Text(
+                        time,
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.primary,
+                          fontSize: l(20),
                         ),
-                        genBoardCards()[boardPage],
-                      ],
-                    ),
-                    DiaryPage(),
-                  ][page]
-              ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: l(20)),
+                  SelectTab(
+                    onTabChange: (index) {
+                      page = index;
+                      setState(() {});
+                    },
+                    value: page,
+                    tabs: ['看板', '工作记录&日记'],
+                  ),
+                  if (projData.isNotEmpty)
+                    [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: l(20)),
+                          SelectTab(
+                            onTabChange: (index) {
+                              boardPage = index;
+                              setState(() {});
+                            },
+                            value: boardPage,
+                            tabs: projData.keys.map((e) => e.replaceAll('.md', '')).toList(),
+                          ),
+                          genBoardCards()[boardPage],
+                        ],
+                      ),
+                      DiaryPage(),
+                    ][page]
+                ],
+              ),
             ),
           ),
         ),
