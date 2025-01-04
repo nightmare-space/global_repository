@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class GestureWithScale extends StatefulWidget {
   const GestureWithScale({
@@ -15,8 +16,7 @@ class GestureWithScale extends StatefulWidget {
   _GestureWithScaleState createState() => _GestureWithScaleState();
 }
 
-class _GestureWithScaleState extends State<GestureWithScale>
-    with SingleTickerProviderStateMixin {
+class _GestureWithScaleState extends State<GestureWithScale> with SingleTickerProviderStateMixin {
   AnimationController? animationController;
 
   @override
@@ -51,8 +51,7 @@ class _GestureWithScaleState extends State<GestureWithScale>
             return;
           }
           setState(() {});
-          Feedback.forLongPress(context);
-          Feedback.forTap(context);
+          HapticFeedback.heavyImpact();
           animationController!.reverse();
           widget.onTap!();
         },
@@ -61,7 +60,7 @@ class _GestureWithScaleState extends State<GestureWithScale>
             return;
           }
           animationController!.forward();
-          Feedback.forLongPress(context);
+          HapticFeedback.heavyImpact();
           setState(() {});
         },
         onTapCancel: () {
@@ -69,8 +68,7 @@ class _GestureWithScaleState extends State<GestureWithScale>
             return;
           }
           animationController!.reverse();
-          Feedback.forLongPress(context);
-          Feedback.forTap(context);
+          HapticFeedback.heavyImpact();
           setState(() {});
         },
         child: widget.child,

@@ -6,13 +6,13 @@ typedef CallBack = void Function(String address);
 
 class HttpServerUtil {
   static void bindServer(int port, CallBack callBack) {
-    HttpServer.bind(InternetAddress.anyIPv4, port, shared: true).then((server) {
+    HttpServer.bind('::', port, shared: true).then((server) {
       //显示服务器地址和端口
       Log.i('Serving at ${server.address}:${server.port}');
       //通过编写HttpResponse对象让服务器响应请求
       server.listen((HttpRequest request) {
         //HttpResponse对象用于返回客户端
-        Log.i('${request.connectionInfo!.remoteAddress}');
+        Log.i('${request.connectionInfo!.remoteAddress} ${request.method}');
         request.response
           ..headers.contentType = ContentType('text', 'plain', charset: 'utf-8')
           ..write('success')

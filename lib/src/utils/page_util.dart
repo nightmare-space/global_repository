@@ -6,7 +6,7 @@ Future<T?> openPage<T>(Widget page, {String? title}) async {
   if (GetPlatform.isDesktop) {
     TabController tabController = Get.find();
     if (title == null) {
-      throw 'title is null';
+      throw 'desktop title is cannot be null';
     }
     tabController.openPage(PageEntity(title: title, page: page));
     return null;

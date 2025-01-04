@@ -59,6 +59,7 @@ class ScreenQuery extends InheritedWidget {
 }
 
 extension ScreenStateExt on State {
+  // TODO: 有没可能弄一个缓存机制
   double l(num width) {
     return ScreenQuery.of(context).setWidth(width);
   }

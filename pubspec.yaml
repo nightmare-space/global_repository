@@ -5,7 +5,7 @@ version: 0.0.1
 publish_to: none
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.19.0 <3.0.0"
   flutter: ">=1.20.0 <2.0.0"
 
 dependencies:
@@ -15,7 +15,7 @@ dependencies:
     sdk: flutter
   path: ^1.8.0
   synchronized: ^3.0.0
-  flutter_markdown: ^0.6.10+2
+  flutter_markdown: ^0.7.4+3
   get: ^4.1.3
   # launcher url
   url_launcher: ^6.0.18
@@ -41,5 +41,5 @@ flutter:
   assets:
     - assets/icon/
 # dependency_overrides:
-  # signale:
-  #   path: ../signale
+# signale:
+#   path: ../signale

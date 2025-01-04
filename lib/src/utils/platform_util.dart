@@ -16,7 +16,7 @@ Future<String> exec(String cmd) async {
 }
 
 bool isAddress(String content) {
-  final RegExp regExp = RegExp('((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}');
+  final RegExp regExp = RegExp(r'^((25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})\.){3}(25[0-5]|2[0-4]\d|1\d{2}|\d{1,2})$');
   return regExp.hasMatch(content);
 }
 
@@ -26,18 +26,15 @@ bool isAddress(String content) {
 class PlatformUtil {
   static Future<List<String>> localAddress() async {
     List<String> address = [];
-    final List<NetworkInterface> interfaces = await NetworkInterface.list(
-      includeLoopback: false,
-      type: InternetAddressType.IPv4,
-    );
+    final List<NetworkInterface> interfaces = await NetworkInterface.list(type: InternetAddressType.any);
     for (final NetworkInterface netInterface in interfaces) {
       // Log.i('netInterface name -> ${netInterface.name}');
       // 遍历网卡
       for (final InternetAddress netAddress in netInterface.addresses) {
         // 遍历网卡的IP地址
-        if (isAddress(netAddress.address)) {
-          address.add(netAddress.address);
-        }
+        // if (isAddress(netAddress.address)) {
+        address.add(netAddress.address);
+        // }
       }
     }
     return address;

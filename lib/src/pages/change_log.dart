@@ -56,7 +56,12 @@ class _ChangeLogPageState extends State<ChangeLogPage> {
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8.w),
-                    child: Text(changes[i].title),
+                    child: Text(
+                      changes[i].title,
+                      style: TextStyle(
+                        fontSize: l(14),
+                      ),
+                    ),
                   ),
                   if (changes[i].summary.isNotEmpty)
                     GlobalCardItem(
@@ -68,7 +73,12 @@ class _ChangeLogPageState extends State<ChangeLogPage> {
                             Clipboard.setData(ClipboardData(text: changes[i].summary));
                             showToast('已复制到剪切板');
                           },
-                          child: Text(changes[i].summary),
+                          child: Text(
+                            changes[i].summary,
+                            style: TextStyle(
+                              fontSize: l(12),
+                            ),
+                          ),
                         ),
                       ),
                     ),

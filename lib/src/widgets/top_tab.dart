@@ -238,7 +238,7 @@ class _TopTabState extends State<TopTab> with SingleTickerProviderStateMixin {
                   ),
                 ),
               ),
-            if (GetPlatform.isDesktop)
+            if (GetPlatform.isWindows)
               Container(
                 height: 24,
                 child: Row(

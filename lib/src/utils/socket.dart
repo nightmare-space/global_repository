@@ -8,11 +8,12 @@ Future<int?> getSafePort(int rangeStart, int rangeEnd) async {
     return null;
   }
   try {
-    await ServerSocket.bind(
+    ServerSocket serverSocket = await ServerSocket.bind(
       '0.0.0.0',
       rangeStart,
       shared: true,
     );
+    serverSocket.close();
     return rangeStart;
   } catch (e) {
     return await getSafePort(rangeStart + 1, rangeEnd);
