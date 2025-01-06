@@ -319,7 +319,7 @@ class _LinuxActionButtonsState extends State<LinuxActionButtons> {
       height: 24.w,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
-        spacing: 4.w,
+        spacing: 8.w,
         children: [
           // Expanded(
           //   child: DragToMoveArea(
