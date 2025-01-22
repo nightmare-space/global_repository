@@ -50,6 +50,7 @@ class ScreenQuery extends InheritedWidget {
   }
 
   double setWidth(num width) {
+    // Log.i('scale -> $scale', tag: 'ScreenAdapter');
     return width * scale;
   }
 

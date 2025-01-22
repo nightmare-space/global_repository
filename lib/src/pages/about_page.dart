@@ -128,7 +128,12 @@ class AboutPage extends StatelessWidget {
                               _SettingItem(
                                 title: S.current.changelog,
                                 onTap: () {
-                                  openPage(const ChangeLogPage(), title: S.current.changelog);
+                                  openPage(
+                                    ChangeLogPage(
+                                      icon: logo,
+                                    ),
+                                    title: S.current.changelog,
+                                  );
                                 },
                                 suffix: Icon(
                                   Icons.arrow_forward_ios,
@@ -411,7 +416,7 @@ class _SettingItemState extends State<_SettingItem> {
                                       content,
                                       style: TextStyle(
                                         color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
-                                        fontWeight: FontWeight.w400,
+                                        fontWeight: FontWeight.w500,
                                         // height: 1.0,
                                         fontSize: 12.w,
                                       ),

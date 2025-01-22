@@ -3,9 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:global_repository/src/widgets/screen_query.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:signale/signale.dart';
 import 'board_util.dart';
 import 'diary_page.dart';
 import 'select_tab.dart';
+
+Color surface = Color(0xff050505);
+Color surfaceContainer = Color(0xff212121);
+Color onSurface = Colors.white;
 
 class ProjBoard extends StatefulWidget {
   const ProjBoard();
@@ -51,6 +56,7 @@ class _ProjBoardState extends State<ProjBoard> {
 
   @override
   Widget build(BuildContext context) {
+    Log.i(l(20));
     bool isMobile = ResponsiveBreakpoints.of(context).isMobile;
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
@@ -61,7 +67,7 @@ class _ProjBoardState extends State<ProjBoard> {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: Scaffold(
-          backgroundColor: Color(0xff090909),
+          backgroundColor: surface,
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: isMobile ? l(20) : l(120)),
             child: SingleChildScrollView(
@@ -75,7 +81,7 @@ class _ProjBoardState extends State<ProjBoard> {
                     style: TextStyle(
                       fontSize: l(20),
                       fontWeight: FontWeight.w500,
-                      color: Colors.white,
+                      color: onSurface,
                     ),
                   ),
                   SizedBox(height: l(20)),
@@ -85,17 +91,17 @@ class _ProjBoardState extends State<ProjBoard> {
                     style: TextStyle(
                       fontSize: l(20),
                       fontWeight: FontWeight.w500,
-                      color: Colors.white,
+                      color: onSurface,
                     ),
                   ),
                   SizedBox(height: l(20)),
                   Text(
-                    '我目前是自由开发，给自己的要求是上四休三，每天会尽量付出8小时在这些项目',
+                    '我目前是自由开发，给自己的要求是上一休六',
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontSize: l(20),
                       fontWeight: FontWeight.w500,
-                      color: Colors.white,
+                      color: onSurface,
                     ),
                   ),
                   SizedBox(height: l(20)),
@@ -103,13 +109,14 @@ class _ProjBoardState extends State<ProjBoard> {
                     children: [
                       Text(
                         '当前页面更新时间：',
-                        style: TextStyle(color: Colors.white, fontSize: l(20)),
+                        style: TextStyle(color: onSurface, fontSize: l(20)),
                       ),
                       Text(
                         time,
                         style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
                           fontSize: l(20),
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
@@ -187,7 +194,7 @@ class _BoardDetailState extends State<BoardDetail> {
                             Text(
                               board.title,
                               style: TextStyle(
-                                color: Colors.white,
+                                color: onSurface,
                                 fontSize: l(20),
                                 fontWeight: FontWeight.w500,
                               ),
@@ -195,7 +202,7 @@ class _BoardDetailState extends State<BoardDetail> {
                             SizedBox(height: l(12)),
                             Container(
                               decoration: BoxDecoration(
-                                color: const Color(0xff141414),
+                                color: surfaceContainer,
                                 borderRadius: BorderRadius.circular(l(20)),
                               ),
                               width: double.infinity,
@@ -208,7 +215,7 @@ class _BoardDetailState extends State<BoardDetail> {
                                       BoardItem item = board.items[i];
                                       return Container(
                                         decoration: BoxDecoration(
-                                          color: const Color(0xff050505),
+                                          color: surface,
                                           borderRadius: BorderRadius.circular(l(12)),
                                         ),
                                         width: double.infinity,
@@ -269,7 +276,7 @@ class HighlightedText extends StatelessWidget {
         spans.add(TextSpan(
           text: '$word ',
           style: TextStyle(
-            color: isDone ? Colors.white70 : Colors.white,
+            color: isDone ? onSurface.withOpacity(0.7) : onSurface,
             fontSize: l(18),
             fontFamily: 'CustomFont',
             fontWeight: FontWeight.w500,

@@ -44,7 +44,7 @@ class _SelectTabState extends State<SelectTab> {
                   setState(() {});
                 },
                 child: Container(
-                  height: l(48),
+                  height: l(40),
                   decoration: BoxDecoration(
                     color: isSelect ? colorScheme.primary : colorScheme.surfaceContainer,
                     borderRadius: BorderRadius.circular(l(12)),
