@@ -153,13 +153,13 @@ class _ChangeLogPageState extends State<ChangeLogPage> {
                     child: Padding(
                       padding: EdgeInsets.all(l(8)),
                       child: Center(
-                        child: (widget.icon as dynamic).child ??
-                            Icon(
-                              Icons.update,
-                              size: 100.w,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                      ),
+                          child: widget.icon == null
+                              ? Icon(
+                                  Icons.update,
+                                  size: 100.w,
+                                  color: Theme.of(context).colorScheme.primary,
+                                )
+                              : (widget.icon as dynamic).child),
                     ),
                   ),
                 ),

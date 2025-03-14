@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:global_repository/src/utils/screen_util.dart';
 
+import 'safearea_fix.dart';
+
 void showToast(
   String message, {
   Duration duration = const Duration(milliseconds: 1000),
@@ -17,16 +19,14 @@ void showToast(
       double deviceWidth = window.physicalSize.width / window.devicePixelRatio;
       return Positioned(
         bottom: 64.w,
-        child: SafeArea(
+        child: SafeAreaFix(
           child: Align(
             alignment: Alignment.center,
             child: SizedBox(
               width: deviceWidth,
               child: Center(
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(
-                    12.w,
-                  ),
+                  borderRadius: BorderRadius.circular(12.w),
                   child: Material(
                     color: Color(0xff303030),
                     child: Padding(
@@ -96,7 +96,7 @@ class _NiToastState extends State<NiToastNew> {
     );
     return Directionality(
       child: MediaQuery(
-        data: MediaQueryData.fromWindow(window),
+        data: MediaQueryData.fromView(View.of(context)),
         child: Localizations(
           locale: const Locale('en', 'US'),
           delegates: _localizationsDelegates.toList(),

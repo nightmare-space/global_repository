@@ -6,6 +6,7 @@ import 'dart:io';
 import '';
 
 export 'src/utils/runtime_environment.dart';
+export 'src/utils/file_util.dart';
 
 Future<String> exec(String cmd) async {
   String value = '';

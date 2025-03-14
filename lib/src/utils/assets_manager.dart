@@ -64,7 +64,7 @@ class AssetsManager {
       } catch (e) {
         Log.e('copy $fileName error $e');
       }
-      if (!Platform.isWindows) {
+      if (!Platform.isWindows && !Platform.isIOS) {
         final ProcessResult result = await Process.run('chmod', ['+x', filePath]);
         Log.d('$logPrefix $fileName stdout:${result.stdout} stderr:${result.stderr}');
       }

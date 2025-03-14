@@ -1,10 +1,6 @@
 library global_repository;
 
 export 'src/widgets/widgets.dart';
-export 'src/widgets/custom_dialog.dart';
-export 'src/widgets/toast.dart';
-export 'src/widgets/custom_scaffold.dart';
-export 'src/widgets/responsive.dart';
 export 'src/foundation/constants.dart';
 export 'src/foundation/global_assets.dart';
 export 'src/utils/dimens.dart';
