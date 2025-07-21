@@ -38,8 +38,7 @@ class _NiScaffoldState extends State<NiScaffold> {
           body: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              if (drawerType == DrawerType.row && widget.drawer != null)
-                widget.drawer!,
+              if (drawerType == DrawerType.row && widget.drawer != null) widget.drawer!,
               Expanded(
                 child: widget.body!,
               ),

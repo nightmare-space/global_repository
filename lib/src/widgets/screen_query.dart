@@ -59,14 +59,25 @@ class ScreenQuery extends InheritedWidget {
   }
 }
 
+// 全局缓存 Map，使用 State 的 hashCode 作为 key
+final Map<int, ScreenQuery> _screenQueryCache = <int, ScreenQuery>{};
+
 extension ScreenStateExt on State {
-  // TODO: 有没可能弄一个缓存机制
   double l(num width) {
-    return ScreenQuery.of(context).setWidth(width);
+    final int stateHash = hashCode;
+    ScreenQuery? cachedScreenQuery = _screenQueryCache[stateHash];
+
+    if (cachedScreenQuery == null) {
+      cachedScreenQuery = ScreenQuery.of(context);
+      _screenQueryCache[stateHash] = cachedScreenQuery;
+    }
+
+    return cachedScreenQuery.setWidth(width);
   }
 }
 
 extension ScreenContextExt on BuildContext {
+  // TODO need cache
   double l(num width) {
     return ScreenQuery.of(this).setWidth(width);
   }

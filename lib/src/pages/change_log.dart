@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/global_repository.dart';
+import 'package:global_repository/src/extension/color_ext.dart';
 
 class ChangeNode {
   ChangeNode(this.title, this.summary);
@@ -72,102 +73,98 @@ class _ChangeLogPageState extends State<ChangeLogPage> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Scaffold(
-          appBar: widget.showAppbar
-              ? AppBar(
-                  systemOverlayStyle: SystemUiOverlayStyle.dark,
-                  title: Text('更新日志'),
-                )
-              : null,
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 12.w),
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              controller: scrollController,
-              itemCount: changes.length,
-              itemBuilder: (c, i) {
-                ChangeNode change = changes[i];
-                return Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.w),
-                        child: Text(
-                          change.title.removeSharp,
-                          style: TextStyle(
-                            fontSize: change.title.containesSharp ? l(12) : l(14),
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+        buildBody(),
+        buildRotateIcon(context),
+      ],
+    );
+  }
+
+  Align buildRotateIcon(BuildContext context) {
+    return Align(
+      alignment: Alignment.topRight,
+      child: Padding(
+        padding: EdgeInsets.all(l(36)),
+        child: FlippableWidget(
+          angle: angle,
+          front: Container(
+            width: l(48),
+            height: l(96),
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary.opacty02,
+              borderRadius: BorderRadius.circular(l(12)),
+            ),
+            child: Center(
+              child: widget.icon == null
+                  ? Icon(
+                      Icons.update,
+                      size: l(40),
+                      color: Theme.of(context).colorScheme.primary,
+                    )
+                  : (widget.icon as dynamic).child,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Scaffold buildBody() {
+    return Scaffold(
+      appBar: widget.showAppbar
+          ? AppBar(
+              systemOverlayStyle: SystemUiOverlayStyle.dark,
+              title: Text('更新日志'),
+            )
+          : null,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 12.w),
+        child: ListView.builder(
+          physics: const BouncingScrollPhysics(),
+          controller: scrollController,
+          itemCount: changes.length,
+          itemBuilder: (c, i) {
+            ChangeNode change = changes[i];
+            return Padding(
+              padding: EdgeInsets.symmetric(vertical: 10.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    child: Text(
+                      change.title.removeSharp,
+                      style: TextStyle(
+                        fontSize: change.title.containesSharp ? l(12) : l(14),
+                        fontWeight: FontWeight.bold,
                       ),
-                      SizedBox(height: l(4)),
-                      if (change.summary.isNotEmpty)
-                        GlobalCardItem(
-                          padding: EdgeInsets.all(10.w),
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: GestureDetector(
-                              onTap: () {
-                                Clipboard.setData(ClipboardData(text: changes[i].summary));
-                                showToast('已复制到剪切板');
-                              },
-                              child: Text(
-                                changes[i].summary,
-                                style: TextStyle(
-                                  fontSize: l(12),
-                                ),
-                              ),
+                    ),
+                  ),
+                  SizedBox(height: l(4)),
+                  if (change.summary.isNotEmpty)
+                    GlobalCardItem(
+                      padding: EdgeInsets.all(10.w),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: GestureDetector(
+                          onTap: () {
+                            Clipboard.setData(ClipboardData(text: changes[i].summary));
+                            showToast('已复制到剪切板');
+                          },
+                          child: Text(
+                            changes[i].summary,
+                            style: TextStyle(
+                              fontSize: l(12),
                             ),
                           ),
                         ),
-                    ],
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.topRight,
-          child: Padding(
-            padding: EdgeInsets.all(l(36)),
-            child: FlippableWidget(
-              angle: angle,
-              front: Container(
-                width: l(100),
-                height: l(200),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primary.withOpacity(0.4),
-                  borderRadius: BorderRadius.circular(25.w),
-                ),
-                child: Center(
-                  child: Container(
-                    width: l(84),
-                    height: l(84),
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surfaceContainerLowest,
-                      borderRadius: BorderRadius.circular(25.w),
+                      ),
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.all(l(8)),
-                      child: Center(
-                          child: widget.icon == null
-                              ? Icon(
-                                  Icons.update,
-                                  size: 100.w,
-                                  color: Theme.of(context).colorScheme.primary,
-                                )
-                              : (widget.icon as dynamic).child),
-                    ),
-                  ),
-                ),
+                ],
               ),
-            ),
-          ),
+            );
+          },
         ),
-      ],
+      ),
     );
   }
 }

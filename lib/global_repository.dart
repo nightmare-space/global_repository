@@ -15,6 +15,7 @@ export 'src/pages/page.dart' hide CheckContainer;
 export 'src/controller/tab_controller.dart';
 export 'src/utils/assets_manager.dart';
 export 'src/utils/utils.dart';
+export 'src/extension/color_ext.dart';
 export 'generated/intl/messages_all.dart';
 import 'generated/intl/messages_en.dart' as en;
 import 'generated/intl/messages_zh_CN.dart' as zh_CN;

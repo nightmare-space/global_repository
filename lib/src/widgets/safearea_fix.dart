@@ -5,8 +5,10 @@ class SafeAreaFix extends StatefulWidget {
   const SafeAreaFix({
     super.key,
     required this.child,
+    this.top = true,
   });
   final Widget child;
+  final bool top;
 
   @override
   State<SafeAreaFix> createState() => _SafeAreaFixState();
@@ -31,6 +33,9 @@ class _SafeAreaFixState extends State<SafeAreaFix> {
         ),
       );
     }
-    return SafeArea(child: widget.child);
+    return SafeArea(
+      top: widget.top,
+      child: widget.child,
+    );
   }
 }

@@ -7,19 +7,22 @@ import 'package:signale/signale.dart';
 import 'platform_util.dart';
 
 class ScreenAdapter {
-  factory ScreenAdapter() => _getInstance()!;
+  factory ScreenAdapter() => _getInstance();
 
   ScreenAdapter._internal();
-  static ScreenAdapter? get instance => _getInstance();
+  static ScreenAdapter get instance => _getInstance();
   static ScreenAdapter? _instance;
-  static ScreenAdapter? _getInstance() {
+  static ScreenAdapter _getInstance() {
     _instance ??= ScreenAdapter._internal();
-    return _instance;
+    return _instance!;
   }
 
   double? uiWidth;
   double scale = 1.0;
   static void init(double width) {
+    if (instance.uiWidth != null) {
+      return;
+    }
     // ignore: deprecated_member_use
     Size dpSize = window.physicalSize / window.devicePixelRatio;
     if (dpSize == Size.zero) {
@@ -51,8 +54,8 @@ class ScreenAdapter {
       width = dpSize.width;
     }
     // Log.i('ScreenAdapter init -> ${window.physicalSize.width} $width');
-    instance!.uiWidth = width;
-    instance!.scale = dpSize.width / width;
+    instance.uiWidth = width;
+    instance.scale = dpSize.width / width;
   }
 
   static void initWithWidth(double width, double screenWidth) {
@@ -60,8 +63,8 @@ class ScreenAdapter {
     if (dpSize == Size.zero) {
       return;
     }
-    instance!.uiWidth = width;
-    instance!.scale = screenWidth / width;
+    instance.uiWidth = width;
+    instance.scale = screenWidth / width;
   }
 
   static double setWidth(num width) {

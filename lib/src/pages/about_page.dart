@@ -6,12 +6,9 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/get.dart';
 import 'package:global_repository/generated/l10n.dart';
 import 'package:global_repository/global_repository.dart';
-import 'package:global_repository/src/utils/page_util.dart';
-import 'package:intl/intl.dart';
+import 'package:global_repository/src/extension/color_ext.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-
-import 'privacy_page.dart';
 
 FontWeight? _bold = GetPlatform.isLinux ? null : FontWeight.bold;
 String _defaultApplicationName(BuildContext context) {
@@ -27,6 +24,8 @@ String _defaultApplicationName(BuildContext context) {
 
 String baseUri = 'http://nightmare.press';
 
+// const int opacity
+
 /// 关于页面
 class AboutPage extends StatelessWidget {
   const AboutPage({
@@ -41,6 +40,7 @@ class AboutPage extends StatelessWidget {
     this.openSourceLink,
     this.hasTerms = false,
     this.canOpenDrawer = true,
+    this.showAppbar = true,
   }) : super(key: key);
 
   final String appVersion;
@@ -53,10 +53,12 @@ class AboutPage extends StatelessWidget {
   final Widget logo;
   final bool hasTerms;
   final bool canOpenDrawer;
+  final bool showAppbar;
 
   @override
   Widget build(BuildContext context) {
     S.load(Localizations.localeOf(context));
+    ColorScheme colorScheme = Theme.of(context).colorScheme;
     return Localizations(
       locale: Localizations.localeOf(context),
       delegates: [
@@ -68,7 +70,7 @@ class AboutPage extends StatelessWidget {
       child: Builder(builder: (context) {
         AppBar? appBar;
         final appName = applicationName ?? _defaultApplicationName(context);
-        if (ResponsiveBreakpoints.of(context).isMobile) {
+        if (showAppbar && ResponsiveBreakpoints.of(context).isMobile) {
           appBar = AppBar(
             title: Text(S.of(context).aboutTitle),
             leading: canOpenDrawer ? DrawerOpenButton(scaffoldContext: context) : null,
@@ -84,25 +86,25 @@ class AboutPage extends StatelessWidget {
               if (appBar != null) appBar,
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
+                  padding: EdgeInsets.symmetric(horizontal: context.l(12)),
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),
                     controller: ScrollController(),
-                    padding: EdgeInsets.only(bottom: 48.w),
+                    padding: EdgeInsets.only(bottom: context.l(48)),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        SizedBox(height: 24.w),
+                        SizedBox(height: context.l(24)),
                         logo,
-                        SizedBox(height: 8.w),
+                        SizedBox(height: context.l(8)),
                         Text(
                           appName,
                           style: TextStyle(
-                            fontSize: 20.w,
+                            fontSize: context.l(20),
                             fontWeight: _bold,
                           ),
                         ),
-                        SizedBox(height: 24.w),
+                        SizedBox(height: context.l(24)),
                         GlobalCardItem(
                           padding: EdgeInsets.zero,
                           child: Column(
@@ -112,7 +114,8 @@ class AboutPage extends StatelessWidget {
                                 suffix: Text(
                                   '$appVersion($versionCode)',
                                   style: TextStyle(
-                                    color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
+                                    color: colorScheme.onSurface.opacty06,
+                                    fontSize: context.l(16),
                                   ),
                                 ),
                               ),
@@ -121,7 +124,8 @@ class AboutPage extends StatelessWidget {
                                 suffix: Text(
                                   'dev',
                                   style: TextStyle(
-                                    color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
+                                    color: colorScheme.onSurface.opacty06,
+                                    fontSize: context.l(16),
                                   ),
                                 ),
                               ),
@@ -137,7 +141,7 @@ class AboutPage extends StatelessWidget {
                                 },
                                 suffix: Icon(
                                   Icons.arrow_forward_ios,
-                                  size: 16.w,
+                                  size: context.l(16),
                                 ),
                               ),
                               if (otherVersionLink != null)
@@ -145,7 +149,7 @@ class AboutPage extends StatelessWidget {
                                   title: S.current.otherVersionDownload,
                                   suffix: Icon(
                                     Icons.arrow_forward_ios,
-                                    size: 16.w,
+                                    size: context.l(16),
                                   ),
                                   onTap: () async {
                                     if (otherVersionLink == null) {
@@ -320,20 +324,22 @@ class AboutPage extends StatelessWidget {
                           ),
                         ),
                         SizedBox(height: 16.w),
-                        GlobalCardItem(
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: Padding(
-                              padding: EdgeInsets.all(10.w),
-                              child: Text(
-                                license ?? '',
-                                style: TextStyle(
-                                  color: Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
+                        if (license != null)
+                          GlobalCardItem(
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: Padding(
+                                padding: EdgeInsets.all(context.l(10)),
+                                child: Text(
+                                  license!,
+                                  style: TextStyle(
+                                    color: colorScheme.onSurface,
+                                    fontSize: context.l(14),
+                                  ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
                       ],
                     ),
                   ),
@@ -375,18 +381,17 @@ class _SettingItemState extends State<_SettingItem> {
       splashColor: Colors.transparent,
       child: Padding(
         padding: EdgeInsets.symmetric(
-          vertical: 4.w,
-          horizontal: 16.w,
+          horizontal: l(12),
         ),
         child: ConstrainedBox(
-          constraints: BoxConstraints(minHeight: 48.w),
+          constraints: BoxConstraints(minHeight: l(48)),
           child: Align(
             alignment: Alignment.centerLeft,
             child: Row(
               children: [
                 if (widget.prefix != null)
                   Padding(
-                    padding: EdgeInsets.only(right: 6.w),
+                    padding: EdgeInsets.only(right: l(6)),
                     child: widget.prefix,
                   ),
                 Expanded(
@@ -402,7 +407,7 @@ class _SettingItemState extends State<_SettingItem> {
                               widget.title ?? '',
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
-                                fontSize: 16.w,
+                                fontSize: l(14),
                                 // height: 1.0,
                               ),
                             ),
