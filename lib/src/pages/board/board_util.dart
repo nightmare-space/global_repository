@@ -1,4 +1,4 @@
-List<BoardCard> getBoardFromMD(String data) {
+List<BoardCardV1> getBoardFromMD(String data) {
   String result = removeHeaderFooter(data);
   // 按##标题分割
   RegExp splitPattern = RegExp(r'(?=^## )', multiLine: true);
@@ -10,7 +10,7 @@ List<BoardCard> getBoardFromMD(String data) {
   // 输出分割后的部分
 
   // 创建 BoardCard 实例列表
-  List<BoardCard> cards = [];
+  List<BoardCardV1> cards = [];
 
   for (String section in sections) {
     // 分割标题和内容
@@ -18,14 +18,14 @@ List<BoardCard> getBoardFromMD(String data) {
     String title = section.substring(0, firstLineBreak).trim();
     List<String> rawItems = section.substring(firstLineBreak).trim().split('\n');
 
-    List<BoardItem> items = [];
+    List<BoardItemV1> items = [];
     String currentItem = '';
     bool isDone = false;
 
     for (String rawItem in rawItems) {
       if (rawItem.startsWith('- [ ]') || rawItem.startsWith('- [x]') || rawItem.startsWith('- [X]')) {
         if (currentItem.isNotEmpty) {
-          items.add(BoardItem(currentItem.trim(), isDone));
+          items.add(BoardItemV1(currentItem.trim(), isDone));
         }
         isDone = rawItem.startsWith('- [x]') || rawItem.startsWith('- [X]');
         currentItem = rawItem.replaceFirst(RegExp(r'^- \[[ xX]\] '), '');
@@ -33,18 +33,18 @@ List<BoardCard> getBoardFromMD(String data) {
         currentItem += '\n${rawItem.trim()}';
       } else {
         if (currentItem.isNotEmpty) {
-          items.add(BoardItem(currentItem.trim(), isDone));
+          items.add(BoardItemV1(currentItem.trim(), isDone));
         }
         currentItem = rawItem.trim();
       }
     }
 
     if (currentItem.isNotEmpty) {
-      items.add(BoardItem(currentItem.trim(), isDone));
+      items.add(BoardItemV1(currentItem.trim(), isDone));
     }
 
     // 创建 BoardCard 实例并添加到列表中
-    cards.add(BoardCard(title.replaceAll('##', ''), items));
+    cards.add(BoardCardV1(title.replaceAll('##', ''), items));
   }
 
   // 输出 BoardCard 实例列表
@@ -69,10 +69,10 @@ String removeHeaderFooter(String data) {
   return result;
 }
 
-class BoardCard {
+class BoardCardV1 {
   String title;
-  List<BoardItem> items;
-  BoardCard(this.title, this.items);
+  List<BoardItemV1> items;
+  BoardCardV1(this.title, this.items);
 
   @override
   String toString() {
@@ -80,10 +80,10 @@ class BoardCard {
   }
 }
 
-class BoardItem {
+class BoardItemV1 {
   String content;
   final bool isDone;
-  BoardItem(this.content, this.isDone);
+  BoardItemV1(this.content, this.isDone);
 
   @override
   String toString() {
