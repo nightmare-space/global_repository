@@ -17,6 +17,9 @@ extension StrExt on String {
   bool get containesSharp => this.contains('#');
 
   String get removeSharp => this.replaceAll('#', '').trim();
+  bool get isSubHeading => this.startsWith('## ');
+  bool get isTertiaryHeading => this.startsWith('### ');
+  String get removeHeading => this.replaceAll(RegExp(r'^(## |### )'), '');
 }
 
 ///  更新日志
@@ -90,7 +93,7 @@ class _ChangeLogPageState extends State<ChangeLogPage> {
             width: l(48),
             height: l(96),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary.opacty02,
+              color: Theme.of(context).colorScheme.primary.opacity02,
               borderRadius: BorderRadius.circular(l(12)),
             ),
             child: Center(

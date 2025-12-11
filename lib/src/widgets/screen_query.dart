@@ -12,8 +12,12 @@ class ScreenQuery extends InheritedWidget {
     required this.screenWidth,
     double longWidthScale = 1.0,
   }) : super(child: child) {
+    Log.i('ScreenQuery init -> uiWidth: $uiWidth, screenWidth: $screenWidth', 'ScreenQuery');
     // TODO 屏幕适配这块一直很模糊
     //
+    if (uiWidth == 0) {
+      return;
+    }
     if (screenWidth > 1000) {
       // 第二显示器为 4K 的时候，
       // Android DPI: 213
@@ -27,9 +31,9 @@ class ScreenQuery extends InheritedWidget {
       // ignore: deprecated_member_use
       double devicePixelRatio = window.devicePixelRatio;
       double androidDPI = devicePixelRatio * 160;
-      Log.i("screenWidth -> ${screenWidth}", tag: 'ScreenAdapter');
-      Log.i("devicePixelRatio -> ${devicePixelRatio}", tag: 'ScreenAdapter');
-      Log.i("Android DPI -> ${androidDPI}", tag: 'ScreenAdapter');
+      Log.i("screenWidth -> ${screenWidth}", 'ScreenQuery');
+      Log.i("devicePixelRatio -> ${devicePixelRatio}", 'ScreenQuery');
+      Log.i("Android DPI -> ${androidDPI}", 'ScreenQuery');
       // 这里其实就是不适配宽高了
       // 但是在 4K 显示器上，所有的 Size 看起来都会非常小
       // 可以参考 Windows 的缩放比例
@@ -56,6 +60,11 @@ class ScreenQuery extends InheritedWidget {
 
   static ScreenQuery of(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ScreenQuery>()!;
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ScreenQuery(uiWidth: $uiWidth, screenWidth: $screenWidth, scale: $scale)';
   }
 }
 

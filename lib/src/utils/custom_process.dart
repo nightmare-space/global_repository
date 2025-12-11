@@ -62,7 +62,7 @@ class YanProcess implements Executable {
     processStderr = _process!.stderr.asBroadcastStream();
     // 不加这个，会出现err输出会累计到最后输出
     processStderr.transform(utf8.decoder).listen((event) {
-      Log.e('$event', tag: 'NiProcess');
+      Log.e('$event', 'NiProcess');
     });
   }
 

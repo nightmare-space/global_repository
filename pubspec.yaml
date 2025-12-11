@@ -24,22 +24,29 @@ dependencies:
   # 提供路径访问
   permission_handler: 6.0.0
   window_manager: ^0.3.0
+  dio: ^5.4.3+1
+  intl: ^0.20.2
   xterm:
     git:
       url: https://github.com/TerminalStudio/xterm.dart
       ref: master
-  dio: ^5.4.3+1
-  intl: ^0.20.2
 
+  retrofit: ^4.4.1
+  json_annotation: ^4.9.0
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
+  json_annotation: ^4.5.0
+  retrofit_generator: ^9.3.0 # for Dart 3.3 use ^9.0.0
+  build_runner: ^2.4.15
+  json_serializable: ^6.9.5
   intl_utils: ^2.8.7
 
 flutter:
   assets:
     - assets/icon/
-# dependency_overrides:
-# signale:
-#   path: ../signale
+dependency_overrides:
+  signale:
+    git:
+      url: https://github.com/nightmare-space/signale

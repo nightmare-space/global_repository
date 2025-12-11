@@ -20,7 +20,7 @@ class _SafeAreaFixState extends State<SafeAreaFix> {
     EdgeInsets padding = MediaQuery.paddingOf(context);
     // Log.i('padding -> $padding');
     // 36.9 是正常高度下的高度
-    // 590.8 是悬浮窗下的高度
+    // 590.8 是垃圾小米悬浮窗下的高度
     if (padding.top > 50) {
       return Padding(
         padding: EdgeInsets.only(

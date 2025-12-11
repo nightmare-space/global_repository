@@ -20,7 +20,7 @@ class ScreenAdapter {
   double? uiWidth;
   double scale = 1.0;
   static void init(double width) {
-    if (instance.uiWidth != null) {
+    if (width == 0 || instance.uiWidth != null) {
       return;
     }
     // ignore: deprecated_member_use
@@ -29,12 +29,7 @@ class ScreenAdapter {
       return;
     }
     // Log.e('ScreenAdapter init -> $width');
-    if (kIsWeb || PlatformUtil.isDesktop()) {
-      // 桌面端直接不适配
-      // 这两个 If 不能合并
-      // 桌面端在改变窗口大小的时候，也不应该做适配
-      width = dpSize.width;
-    } else if (dpSize.width > 1000) {
+    if (dpSize.width > 1000) {
       // 第二显示器为 4K 的时候，
       // Android DPI: 213
       // devicePixelRatio: 1.331
@@ -47,10 +42,10 @@ class ScreenAdapter {
       // ignore: deprecated_member_use
       double devicePixelRatio = window.devicePixelRatio;
       double androidDPI = devicePixelRatio * 160;
-      Log.i("DP Size.longestSide -> ${dpSize.longestSide}", tag: 'ScreenAdapter');
-      Log.i("DP Size.width -> ${dpSize.width}", tag: 'ScreenAdapter');
-      Log.i("devicePixelRatio -> ${devicePixelRatio}", tag: 'ScreenAdapter');
-      Log.i("Android DPI -> ${androidDPI}", tag: 'ScreenAdapter');
+      Log.i("DP Size.longestSide -> ${dpSize.longestSide}", 'ScreenAdapter');
+      Log.i("DP Size.width -> ${dpSize.width}", 'ScreenAdapter');
+      Log.i("devicePixelRatio -> ${devicePixelRatio}", 'ScreenAdapter');
+      Log.i("Android DPI -> ${androidDPI}", 'ScreenAdapter');
       width = dpSize.width;
     }
     // Log.i('ScreenAdapter init -> ${window.physicalSize.width} $width');

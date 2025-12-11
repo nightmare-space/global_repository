@@ -148,7 +148,7 @@ class _LoggerViewState extends State<LoggerView> {
           Align(
             alignment: Alignment.topRight,
             child: NiCardButton(
-              color: Theme.of(context).colorScheme.primary.opacty02,
+              color: Theme.of(context).colorScheme.primary.opacity02,
               onTap: () {
                 List<LogEntity> logData = Log.defaultLogger.buffer;
                 if (logData.isEmpty) {
@@ -157,7 +157,7 @@ class _LoggerViewState extends State<LoggerView> {
                 }
                 StringBuffer logBuffer = StringBuffer();
                 for (var log in logData) {
-                  logBuffer.writeln('${log.time} [${log.level.name}] ${log.data}');
+                  logBuffer.writeln('${log.time.format} [${log.level.name}] ${log.data}');
                 }
                 Clipboard.setData(ClipboardData(text: '$logBuffer'));
                 showToast('已复制日志到剪贴板');
@@ -182,6 +182,10 @@ class _LoggerViewState extends State<LoggerView> {
       ),
     );
   }
+}
+
+extension TimeExt on DateTime {
+  String get format => '${twoDigits(hour)}:${twoDigits(minute)}:${twoDigits(second)}';
 }
 
 class CheckContainer extends StatelessWidget {

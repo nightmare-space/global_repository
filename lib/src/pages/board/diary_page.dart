@@ -1,22 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart' hide Response;
 import 'package:global_repository/global_repository.dart';
-import 'package:global_repository/src/pages/about_page.dart';
 import 'package:global_repository/src/widgets/widgets.dart';
-import 'package:signale/signale.dart';
 
 Color surface = Color(0xff050505);
-Color surfaceContainer = Color(0xff101010);
+Color surfaceContainer = Color(0xff1E1E1E);
 Color onSurface = Colors.white;
 // 二级标题：Secondary Heading 或 Subheading
 // 三级标题：Tertiary Heading
-
-extension StrExt on String {
-  bool get isSubHeading => this.startsWith('## ');
-  bool get isTertiaryHeading => this.startsWith('### ');
-  String get removeHeading => this.replaceAll(RegExp(r'^(## |### )'), '');
-}
 
 class DiaryNode {
   DiaryNode(this.title, this.summary);
@@ -84,15 +75,11 @@ class _DiaryPageState extends State<DiaryPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height,
-      child: Padding(
-        padding: EdgeInsets.only(top: l(12)),
-        child: ListView.builder(
-          physics: const BouncingScrollPhysics(),
-          padding: EdgeInsets.only(bottom: l(100)),
-          itemCount: diaries.length,
-          itemBuilder: (c, i) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        for (int i = 0; i < diaries.length; i++)
+          Builder(builder: (context) {
             DiaryNode diary = diaries[i];
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -170,9 +157,9 @@ class _DiaryPageState extends State<DiaryPage> {
                 SizedBox(height: l(20)),
               ],
             );
-          },
-        ),
-      ),
+          }),
+        SizedBox(height: l(100)), // 底部留白
+      ],
     );
   }
 }

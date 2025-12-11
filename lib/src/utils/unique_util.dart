@@ -1,8 +1,11 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:get/utils.dart';
-import 'package:global_repository/global_repository.dart';
+import 'package:global_repository/src/utils/utils.dart';
+
+String _shortHash(Object? object) {
+  return object.hashCode.toUnsigned(20).toRadixString(16).padLeft(5, '0');
+}
 
 ///
 class UniqueUtil {
@@ -51,7 +54,7 @@ class UniqueUtil {
     } else {
       file = File('$dataPath/unique.txt');
     }
-    await file.writeAsString(shortHash(() {}));
+    await file.writeAsString(_shortHash(() {}));
   }
 
   static String? props;

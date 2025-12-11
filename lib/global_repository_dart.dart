@@ -7,6 +7,8 @@ import '';
 
 export 'src/utils/runtime_environment.dart';
 export 'src/utils/file_util.dart';
+export 'src/utils/unique_util.dart';
+export 'package:signale/signale.dart';
 
 Future<String> exec(String cmd) async {
   String value = '';

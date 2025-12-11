@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
-import 'package:global_repository/global_repository.dart';
+import 'package:global_repository/src/utils/runtime_environment.dart';
 
+const bool isWeb = bool.fromEnvironment('dart.library.js_util');
 Future<String> exec(String cmd) async {
   String value = '';
   final ProcessResult result = await Process.run(
@@ -63,21 +63,21 @@ class PlatformUtil {
   }
 
   static Map<String, String> envir() {
-    if (kIsWeb) {
+    if (isWeb) {
       return {};
     }
     final Map<String, String> map = Map.from(Platform.environment);
     if (Platform.isWindows) {
-      map['PATH'] = RuntimeEnvir.binPath! + ';' + map['PATH']!;
+      map['PATH'] = RuntimeEnvir.binPath + ';' + map['PATH']!;
     } else {
-      map['PATH'] = RuntimeEnvir.binPath! + ':' + map['PATH']!;
+      map['PATH'] = RuntimeEnvir.binPath + ':' + map['PATH']!;
     }
     return map;
   }
 
   static Map<String, String> environmentByPackage(String packageName) {
     final Map<String, String> map = Map.from(Platform.environment);
-    map['PATH'] = RuntimeEnvir.binPath! + ';' + map['PATH']!;
+    map['PATH'] = RuntimeEnvir.binPath + ';' + map['PATH']!;
     return map;
   }
 
