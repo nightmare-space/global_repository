@@ -54,7 +54,7 @@ class _PrivacyAgreePageState extends State<PrivacyAgreePage> {
                       height: w(48),
                       child: Center(
                         child: Text(
-                          '同意继续',
+                          '同意继续 (OK)',
                           style: TextStyle(
                             fontSize: w(16),
                             color: Theme.of(context).colorScheme.onPrimary,
